@@ -1,0 +1,27 @@
+{
+  "name": "imtegra",
+  "version": "1.0.0",
+  "description": "CRM for I&S TLC department",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/micakce/imtegra.git"
+  },
+  "author": "micakce",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/micakce/imtegra/issues"
+  },
+  "homepage": "https://github.com/micakce/imtegra#readme",
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.6.10"
+  }
+}
