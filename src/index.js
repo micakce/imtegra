@@ -1,19 +1,23 @@
 const express = require('express');
 const path = require('path');
+const morgan = require('morgan');
 
 // Initializations
 const app = express();
+
+    //Connection to database
 require('./database.js');
 
 // Settings
 app.set('port', process.env.PORT || 3000);
 
 // Middlewares
+app.use(morgan('dev'));
 app.use(express.json());
 
 
 // Routes
-require('./routes/users.routes')
+app.use(require('./routes/users.routes'));
 
 // Static files
 app.use(express.static(path.join(__dirname, 'app/build/')));

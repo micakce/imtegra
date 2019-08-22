@@ -10,7 +10,7 @@ const ClientSchema = new Schema({
         apto: String,
         location: String,
         city: String,
-    }
+    },
     services:[{
         service: String,
         speed: Number,
