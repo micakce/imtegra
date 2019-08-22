@@ -1,4 +1,10 @@
 const express = require('express');
-const router = require(express.Router());
+const router = express.Router();
 
-const Client = require('../models/client.js')
+router.get('/', (req, res) => {
+    res.send("Hola tu como estas?")
+});
+
+// const Client = require('../models/client.js')
+
+

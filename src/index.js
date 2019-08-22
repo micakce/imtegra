@@ -9,8 +9,11 @@ require('./database.js');
 app.set('port', process.env.PORT || 3000);
 
 // Middlewares
+app.use(express.json());
+
 
 // Routes
+require('./routes/users.routes')
 
 // Static files
 app.use(express.static(path.join(__dirname, 'app/build/')));
