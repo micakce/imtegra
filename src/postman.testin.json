@@ -1,0 +1,16 @@
+{
+    "abonado": 4681829,
+    "name": "Dangelo Guanipa",
+    "address": {
+        "street": "Mendoza 2152",
+        "apto": "1B",
+        "location": "Belgrano",
+        "city": ""
+    },
+    "services": [
+        {
+            "service": "Triple Play",
+            "speed": 0
+        }
+    ]
+}

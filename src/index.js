@@ -1,12 +1,10 @@
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
-
+ 
 // Initializations
-const app = express();
-
-    //Connection to database
 require('./database.js');
+const app = express();
 
 // Settings
 app.set('port', process.env.PORT || 3000);
