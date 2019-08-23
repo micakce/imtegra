@@ -8,6 +8,12 @@ const Client = require('../models/client.js')
 //     res.json({status: "API is good for it, from /"});
 // });
 
+router.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 router.get('/clients', async (req, res) => {
     const clients = await Client.find();
     res.json(clients)
