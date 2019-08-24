@@ -32,11 +32,12 @@ export default class AddClient extends Component {
     if (name.match(/\./)){
       const key = name.match(/(\D+)\./)[1];
       const key_value = name.match(/\.(\D+)/)[1];
-      let user = Object.assign({}, this.state[key])
-      user[key_value] = value
-      this.setState({
-        [key]: user
-      });
+      // let user = Object.assign({}, this.state[key])
+      // user[key_value] = value
+      // this.setState({
+      // [key]: user
+      this.setState({[key]: {...this.state[key], [key_value]: value}});
+      // });
     } else {
       this.setState({
         [name]: value
