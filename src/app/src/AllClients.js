@@ -47,7 +47,7 @@ export default class AllClients extends Component {
     render() {
 
         return (
-            <Table variant="dark" striped bordered hover>
+            <Table size="sm" variant="dark" striped bordered hover>
                 <thead>
                     <tr>
                         <th>Abonado</th>

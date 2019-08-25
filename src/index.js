@@ -1,13 +1,15 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
- 
+
 // Initializations
 require('./database.js');
 const app = express();
 
 // Settings
 app.set('port', process.env.PORT || 3000);
+// const env = process.env.NODE_ENV
+console.log(process.env.NODE_ENV);
 
 // Middlewares
 app.use(morgan('dev'));
