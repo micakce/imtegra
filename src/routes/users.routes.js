@@ -25,15 +25,15 @@ router.get('/clients/:id', async (req, res) => {
 });
 
 router.post('/clients', async (req, res) => {
-    const { abonado, name, address, services } = req.body;
-    const client = new Client({ abonado, name, address, services })
+    const { abonado, name, email, telefono, address, services } = req.body;
+    const client = new Client({ abonado, name, email, telefono, address, services })
     await client.save()
     res.json(client);
 });
 
 router.put('/clients/:id', async (req, res) => {
-    const { abonado, name, address, services } = req.body;
-    const newClient = { abonado, name, address, services };
+    const { abonado, name, email, telefono, address, services } = req.body;
+    const newClient = { abonado, name, email, telefono, address, services };
     await Client.findByIdAndUpdate(req.params.id, newClient);
     res.json(newClient);
 });

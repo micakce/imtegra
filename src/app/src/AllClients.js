@@ -20,15 +20,15 @@ export default class AllClients extends Component {
     async deleteClient(id) {
         if (window.confirm('Seguro quieres eliminar este cliente?')) {
             // const respuesta = await fetch(`/clients/${id}`, {
-            await fetch(`/clients/${id}`, {
+            fetch(`/clients/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }
             })
-            // const data = JSON.stringify(respuesta);
-            // console.log(data)
+                .then(res => console.log(JSON.stringify(res)))
+                .catch(err => console.error(err))
             this.fetchClients();
         }
     }
@@ -40,7 +40,8 @@ export default class AllClients extends Component {
                 console.log(data);
                 this.setState({ clients: data });
                 console.log(this.state)
-            });
+            })
+            .catch(err => console.error(err));
     }
 
     render() {
@@ -67,7 +68,7 @@ export default class AllClients extends Component {
                                 <th>{client.name}</th>
                                 <th>{client.email}</th>
                                 <th>{client.telefono}</th>
-                                <th>{client.street} {client.apto}</th>
+                                <th>{client.address.street} {client.address.apto}</th>
                                 <th>{client.service}</th>
                                 <th onClick={() => this.deleteClient(client._id)} >X</th>
                                 <th ><ECModal client={client} reload={this.fetchClients} /></th>
