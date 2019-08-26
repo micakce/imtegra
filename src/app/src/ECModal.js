@@ -26,14 +26,6 @@ function ECModal(props) {
         <Modal.Body>
           <AddClient action={props.action} client={props.client} reload={props.reload} toggle={handleClose} />
         </Modal.Body>
-        {/* <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save
-          </Button>
-        </Modal.Footer> */}
       </Modal>
     </>
   );

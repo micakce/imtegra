@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table } from 'react-bootstrap'
+import { Table, Button } from 'react-bootstrap'
 import ECModal from './ECModal'
 
 export default class AllClients extends Component {
@@ -17,7 +17,7 @@ export default class AllClients extends Component {
     }
 
 
-    async deleteClient(id) {
+    deleteClient(id) {
         if (window.confirm('Seguro quieres eliminar este cliente?')) {
             // const respuesta = await fetch(`/clients/${id}`, {
             fetch(`/clients/${id}`, {
@@ -57,12 +57,22 @@ export default class AllClients extends Component {
                             <th>Telefono</th>
                             <th>Direccion</th>
                             <th>Servicios</th>
+                            <th>PM</th>
+                            <th>Implementador</th>
+                            <th>Estatus</th>
                             <th>Del</th>
                             <th>Edit</th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.state.clients.map(client => {
+                            let service_list = []
+                            if (client.services.length > 0) {
+                                service_list = client.services.map(service => {
+                                    return (<div key={service._id}>{service.service} - {service.speed}</div>);
+                                    // return (`${service.service} - ${service.speed}`);
+                                })
+                            }
                             return (
                                 <tr key={client._id}>
                                     <td>{client.abonado}</td>
@@ -70,17 +80,18 @@ export default class AllClients extends Component {
                                     <td>{client.email}</td>
                                     <td>{client.telefono}</td>
                                     <td>{client.address.street} {client.address.apto}</td>
-                                    <td>{client.service}</td>
-                                    <td onClick={() => this.deleteClient(client._id)} >X</td>
+                                    <td>{service_list}</td>
+                                    <td>{client.pm}</td>
+                                    <td>{client.im}</td>
+                                    <td>{client.status}</td>
+                                    <td  ><Button variant="danger" onClick={() => this.deleteClient(client._id)} >X </Button> </td>
                                     <td ><ECModal action={'edit'} client={client} reload={this.fetchClients} /></td>
                                 </tr>
                             )
                         })}
                     </tbody>
                 </Table>
-                <div >
-                    <ECModal reload={this.fetchClients} action={'add'} />
-                </div>
+                <ECModal reload={this.fetchClients} action={'add'} />
             </div>
         )
     }

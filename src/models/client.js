@@ -16,7 +16,10 @@ const ClientSchema = new Schema({
   services:[{
     service: String,
     speed: Number,
-  }]
+  }],
+  pm: String,
+  im: String,
+  status: String
 });
 
 module.exports = mongoose.model('Client', ClientSchema);
