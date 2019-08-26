@@ -6,9 +6,8 @@ export default class AddClient extends Component {
   constructor(props) {
     super(props);
     if (props.client) {
-      this.state = { ...props.client, edit: true };
+      this.state = props.client;
     } else {
-
       this.state = {
         abonado: "",
         name: "",
@@ -25,8 +24,8 @@ export default class AddClient extends Component {
             service: "",
             speed: ""
           }
-        ],
-        edit: false
+        ]
+        // edit: false
       }
     }
     this.handleChange = this.handleChange.bind(this);
@@ -47,7 +46,7 @@ export default class AddClient extends Component {
   }
 
   addClient(e) {
-    if (this.state.edit) {
+    if (this.props.action === 'edit') {
       fetch(`/clients/${this.props.client._id}`, {
         method: 'PUT',
         body: JSON.stringify(this.state),
@@ -82,6 +81,22 @@ export default class AddClient extends Component {
         .catch(err => console.error(err));
       e.preventDefault();
 
+    } else if (this.props.action === 'add') {
+      fetch('/clients', {
+        method: 'POST',
+        body: JSON.stringify(this.state),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(res => {
+        console.log(res.json())
+          this.props.toggle();
+          this.props.reload();
+      })
+        .catch(err => console.error(err));
+      e.preventDefault();
     } else {
       fetch('/clients', {
         method: 'POST',
@@ -91,7 +106,7 @@ export default class AddClient extends Component {
           'Content-Type': 'application/json'
         }
       })
-        .then(res => res.json() )
+        .then(res => res.json())
         .then(data => {
           console.log(data);
           this.setState({
@@ -125,12 +140,12 @@ export default class AddClient extends Component {
         <Form.Row>
           <Form.Group md="3" as={Col} controlId="">
             <Form.Label>Abonado</Form.Label>
-            <Form.Control value={this.state.abonado} name="abonado" onChange={this.handleChange} type="number" placeholder="5555555" />
+            <Form.Control as="input" value={this.state.abonado} name="abonado" onChange={this.handleChange} type="number" placeholder="5555555" required />
           </Form.Group>
 
           <Form.Group md as={Col} controlId="">
             <Form.Label>Nombre</Form.Label>
-            <Form.Control value={this.state.name} name="name" onChange={this.handleChange} type="text" placeholder="Telecentro SA" />
+            <Form.Control value={this.state.name} name="name" onChange={this.handleChange} type="text" placeholder="Telecentro SA" required />
           </Form.Group>
         </Form.Row>
 
@@ -169,10 +184,13 @@ export default class AddClient extends Component {
             <Form.Control value={this.state.address.city} name="address.city" onChange={this.handleChange} placeholder="CABA" />
           </Form.Group>
         </Form.Row>
-
+        <br/>
         <Button onClick={this.addClient} variant="primary" type="submit">
           Submit
         </Button>
+          <Button variant="secondary" onClick={this.props.toggle}>
+            Cancel
+          </Button>
       </Form>
     );
   }

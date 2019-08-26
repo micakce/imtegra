@@ -5,16 +5,18 @@ import AddClient from './AddClient';
 function ECModal(props) {
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => 
+  {
+    setShow(false); 
+  }
   const handleShow = () => {
-    console.log(props)
     setShow(true);
   }
 
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
-        Edit
+      {props.action}
       </Button>
 
       <Modal show={show} onHide={handleClose}>
@@ -22,16 +24,16 @@ function ECModal(props) {
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <AddClient client={props.client} reload={props.reload} toggle={handleClose} />
+          <AddClient action={props.action} client={props.client} reload={props.reload} toggle={handleClose} />
         </Modal.Body>
-        <Modal.Footer>
+        {/* <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
           <Button variant="primary" onClick={handleClose}>
             Save
           </Button>
-        </Modal.Footer>
+        </Modal.Footer> */}
       </Modal>
     </>
   );

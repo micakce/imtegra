@@ -47,36 +47,41 @@ export default class AllClients extends Component {
     render() {
 
         return (
-            <Table size="sm" variant="dark" striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>Abonado</th>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Telefono</th>
-                        <th>Direccion</th>
-                        <th>Servicios</th>
-                        <th>Del</th>
-                        <th>Edit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.state.clients.map(client => {
-                        return (
-                            <tr key={client._id}>
-                                <th>{client.abonado}</th>
-                                <th>{client.name}</th>
-                                <th>{client.email}</th>
-                                <th>{client.telefono}</th>
-                                <th>{client.address.street} {client.address.apto}</th>
-                                <th>{client.service}</th>
-                                <th onClick={() => this.deleteClient(client._id)} >X</th>
-                                <th ><ECModal client={client} reload={this.fetchClients} /></th>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </Table>
+            <div>
+                <Table size="sm" variant="dark" striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>Abonado</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Telefono</th>
+                            <th>Direccion</th>
+                            <th>Servicios</th>
+                            <th>Del</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.clients.map(client => {
+                            return (
+                                <tr key={client._id}>
+                                    <td>{client.abonado}</td>
+                                    <td>{client.name}</td>
+                                    <td>{client.email}</td>
+                                    <td>{client.telefono}</td>
+                                    <td>{client.address.street} {client.address.apto}</td>
+                                    <td>{client.service}</td>
+                                    <td onClick={() => this.deleteClient(client._id)} >X</td>
+                                    <td ><ECModal action={'edit'} client={client} reload={this.fetchClients} /></td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </Table>
+                <div >
+                    <ECModal reload={this.fetchClients} action={'add'} />
+                </div>
+            </div>
         )
     }
 }
