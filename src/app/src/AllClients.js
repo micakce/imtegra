@@ -70,7 +70,6 @@ export default class AllClients extends Component {
                             if (client.services.length > 0) {
                                 service_list = client.services.map(service => {
                                     return (<div key={service._id}>{service.service} - {service.speed}</div>);
-                                    // return (`${service.service} - ${service.speed}`);
                                 })
                             }
                             return (

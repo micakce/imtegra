@@ -137,10 +137,10 @@ export default class AddClient extends Component {
               city: ""
             },
             services: [
-              // {
-              //   service: "",
-              //   speed: ""
-              // }
+              {
+                service: "",
+                speed: ""
+              }
             ]
           });
         })

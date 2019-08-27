@@ -4,7 +4,7 @@ import { Nav, Navbar, NavDropdown, Form, FormControl, Button } from 'react-boots
 import AddClient from "./AddClient.js"
 import AllClients from "./AllClients.js"
 import Home from "./Home"
-
+import Client from "./Client"
 
 function AppRouter() {
   return (
@@ -17,6 +17,7 @@ function AppRouter() {
             <Nav.Link as={Link} to="/">Home</Nav.Link>
             <Nav.Link as={Link} to="/clients/add">Add Client</Nav.Link>
             <Nav.Link as={Link} to="/clients/all">All Clients</Nav.Link>
+            <Nav.Link as={Link} to="/clients/client">Client</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -35,6 +36,7 @@ function AppRouter() {
       <Route path="/" exact component={Home} />
       <Route path="/clients/add" component={AddClient} />
       <Route path="/clients/all" component={AllClients} />
+      <Route path="/clients/client" component={Client} />
     </Router>
 
   );
