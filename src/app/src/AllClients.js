@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Table, Button } from 'react-bootstrap'
-import ECModal from './ECModal'
+import { Table, Button } from 'react-bootstrap';
+import ECModal from './ECModal';
+import ViewClient from './ViewClient';
+import { BrowserRouter as Route, Link } from "react-router-dom";
 
 export default class AllClients extends Component {
 
@@ -37,9 +39,9 @@ export default class AllClients extends Component {
         fetch('/clients')
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 this.setState({ clients: data });
-                console.log(this.state)
+                // console.log(this.state)
             })
             .catch(err => console.error(err));
     }
@@ -66,6 +68,16 @@ export default class AllClients extends Component {
                     </thead>
                     <tbody>
                         {this.state.clients.map(client => {
+
+                            const OtraViewClient = (props) => {
+                                return (
+                                    <ViewClient
+                                        cliente={client}
+                                        {...props}
+                                    />
+                                );
+                            }
+
                             let service_list = []
                             if (client.services.length > 0) {
                                 service_list = client.services.map(service => {
@@ -73,8 +85,9 @@ export default class AllClients extends Component {
                                 })
                             }
                             return (
-                                <tr key={client._id}>
-                                    <td>{client.abonado}</td>
+                                <tr key={client._id}  >
+                                    <td> <Link to={`/clients/client/${client._id}`} >{client.abonado}</Link></td>
+                                    {/* <td> {client.abonado}</td> */}
                                     <td>{client.name}</td>
                                     <td>{client.email}</td>
                                     <td>{client.telefono}</td>
@@ -85,6 +98,7 @@ export default class AllClients extends Component {
                                     <td>{client.status}</td>
                                     <td  ><Button variant="danger" onClick={() => this.deleteClient(client._id)} >X </Button> </td>
                                     <td ><ECModal action={'edit'} client={client} reload={this.fetchClients} /></td>
+                                    <Route path={`/clients/client/${client._id}`} render={OtraViewClient} />
                                 </tr>
                             )
                         })}

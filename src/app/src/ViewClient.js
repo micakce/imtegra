@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
 import { Accordion, Card, Button, Row, Col } from 'react-bootstrap';
 import { dangeloState } from './testVariables';
+import { RenderADI, RenderL2VPN, RenderTTT } from './RenderService';
 
-export default class ClientMain extends Component {
+export default class ViewClient extends Component {
     constructor(props) {
         super(props);
-        this.state = dangeloState;
+
+        if (props.cliente) {
+            this.state = props.cliente;
+            console.log("Maldito cliente");
+        } else {
+            this.state = dangeloState;
+            console.log("Maldito Estado");
+        }
+
+        // this.state = {
+        //     client: props.client
+        // }
+
         // this.state = {
         //     abonado: "",
         //     name: "",
@@ -29,6 +42,9 @@ export default class ClientMain extends Component {
         // }
     }
 
+    componentDidMount() {
+        console.log(this.props);
+    }
 
     render() {
         return (
@@ -78,8 +94,8 @@ export default class ClientMain extends Component {
                                 <Row></Row>
                             </Col>
                         </Row>
-                        {/* <Button variant="primary">Go somewhere</Button>
-                    <Card.Link href="#">Card Link</Card.Link>
+                        <Button variant="primary">Go somewhere</Button>
+                        {/* <Card.Link href="#">Card Link</Card.Link>
                     <Card.Link href="#">Another Link</Card.Link> */}
                     </Card.Body>
                 </Card>
@@ -88,55 +104,19 @@ export default class ClientMain extends Component {
                     <Card.Header as="h5">Servicios</Card.Header>
                     <Card.Body>
                         <Accordion >
-                            {dangeloState.services.map(service => {
+                            {dangeloState.services.map((service, idx) => {
                                 if (service.name === "ADI") {
 
                                     return (
-                                        <Card>
-                                            <Accordion.Toggle as={Card.Header} eventKey="0">
-                                                <b>{`${service.name} - ${service.speed}`}</b>
-                                            </Accordion.Toggle>
-                                            <Accordion.Collapse eventKey="0">
-                                                <Card.Body>
-                                                    <Row>
-                                                        <Col>
-                                                            <b>Servicio: </b>{` ${service.name} - ${service.speed} Mbps`}
-                                                        </Col>
-                                                        <Col>
-                                                            <b>IP: </b>{service.ip}
-                                                        </Col>
-                                                        <Col>
-                                                            <b>IP: </b>{service.ip_mon}
-                                                        </Col>
-                                                    </Row>
-                                                    <Row>
-                                                        <Col>
-                                                            <b>Tecnología: </b>{` ${service.tech}`}
-                                                        </Col>
-                                                        <Col>
-                                                            <b>DG: </b>{service.dg}
-                                                        </Col>
-                                                        <Col>
-                                                            <b>Mask: </b>{service.mask}
-                                                        </Col>
-                                                    </Row>
-                                                    <Row>
-                                                        <Col>
-                                                            <b>Equipo: </b>
-                                                        </Col>
-                                                        <Col>
-                                                            <b>VLAN: </b>{service.vlan}
-                                                        </Col>
-                                                        <Col>
-                                                            <b>DG: </b>{service.dg_mon}
-                                                        </Col>
-                                                        <Col>
-                                                            <b>Mask: </b>{service.mon}
-                                                        </Col>
-                                                    </Row>
-                                                </Card.Body>
-                                            </Accordion.Collapse>
-                                        </Card>
+                                        <RenderADI service={service} idx={idx} />
+                                    )
+                                } else if (service.name === "L2VPN") {
+                                    return (
+                                        <RenderL2VPN service={service} idx={idx} />
+                                    )
+                                } else if (service.name === "TTT") {
+                                    return (
+                                        <RenderTTT service={service} idx={idx} />
                                     )
                                 }
                             })}

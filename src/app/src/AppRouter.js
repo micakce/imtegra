@@ -1,12 +1,23 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Nav, Navbar, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
-import AddClient from "./AddClient.js"
-import AllClients from "./AllClients.js"
-import Home from "./Home"
-import Client from "./Client"
+import AddClient from "./AddClient.js";
+import AllClients from "./AllClients.js";
+import Home from "./Home";
+import ViewClient from "./ViewClient";
+import { rogerState } from "./testVariables";
+
 
 function AppRouter() {
+
+  const MyViewClient = (props) => {
+    return (
+      <ViewClient
+        cliente={rogerState}
+        {...props}
+      />
+    );
+  }
   return (
     <Router>
       <Navbar bg="light" expand="lg">
@@ -18,6 +29,7 @@ function AppRouter() {
             <Nav.Link as={Link} to="/clients/add">Add Client</Nav.Link>
             <Nav.Link as={Link} to="/clients/all">All Clients</Nav.Link>
             <Nav.Link as={Link} to="/clients/client">Client</Nav.Link>
+            <Nav.Link as={Link} to="/clients/client/123">Client 123</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -35,8 +47,11 @@ function AppRouter() {
       {/* <Route path="/" exact render={(props) => <AllClients {...props} />} /> */}
       <Route path="/" exact component={Home} />
       <Route path="/clients/add" component={AddClient} />
-      <Route path="/clients/all" component={AllClients} />
-      <Route path="/clients/client" component={Client} />
+      <Route path="/clients/all" render={(props) => <AllClients {...props} />} />
+      {/* <Route path="/clients/all" component={AllClients} /> */}
+      <Route path="/clients/client" exact component={ViewClient} />
+      {/* <Route path="/clients/client/123" render={(props) => <ViewClient {...props} cliente={rogerState} />} /> */}
+      <Route path="/clients/client/123" render={MyViewClient} />
     </Router>
 
   );
