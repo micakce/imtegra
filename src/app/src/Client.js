@@ -93,29 +93,52 @@ export default class ClientMain extends Component {
 
                                     return (
                                         <Card>
-                                        <Accordion.Toggle as={Card.Header} eventKey="0">
-                                           <b>{`${service.name} - ${service.speed}`}</b>
-                                    </Accordion.Toggle>
-                                        <Accordion.Collapse eventKey="0">
-                                            <Card.Body>
-                                            <Row>
-                                                <Col>
-                                                <b>Servicio: </b>{` ${service.name} - ${service.speed} Mbps`}
-                                                </Col>
-                                                <Col>
-                                                <b>Servicio: </b>{` ${service.name} - ${service.speed} Mbps`}
-                                                </Col>
-                                            </Row>
-                                            <Row>
-                                                <Col>
-                                                <b>Tecnología: </b>{` ${service.tech}`}
-                                                </Col>
-                                            </Row>
-                                            </Card.Body>
-                                        </Accordion.Collapse>
-                                    </Card>
-                                )
-                            }
+                                            <Accordion.Toggle as={Card.Header} eventKey="0">
+                                                <b>{`${service.name} - ${service.speed}`}</b>
+                                            </Accordion.Toggle>
+                                            <Accordion.Collapse eventKey="0">
+                                                <Card.Body>
+                                                    <Row>
+                                                        <Col>
+                                                            <b>Servicio: </b>{` ${service.name} - ${service.speed} Mbps`}
+                                                        </Col>
+                                                        <Col>
+                                                            <b>IP: </b>{service.ip}
+                                                        </Col>
+                                                        <Col>
+                                                            <b>IP: </b>{service.ip_mon}
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col>
+                                                            <b>Tecnología: </b>{` ${service.tech}`}
+                                                        </Col>
+                                                        <Col>
+                                                            <b>DG: </b>{service.dg}
+                                                        </Col>
+                                                        <Col>
+                                                            <b>Mask: </b>{service.mask}
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col>
+                                                            <b>Equipo: </b>
+                                                        </Col>
+                                                        <Col>
+                                                            <b>VLAN: </b>{service.vlan}
+                                                        </Col>
+                                                        <Col>
+                                                            <b>DG: </b>{service.dg_mon}
+                                                        </Col>
+                                                        <Col>
+                                                            <b>Mask: </b>{service.mon}
+                                                        </Col>
+                                                    </Row>
+                                                </Card.Body>
+                                            </Accordion.Collapse>
+                                        </Card>
+                                    )
+                                }
                             })}
                         </Accordion>
                     </Card.Body>

@@ -54,7 +54,7 @@ const blankState = {
         },
         {
             name: "",
-            type: "",
+            speed: "",
             tech: "",
             type: "",
             contra: "",
@@ -101,11 +101,13 @@ const dangeloState = {
             name: "ADI",
             speed: "50",
             tech: "FO",
-            ip: "180.80.8.2",
+            ip: "180.80.8.1",
+            dg: "180.80.8.2",
             mask: "255.255.255.252",
             vlan: "2152",
             ip_mon: "10.252.1.23",
-            ip_mask: "255.255.255.240",
+            dg_mon: "10.252.1.30",
+            mask_mon: "255.255.255.240",
         },
         {
             name: "L2VPN",
@@ -119,7 +121,7 @@ const dangeloState = {
         },
         {
             name: "TTT",
-            type: "30/100",
+            speed: "30/100",
             tech: "CO",
             type: "PaP",
             contra: "4545432",
