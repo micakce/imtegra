@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Form, Button } from 'react-bootstrap';
+import { dangeloState, blankState } from './testVariables'
 
 export default class AddClient extends Component {
 
@@ -8,27 +9,7 @@ export default class AddClient extends Component {
     if (props.client) {
       this.state = props.client;
     } else {
-      this.state = {
-        abonado: "",
-        name: "",
-        telefono: "",
-        email: "",
-        address: {
-          street: "",
-          apto: "",
-          location: "",
-          city: ""
-        },
-        services: [
-          {
-            service: "",
-            speed: "",
-          }
-        ],
-        pm: "",
-        im: "",
-        status: ""
-      }
+      this.state = blankState;
     }
     this.handleChange = this.handleChange.bind(this);
     this.addClient = this.addClient.bind(this);
@@ -83,7 +64,7 @@ export default class AddClient extends Component {
             },
             services: [
               {
-                service: "",
+                name: "",
                 speed: ""
               }
             ],
@@ -138,7 +119,7 @@ export default class AddClient extends Component {
             },
             services: [
               {
-                service: "",
+                name: "",
                 speed: ""
               }
             ]
@@ -215,16 +196,16 @@ export default class AddClient extends Component {
             <Form.Control value={this.state.status} name="status" onChange={this.handleChange} placeholder="" />
           </Form.Group>
         </Form.Row>
-        <Form.Row>
+        {/* <Form.Row>
           <Form.Group md="4" as={Col} controlId="personal">
             <Form.Label>Service</Form.Label>
-            <Form.Control value={this.state.services[0].service} name="services.service" onChange={this.handleChange} placeholder="" />
+            <Form.Control value={this.state.services[0].name} name="services.name" onChange={this.handleChange} placeholder="" />
           </Form.Group>
           <Form.Group md="4" as={Col} controlId="personal">
             <Form.Label>Speed</Form.Label>
             <Form.Control value={this.state.services[0].speed} name="services.speed" onChange={this.handleChange} placeholder="" />
           </Form.Group>
-        </Form.Row>
+        </Form.Row> */}
         <Button onClick={this.addClient} variant="primary" type="submit">
           Submit
         </Button>

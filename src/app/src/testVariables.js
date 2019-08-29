@@ -32,54 +32,45 @@ const blankState = {
         city: ""
     },
     services: [
+        // {
+        //     name: "",
+        //     speed: "",
+        //     tech: "",
+        //     ip: "",
+        //     mask: "",
+        //     vlan: "",
+        //     ip_mon: "",
+        //     ip_mask: "",
+        // },
+        // {
+        //     name: "",
+        //     speed: "",
+        //     tech: "",
+        //     vlan: "",
+        //     type: "",
+        //     contra: "",
+        //     cm: "",
+        //     mac: "",
+        // },
+        // {
+        //     name: "",
+        //     speed: "",
+        //     tech: "",
+        //     type: "",
+        //     contra: "",
+        //     vlan: "",
+        //     cm: "",
+        //     mac: "",
+        // },
+    ],
+    hardware: [
         {
-            name: "",
-            speed: "",
-            tech: "",
-            ip: "",
-            mask: "",
-            vlan: "",
-            ip_mon: "",
-            ip_mask: "",
-        },
-        {
-            name: "",
-            speed: "",
-            tech: "",
-            vlan:"",
-            type: "",
-            contra: "",
-            cm: "",
-            mac: "",
-        },
-        {
-            name: "",
-            speed: "",
-            tech: "",
-            type: "",
-            contra: "",
-            vlan: "",
-            cm: "",
-            mac: "",
+            device: "",
+            code: "",
+            model: "",
+            serial: ""
         },
     ],
-    hardware: {
-        switch: {
-            code: "",
-            model: "",
-            serial: ""
-        },
-        sfp: {
-            code: "",
-            model: "",
-            serial: ""
-        },
-        patch: {
-            code: "",
-            model: "",
-            serial: ""
-        }
-    },
     pm: "",
     im: "",
     status: "",
@@ -115,7 +106,7 @@ const dangeloState = {
             name: "L2VPN",
             speed: "15",
             tech: "CO",
-            vlan:"2122",
+            vlan: "2122",
             type: "PaP",
             contra: "4545432",
             cm: "FASTV3.1",
@@ -188,7 +179,7 @@ const rogerState = {
             name: "L2VPN",
             speed: "15",
             tech: "CO",
-            vlan:"2122",
+            vlan: "2122",
             type: "PaP",
             contra: "4545432",
             cm: "FASTV3.1",
@@ -209,26 +200,29 @@ const rogerState = {
             mac: "34.fd.34.df.43.er",
         },
     ],
-    hardware: {
-        switch: {
+    hardware: [
+        {
+            device: "SG350",
             code: "74500",
             model: "SG350",
             serial: "PSZ430190BY"
         },
-        sfp: {
+        {
+            device: "SFP",
             code: "74500",
             model: "OSI-D20K",
             serial: "ZZ1802022"
         },
-        patch: {
+        {
+            device: "PATCH",
             code: "74500",
             model: "5M",
             serial: "171645221"
         }
-    },
+    ],
     pm: "cmontero",
     im: "rmontilla",
     status: "Creado"
 }
 
-export { dangeloState, blankState, rogerState};
+export { dangeloState, blankState, rogerState };

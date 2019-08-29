@@ -32,8 +32,9 @@ export default class ViewClient extends Component {
         fetch(`/clients/search/${this.state.search}`)
             .then(res => res.json())
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 this.setState({ ...data })
+                console.log(this.state)
             })
             .catch(err => console.error(err));
         e.preventDefault();

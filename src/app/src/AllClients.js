@@ -55,9 +55,9 @@ export default class AllClients extends Component {
                         <tr>
                             <th>Abonado</th>
                             <th>Nombre</th>
-                            <th>Email</th>
-                            <th>Telefono</th>
-                            <th>Direccion</th>
+                            {/* <th>Email</th> */}
+                            {/* <th>Telefono</th>
+                            <th>Direccion</th> */}
                             <th>Servicios</th>
                             <th>PM</th>
                             <th>Implementador</th>
@@ -81,9 +81,9 @@ export default class AllClients extends Component {
                                     {/* <td> <Link to={`/clients/client/${client.abonado}`} >{client.abonado}</Link></td> */}
                                     <td> {client.abonado}</td>
                                     <td>{client.name}</td>
-                                    <td>{client.email}</td>
-                                    <td>{client.telefono}</td>
-                                    <td>{client.address.street} {client.address.apto}</td>
+                                    {/* <td>{client.email}</td> */}
+                                    {/* <td>{client.telefono}</td>
+                                    <td>{client.address.street} {client.address.apto}</td> */}
                                     <td>{service_list}</td>
                                     <td>{client.pm}</td>
                                     <td>{client.im}</td>
