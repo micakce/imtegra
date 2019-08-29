@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import ECModal from './ECModal';
-import ViewClient from './ViewClient';
-import { BrowserRouter as Route, Link } from "react-router-dom";
+// import ViewClient from './ViewClient';
+// import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export default class AllClients extends Component {
 
@@ -69,15 +69,6 @@ export default class AllClients extends Component {
                     <tbody>
                         {this.state.clients.map(client => {
 
-                            const OtraViewClient = (props) => {
-                                return (
-                                    <ViewClient
-                                        cliente={client}
-                                        {...props}
-                                    />
-                                );
-                            }
-
                             let service_list = []
                             if (client.services.length > 0) {
                                 service_list = client.services.map(service => {
@@ -85,9 +76,10 @@ export default class AllClients extends Component {
                                 })
                             }
                             return (
+
                                 <tr key={client._id}  >
-                                    <td> <Link to={`/clients/client/${client._id}`} >{client.abonado}</Link></td>
-                                    {/* <td> {client.abonado}</td> */}
+                                    {/* <td> <Link to={`/clients/client/${client.abonado}`} >{client.abonado}</Link></td> */}
+                                    <td> {client.abonado}</td>
                                     <td>{client.name}</td>
                                     <td>{client.email}</td>
                                     <td>{client.telefono}</td>
@@ -98,8 +90,9 @@ export default class AllClients extends Component {
                                     <td>{client.status}</td>
                                     <td  ><Button variant="danger" onClick={() => this.deleteClient(client._id)} >X </Button> </td>
                                     <td ><ECModal action={'edit'} client={client} reload={this.fetchClients} /></td>
-                                    <Route path={`/clients/client/${client._id}`} render={OtraViewClient} />
+                                    {/* <Route path={`/clients/client/${client.abonado}`} render={() => <ViewClient cliente={client} />} /> */}
                                 </tr>
+
                             )
                         })}
                     </tbody>

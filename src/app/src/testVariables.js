@@ -82,7 +82,7 @@ const blankState = {
     },
     pm: "",
     im: "",
-    status: ""
+    status: "",
 }
 
 const dangeloState = {

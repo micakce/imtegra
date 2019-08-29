@@ -16,18 +16,23 @@ router.use(function(req, res, next) {
 
 router.get('/clients', async (req, res) => {
     const clients = await Client.find();
-    res.json(clients)
+    res.json(clients);
+});
+
+router.get('/clients/search/:id', async (req, res) => {
+    const client = await Client.findOne({ abonado: req.params.id });
+    res.json(client);
 });
 
 router.get('/clients/:id', async (req, res) => {
-    const client = await Client.findById(req.params.id)
+    const client = await Client.findById(req.params.id);
     res.json(client);
 });
 
 router.post('/clients', async (req, res) => {
     const { abonado, name, email, telefono, address, services, pm, im, status } = req.body;
-    const client = new Client({ abonado, name, email, telefono, address, services, pm, im, status })
-    await client.save()
+    const client = new Client({ abonado, name, email, telefono, address, services, pm, im, status });
+    await client.save();
     res.json(client);
 });
 

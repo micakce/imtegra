@@ -1,54 +1,51 @@
 import React, { Component } from 'react';
-import { Accordion, Card, Button, Row, Col } from 'react-bootstrap';
-import { dangeloState } from './testVariables';
+import { Accordion, Card, Button, Row, Col, Form, FormControl } from 'react-bootstrap';
+import { dangeloState, blankState } from './testVariables';
 import { RenderADI, RenderL2VPN, RenderTTT } from './RenderService';
 
 export default class ViewClient extends Component {
+
     constructor(props) {
         super(props);
 
-        if (props.cliente) {
-            this.state = props.cliente;
+        if (props.client) {
+            this.state = props.client;
             console.log("Maldito cliente");
         } else {
-            this.state = dangeloState;
+            this.state = { search: "", ...blankState };
             console.log("Maldito Estado");
+            console.log(this.state);
         }
 
-        // this.state = {
-        //     client: props.client
-        // }
+        this.handleSearchChange = this.handleSearchChange.bind(this);
+        this.searchClient = this.searchClient.bind(this);
 
-        // this.state = {
-        //     abonado: "",
-        //     name: "",
-        //     telefono: "",
-        //     email: "",
-        //     address: {
-        //         street: "",
-        //         apto: "",
-        //         location: "",
-        //         city: ""
-        //     },
-        //     services: [
-        //         {
-        //             service: "",
-        //             speed: "",
-        //         }
-        //     ],
-        //     pm: "",
-        //     im: "",
-        //     status: ""
-        // }
     }
 
-    componentDidMount() {
-        console.log(this.props);
+    handleSearchChange(e) {
+        this.setState({
+            search: e.target.value
+        })
+    }
+
+    searchClient(e) {
+        fetch(`/clients/search/${this.state.search}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                this.setState({ ...data })
+            })
+            .catch(err => console.error(err));
+        e.preventDefault();
     }
 
     render() {
         return (
             <div>
+                <Form inline>
+                    <FormControl type="text" placeholder="Search" onChange={this.handleSearchChange} value={this.state.search} className="mr-sm-2" />
+                    <Button type="submit" variant="outline-success" onClick={this.searchClient}>Search</Button>
+                </Form>
                 <Card>
                     <Card.Header as="h5">Datos del Cliente</Card.Header>
                     <Card.Body>
@@ -104,7 +101,7 @@ export default class ViewClient extends Component {
                     <Card.Header as="h5">Servicios</Card.Header>
                     <Card.Body>
                         <Accordion >
-                            {dangeloState.services.map((service, idx) => {
+                            {this.state.services.map((service, idx) => {
                                 if (service.name === "ADI") {
 
                                     return (
