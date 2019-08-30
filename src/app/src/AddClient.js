@@ -51,27 +51,7 @@ export default class AddClient extends Component {
       })
         .then(res => res.json())
         .then(data => {
-          this.setState({
-            abonado: "",
-            name: "",
-            telefono: "",
-            email: "",
-            address: {
-              street: "",
-              apto: "",
-              location: "",
-              city: ""
-            },
-            services: [
-              {
-                name: "",
-                speed: ""
-              }
-            ],
-            pm: "",
-            im: "",
-            status: ""
-          });
+          this.setState({ ...blankState })
           this.props.toggle();
           this.props.reload();
         })
@@ -106,24 +86,7 @@ export default class AddClient extends Component {
         .then(res => res.json())
         .then(data => {
           console.log(data);
-          this.setState({
-            abonado: "",
-            name: "",
-            telefono: "",
-            email: "",
-            address: {
-              street: "",
-              apto: "",
-              location: "",
-              city: ""
-            },
-            services: [
-              {
-                name: "",
-                speed: ""
-              }
-            ]
-          });
+          this.setState({ ...blankState });
         })
         .catch(err => console.error(err));
       e.preventDefault();

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Accordion, Card, Button, Row, Col, Form, FormControl } from 'react-bootstrap';
 import { dangeloState, blankState } from './testVariables';
 import { RenderADI, RenderL2VPN, RenderTTT } from './RenderService';
+import ASModal from './AddServiceModal';
 
 export default class ViewClient extends Component {
 
@@ -34,7 +35,6 @@ export default class ViewClient extends Component {
             .then(data => {
                 // console.log(data)
                 this.setState({ ...data })
-                console.log(this.state)
             })
             .catch(err => console.error(err));
         e.preventDefault();
@@ -116,8 +116,11 @@ export default class ViewClient extends Component {
                                     return (
                                         <RenderTTT service={service} idx={idx} />
                                     )
+                                } else {
+                                    return (<div style={{display: 'flex', justifyContent:'center'}}><h3 >Agrega un Servicio</h3></div>)
                                 }
                             })}
+                            <ASModal />
                         </Accordion>
                     </Card.Body>
                 </Card>
