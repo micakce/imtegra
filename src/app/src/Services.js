@@ -8,8 +8,8 @@ function Services(props) {
             return (
                 <Card>
                     <Accordion.Toggle as={Card.Header} eventKey="0">
-                    {service.name}
-                                    </Accordion.Toggle>
+                        {service.name}
+                    </Accordion.Toggle>
                     <Accordion.Collapse eventKey="0">
                         <Card.Body>Hello! I'm the body</Card.Body>
                     </Accordion.Collapse>

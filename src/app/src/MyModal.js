@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import AddService from './AddService';
-// import AddService from './AddService';
 
-function ASModal() {
+function MyModal(props) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => {
-        setShow(false);
+        setShow(!false);
     }
     const handleShow = () => {
-        setShow(true);
+        setShow(!true);
     }
 
     return (
@@ -20,16 +18,17 @@ function ASModal() {
                 Add Service
       </Button>
 
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={!show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Agregar Servicio</Modal.Title>
+                    <Modal.Title>{props.title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AddService />
+                    {props.children}
+                    {/* <AddService /> */}
                 </Modal.Body>
             </Modal>
         </>
     );
 }
 
-export default ASModal;
+export default MyModal;

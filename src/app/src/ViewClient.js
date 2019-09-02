@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Accordion, Card, Button, Row, Col, Form, FormControl } from 'react-bootstrap';
-import { dangeloState, blankState } from './testVariables';
+import { blankState } from './testVariables';
 import { RenderADI, RenderL2VPN, RenderTTT } from './RenderService';
-import ASModal from './AddServiceModal';
+import MyModal from './MyModal';
+import AddService from './AddService';
 
 export default class ViewClient extends Component {
 
@@ -120,7 +121,10 @@ export default class ViewClient extends Component {
                                     return (<div style={{display: 'flex', justifyContent:'center'}}><h3 >Agrega un Servicio</h3></div>)
                                 }
                             })}
-                            <ASModal />
+                            <MyModal 
+                            children={<AddService />} 
+                            title={"Agregar Servicio"}
+                            />
                         </Accordion>
                     </Card.Body>
                 </Card>
