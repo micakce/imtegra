@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import { Form, Col, Row } from 'react-bootstrap';
+import { Button, Form, Col, Row } from 'react-bootstrap';
 
 
 export default class AddService extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            service: ""
+        if (props) {
+            this.state = { abonado: props.abonado, service: ""}
+            console.log(props)
+            console.log(this.state)
+        } else {
+            this.state = { service: "" }
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -23,19 +27,36 @@ export default class AddService extends Component {
         }
     }
 
+    addService() {
+        // fetch(`/clients/service/${this.state.ab}`, met)
+        console.log(this.state);
+    }
+
     adi() {
         if (this.state.service === 'ADI') {
             if (this.state.fo) {
                 return (
                     <div>
+
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>Velocidad</Form.Label>
+                                <Form.Control size="sm" value={this.state.speed} name="speed" onChange={this.handleChange} type="number" placeholder="en Mbps" />
+                            </Form.Group>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>VLAN</Form.Label>
+                                <Form.Control size="sm" value={this.state.vlan} name="vlan" onChange={this.handleChange} type="text" placeholder="VLAN del Servicio" />
+                            </Form.Group>
+                        </Form.Row>
+
                         <Form.Row>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Red</Form.Label>
                                 <Form.Control size="sm" value={this.state.red} name="red" onChange={this.handleChange} type="text" placeholder="10.0.0.0/30" />
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
-                                <Form.Label>Velocidad</Form.Label>
-                                <Form.Control size="sm" value={this.state.speed} name="speed" onChange={this.handleChange} type="number" placeholder="en Mbps" />
+                                <Form.Label>Mascara Servicio</Form.Label>
+                                <Form.Control size="sm" value={this.state.mask} name="mask" onChange={this.handleChange} type="text" placeholder="255.255.255.0" />
                             </Form.Group>
                         </Form.Row>
 
@@ -45,41 +66,19 @@ export default class AddService extends Component {
                                 <Form.Control size="sm" value={this.state.ip} name="ip" onChange={this.handleChange} type="text" placeholder="IP del cliente" />
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
-                                <Form.Label>IP Monitoria</Form.Label>
-                                <Form.Control size="sm" value={this.state.ip_mon} name="ip_mon" onChange={this.handleChange} type="text" placeholder="IP equipo cliente" />
+                                <Form.Label>DG Servicio</Form.Label>
+                                <Form.Control size="sm" value={this.state.red} name="dg" onChange={this.handleChange} type="text" placeholder="IP del PE" />
                             </Form.Group>
                         </Form.Row>
 
                         <Form.Row>
                             <Form.Group as={Col} controlId="">
-                                <Form.Label>DG Servicio</Form.Label>
-                                <Form.Control size="sm" value={this.state.red} name="dg" onChange={this.handleChange} type="text" placeholder="IP del PE" />
+                                <Form.Label>IP Monitoria</Form.Label>
+                                <Form.Control size="sm" value={this.state.ip_mon} name="ip_mon" onChange={this.handleChange} type="text" placeholder="IP equipo cliente" />
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>DG Monitoria</Form.Label>
                                 <Form.Control size="sm" value={this.state.dg_mon} name="dg_mon" onChange={this.handleChange} type="text" placeholder="IP del PE" />
-                            </Form.Group>
-                        </Form.Row>
-
-                        <Form.Row>
-                            <Form.Group as={Col} controlId="">
-                                <Form.Label>Mascara Servicio</Form.Label>
-                                <Form.Control size="sm" value={this.state.mask} name="mask" onChange={this.handleChange} type="text" placeholder="255.255.255.0" />
-                            </Form.Group>
-                            <Form.Group as={Col} controlId="">
-                                <Form.Label>Mascara Monitoria</Form.Label>
-                                <Form.Control size="sm" value={this.state.mask_mon} name="mask_mon" onChange={this.handleChange} type="text" placeholder="255.255.255.240" />
-                            </Form.Group>
-                        </Form.Row>
-
-                        <Form.Row>
-                            <Form.Group as={Col} controlId="">
-                                <Form.Label>VLAN</Form.Label>
-                                <Form.Control size="sm" value={this.state.vlan} name="vlan" onChange={this.handleChange} type="text" placeholder="VLAN del Servicio" />
-                            </Form.Group>
-                            <Form.Group as={Col} controlId="">
-                                <Form.Label>VLAN</Form.Label>
-                                <Form.Control size="sm" value={this.state.vlan_mon} name="vlan_mon" onChange={this.handleChange} type="text" placeholder="VLAN 152" />
                             </Form.Group>
                         </Form.Row>
 
@@ -167,6 +166,7 @@ export default class AddService extends Component {
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Tipo</Form.Label>
                                 <Form.Control size="sm" value={this.state.type} name="type" onChange={this.handleChange} as="select" placeholder="en Mbps">
+                                    <option>...</option>
                                     <option>Punto a punto</option>
                                     <option>Punto Multipunto</option>
                                     <option>Multipunto</option>
@@ -208,6 +208,187 @@ export default class AddService extends Component {
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>VLAN</Form.Label>
                                 <Form.Control size="sm" value={this.state.vlan_mon} name="vlan_mon" onChange={this.handleChange} type="text" placeholder="VLAN 152" />
+                            </Form.Group>
+                        </Form.Row>
+
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>Equipo</Form.Label>
+                                <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
+                                    <option>Selecciona un equipo</option>
+                                    <option>SG350</option>
+                                    <option>DELL</option>
+                                    <option>CM</option>
+                                </Form.Control>
+                            </Form.Group>
+                        </Form.Row>
+
+                    </div>
+                )
+            } else if (this.state.co) {
+
+                return (
+
+                    <div>
+
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>Tipo</Form.Label>
+                                <Form.Control size="sm" value={this.state.type} name="type" onChange={this.handleChange} as="select" placeholder="en Mbps">
+                                    <option>...</option>
+                                    <option>Punto a punto</option>
+                                    <option>Punto Multipunto</option>
+                                    <option>Multipunto</option>
+                                </Form.Control>
+                            </Form.Group>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>Contra</Form.Label>
+                                <Form.Control size="sm" value={this.state.contra} name="contra" onChange={this.handleChange} type="text" placeholder="5551212,5559012" />
+                            </Form.Group>
+                        </Form.Row>
+
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>Velocidad</Form.Label>
+                                <Form.Control size="sm" value={this.state.speed} name="speed" onChange={this.handleChange} type="number" placeholder="en Mbps" />
+                            </Form.Group>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>VLAN</Form.Label>
+                                <Form.Control size="sm" value={this.state.vlan} name="vlan" onChange={this.handleChange} type="text" placeholder="VLAN del Servicio" />
+                            </Form.Group>
+                        </Form.Row>
+
+
+
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>Equipo</Form.Label>
+                                <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
+                                    <option>Selecciona un equipo</option>
+                                    <option>SG350</option>
+                                    <option>DELL</option>
+                                    <option>CM</option>
+                                </Form.Control>
+                            </Form.Group>
+                        </Form.Row>
+
+                    </div>
+                )
+            }
+        }
+    }
+
+    ttt() {
+        if (this.state.service === 'TTT') {
+            if (this.state.fo) {
+                return (
+                    <div>
+
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>Plan</Form.Label>
+                                <Form.Control size="sm" value={this.state.plan} name="plan" onChange={this.handleChange} type="number" placeholder="canales/números" />
+                            </Form.Group>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>VLAN</Form.Label>
+                                <Form.Control size="sm" value={this.state.vlan} name="vlan" onChange={this.handleChange} type="text" placeholder="VLAN del Servicio" />
+                            </Form.Group>
+                        </Form.Row>
+
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>Red</Form.Label>
+                                <Form.Control size="sm" value={this.state.red} name="red" onChange={this.handleChange} type="text" placeholder="10.0.0.0/30" />
+                            </Form.Group>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>Mascara Servicio</Form.Label>
+                                <Form.Control size="sm" value={this.state.mask} name="mask" onChange={this.handleChange} type="text" placeholder="255.255.255.0" />
+                            </Form.Group>
+                        </Form.Row>
+
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>IP Servicio</Form.Label>
+                                <Form.Control size="sm" value={this.state.ip} name="ip" onChange={this.handleChange} type="text" placeholder="IP del cliente" />
+                            </Form.Group>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>DG Servicio</Form.Label>
+                                <Form.Control size="sm" value={this.state.red} name="dg" onChange={this.handleChange} type="text" placeholder="IP del PE" />
+                            </Form.Group>
+                        </Form.Row>
+
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>IP Monitoria</Form.Label>
+                                <Form.Control size="sm" value={this.state.ip_mon} name="ip_mon" onChange={this.handleChange} type="text" placeholder="IP equipo cliente" />
+                            </Form.Group>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>Mascara Monitoria</Form.Label>
+                                <Form.Control size="sm" value={this.state.mask_mon} name="mask_mon" onChange={this.handleChange} type="text" placeholder="255.255.255.240" />
+                            </Form.Group>
+                        </Form.Row>
+
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>DG Monitoria</Form.Label>
+                                <Form.Control size="sm" value={this.state.dg_mon} name="dg_mon" onChange={this.handleChange} type="text" placeholder="IP del PE" />
+                            </Form.Group>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>VLAN</Form.Label>
+                                <Form.Control size="sm" value={this.state.vlan_mon} name="vlan_mon" onChange={this.handleChange} type="text" placeholder="VLAN 152" />
+                            </Form.Group>
+                        </Form.Row>
+
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>Equipo</Form.Label>
+                                <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
+                                    <option>Selecciona un equipo</option>
+                                    <option>SG350</option>
+                                    <option>DELL</option>
+                                    <option>CM</option>
+                                </Form.Control>
+                            </Form.Group>
+                        </Form.Row>
+
+                    </div >
+                )
+            } else if (this.state.co) {
+
+                return (
+
+                    <div>
+
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>Plan</Form.Label>
+                                <Form.Control size="sm" value={this.state.plan} name="plan" onChange={this.handleChange} type="number" placeholder="canales/números" />
+                            </Form.Group>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>VLAN</Form.Label>
+                                <Form.Control size="sm" value={this.state.vlan} name="vlan" onChange={this.handleChange} type="text" placeholder="VLAN del Servicio" />
+                            </Form.Group>
+                        </Form.Row>
+
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>Red</Form.Label>
+                                <Form.Control size="sm" value={this.state.red} name="red" onChange={this.handleChange} type="text" placeholder="10.0.0.0/30" />
+                            </Form.Group>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>Mascara Servicio</Form.Label>
+                                <Form.Control size="sm" value={this.state.mask} name="mask" onChange={this.handleChange} type="text" placeholder="255.255.255.0" />
+                            </Form.Group>
+                        </Form.Row>
+
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>IP Servicio</Form.Label>
+                                <Form.Control size="sm" value={this.state.ip} name="ip" onChange={this.handleChange} type="text" placeholder="IP del cliente" />
+                            </Form.Group>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>DG Servicio</Form.Label>
+                                <Form.Control size="sm" value={this.state.red} name="dg" onChange={this.handleChange} type="text" placeholder="IP del PE" />
                             </Form.Group>
                         </Form.Row>
 
@@ -268,7 +449,9 @@ export default class AddService extends Component {
                     </Form.Group>
                     {this.adi()}
                     {this.l2vpn()}
+                    {this.ttt()}
                 </Form.Row>
+                <Button variant="warning" onClick={this.addService} />
             </Form >
         )
     }

@@ -12,7 +12,6 @@ export default class ViewClient extends Component {
 
         if (props.client) {
             this.state = props.client;
-            console.log("Maldito cliente");
         } else {
             this.state = { search: "", ...blankState };
             console.log("Maldito Estado");
@@ -36,6 +35,7 @@ export default class ViewClient extends Component {
             .then(data => {
                 // console.log(data)
                 this.setState({ ...data })
+                console.log(this.state)
             })
             .catch(err => console.error(err));
         e.preventDefault();
@@ -118,12 +118,12 @@ export default class ViewClient extends Component {
                                         <RenderTTT service={service} idx={idx} />
                                     )
                                 } else {
-                                    return (<div style={{display: 'flex', justifyContent:'center'}}><h3 >Agrega un Servicio</h3></div>)
+                                    return (<div style={{ display: 'flex', justifyContent: 'center' }}><h3 >Agrega un Servicio</h3></div>)
                                 }
                             })}
-                            <MyModal 
-                            children={<AddService />} 
-                            title={"Agregar Servicio"}
+                            <MyModal
+                                children={<AddService abonado={this.state.abonado} />}
+                                title={"Agregar Servicio"}
                             />
                         </Accordion>
                     </Card.Body>

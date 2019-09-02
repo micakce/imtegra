@@ -114,7 +114,7 @@ const dangeloState = {
         },
         {
             name: "TTT",
-            speed: "30/100",
+            plan: "30/100",
             tech: "CO",
             red: "180.80.8.0/30",
             ip: "180.80.8.1",
