@@ -6,9 +6,9 @@ export default class AddService extends Component {
     constructor(props) {
         super(props);
         if (props) {
-            this.state = { ...props }
+            this.state = { ...props };
         } else {
-            this.state = { service: "" }
+            this.state = { service: "" };
         }
         this.handleChange = this.handleChange.bind(this);
         this.addService = this.addService.bind(this);
@@ -27,20 +27,19 @@ export default class AddService extends Component {
     }
 
     addService() {
+        console.log(this.state);
         fetch(`/clients/service/${this.state.abonado}`, {
-            method: 'POST',
+            method: 'PUT',
             body: JSON.stringify(this.state),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
         })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-            })
+            .then(res => console.log(res))
+            .then(data => console.log(data))
             .catch(err => console.error(err))
-            this.props.toggle();
+        this.props.toggle();
     }
 
     adi() {
@@ -52,7 +51,7 @@ export default class AddService extends Component {
                         <Form.Row>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Velocidad</Form.Label>
-                                <Form.Control size="sm" value={this.state.speed} name="speed" onChange={this.handleChange} type="number" placeholder="en Mbps" />
+                                <Form.Control size="sm" value={this.state.plan} name="plan" onChange={this.handleChange} type="number" placeholder="en Mbps" />
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>VLAN</Form.Label>
@@ -118,7 +117,7 @@ export default class AddService extends Component {
                         <Form.Row>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Velocidad</Form.Label>
-                                <Form.Control size="sm" value={this.state.speed} name="speed" onChange={this.handleChange} type="number" placeholder="en Mbps" />
+                                <Form.Control size="sm" value={this.state.plan} name="plan" onChange={this.handleChange} type="number" placeholder="en Mbps" />
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>VLAN</Form.Label>
@@ -192,7 +191,7 @@ export default class AddService extends Component {
                         <Form.Row>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Velocidad</Form.Label>
-                                <Form.Control size="sm" value={this.state.speed} name="speed" onChange={this.handleChange} type="number" placeholder="en Mbps" />
+                                <Form.Control size="sm" value={this.state.plan} name="plan" onChange={this.handleChange} type="number" placeholder="en Mbps" />
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>VLAN</Form.Label>
@@ -261,7 +260,7 @@ export default class AddService extends Component {
                         <Form.Row>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Velocidad</Form.Label>
-                                <Form.Control size="sm" value={this.state.speed} name="speed" onChange={this.handleChange} type="number" placeholder="en Mbps" />
+                                <Form.Control size="sm" value={this.state.plan} name="plan" onChange={this.handleChange} type="number" placeholder="en Mbps" />
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>VLAN</Form.Label>

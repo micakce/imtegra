@@ -162,11 +162,11 @@ export default class AddClient extends Component {
         {/* <Form.Row>
           <Form.Group md="4" as={Col} controlId="personal">
             <Form.Label>Service</Form.Label>
-            <Form.Control value={this.state.services[0].name} name="services.name" onChange={this.handleChange} placeholder="" />
+            <Form.Control value={this.services ? this.services[0].service : "Nope"} name="services.service" onChange={this.handleChange} placeholder="" />
           </Form.Group>
           <Form.Group md="4" as={Col} controlId="personal">
             <Form.Label>Speed</Form.Label>
-            <Form.Control value={this.state.services[0].speed} name="services.speed" onChange={this.handleChange} placeholder="" />
+            <Form.Control value={this.services ? this.services[0].plan : "Nope"} name="services.plan" onChange={this.handleChange} placeholder="" />
           </Form.Group>
         </Form.Row> */}
         <Button onClick={this.addClient} variant="primary" type="submit">

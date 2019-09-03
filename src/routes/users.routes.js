@@ -48,10 +48,11 @@ router.delete('/clients/:id', async (req, res) => {
     res.send(`Client ${req.body.name} was deleted succesfully`)
 });
 
-router.post('/clients/service/:id', async (req, res) => {
-    const service = { ...req.body }
-    await Client.findOneAndUpdate({ abonado: req.body.id }, {$push: { services: service}});
-    res.json()
+router.put('/clients/service/:id', async (req, res) => {
+    const { service, plan, red, ip, dg, mask, vlan } = req.body;
+    const newService = { service, plan, red, ip, dg, mask, vlan };
+    await Client.findOneAndUpdate({ abonado: req.body.id }, { $push: { services: newService}  });
+    res.json();
 });
 
 module.exports = router;

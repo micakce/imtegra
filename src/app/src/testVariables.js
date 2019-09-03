@@ -12,7 +12,7 @@
 //     services: [
 //         {
 //             service: "",
-//             speed: "",
+//             plan: "",
 //         }
 //     ],
 //     pm: "",
@@ -33,8 +33,8 @@ const blankState = {
     },
     services: [
         // {
-        //     name: "",
-        //     speed: "",
+        //     service: "",
+        //     plan: "",
         //     tech: "",
         //     ip: "",
         //     mask: "",
@@ -43,8 +43,8 @@ const blankState = {
         //     ip_mask: "",
         // },
         // {
-        //     name: "",
-        //     speed: "",
+        //     service: "",
+        //     plan: "",
         //     tech: "",
         //     vlan: "",
         //     type: "",
@@ -53,8 +53,8 @@ const blankState = {
         //     mac: "",
         // },
         // {
-        //     name: "",
-        //     speed: "",
+        //     service: "",
+        //     plan: "",
         //     tech: "",
         //     type: "",
         //     contra: "",
@@ -89,8 +89,8 @@ const dangeloState = {
     },
     services: [
         {
-            name: "ADI",
-            speed: "50",
+            service: "ADI",
+            plan: "50",
             tech: "FO",
             red: "180.80.8.0/30",
             ip: "180.80.8.1",
@@ -103,8 +103,8 @@ const dangeloState = {
             vlan_mon: "152" //default 152
         },
         {
-            name: "L2VPN",
-            speed: "15",
+            service: "L2VPN",
+            plan: "15",
             tech: "CO",
             vlan: "2122",
             type: "PaP",
@@ -113,7 +113,7 @@ const dangeloState = {
             mac: "34.fd.34.df.43.er",
         },
         {
-            name: "TTT",
+            service: "TTT",
             plan: "30/100",
             tech: "CO",
             red: "180.80.8.0/30",
@@ -162,8 +162,8 @@ const rogerState = {
     },
     services: [
         {
-            name: "ADI",
-            speed: "50",
+            service: "ADI",
+            plan: "50",
             tech: "FO",
             red: "180.80.8.0/30",
             ip: "180.80.8.1",
@@ -176,8 +176,8 @@ const rogerState = {
             vlan_mon: "152" //default 152
         },
         {
-            name: "L2VPN",
-            speed: "15",
+            service: "L2VPN",
+            plan: "15",
             tech: "CO",
             vlan: "2122",
             type: "PaP",
@@ -186,8 +186,8 @@ const rogerState = {
             mac: "34.fd.34.df.43.er",
         },
         {
-            name: "TTT",
-            speed: "30/100",
+            service: "TTT",
+            plan: "30/100",
             tech: "CO",
             red: "180.80.8.0/30",
             ip: "180.80.8.1",

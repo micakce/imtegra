@@ -3,7 +3,7 @@ import { Accordion, Card, Button, Row, Col, Form, FormControl } from 'react-boot
 import { blankState } from './testVariables';
 import { RenderADI, RenderL2VPN, RenderTTT } from './RenderService';
 import MyModal from './MyModal';
-import AddService from './AddService';
+// import AddService from './AddService';
 
 export default class ViewClient extends Component {
 
@@ -14,8 +14,6 @@ export default class ViewClient extends Component {
             this.state = props.client;
         } else {
             this.state = { search: "", ...blankState };
-            console.log("Maldito Estado");
-            console.log(this.state);
         }
 
         this.handleSearchChange = this.handleSearchChange.bind(this);
