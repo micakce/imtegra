@@ -6,7 +6,7 @@ function RenderADI(props) {
     return (
         <Card>
             <Accordion.Toggle as={Card.Header} eventKey={props.idx}>
-                <b>{`${props.service.name} - ${props.service.speed}`}</b>
+                <b>{`${props.service.service} - ${props.service.speed}`}</b>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={props.idx}>
                 <Card.Body >
@@ -25,7 +25,7 @@ function RenderADI(props) {
                     </Card.Title>
                     <Row>
                         <Col>
-                            <b>Servicio: </b>{` ${props.service.name} - ${props.service.speed} Mbps`}
+                            <b>Servicio: </b>{` ${props.service.service} - ${props.service.speed} Mbps`}
                         </Col>
                         <Col>
                             {/* <b>IP: </b>{props.service.ip} */}
@@ -87,13 +87,13 @@ function RenderL2VPN(props) {
     return (
         <Card>
             <Accordion.Toggle as={Card.Header} eventKey={props.idx}>
-                <b>{`${props.service.name} - ${props.service.speed}`}</b>
+                <b>{`${props.service.service} - ${props.service.speed}`}</b>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={props.idx}>
                 <Card.Body>
                     <Row>
                         <Col>
-                            <b>Servicio: </b>{` ${props.service.name} - ${props.service.speed} Mbps`}
+                            <b>Servicio: </b>{` ${props.service.service} - ${props.service.speed} Mbps`}
                         </Col>
                         <Col>
                             <b>Tipo: </b> {` ${props.service.type}`}
@@ -135,7 +135,7 @@ function RenderTTT(props) {
     return (
         <Card>
             <Accordion.Toggle as={Card.Header} eventKey={props.idx}>
-                <b>{`${props.service.name} - ${props.service.speed}`}</b>
+                <b>{`${props.service.service} - ${props.service.speed}`}</b>
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={props.idx}>
                 <Card.Body>
@@ -154,7 +154,7 @@ function RenderTTT(props) {
                     </Card.Title>
                     <Row>
                         <Col>
-                            <b>Servicio: </b>{` ${props.service.name} - ${props.service.speed} Mbps`}
+                            <b>Servicio: </b>{` ${props.service.service} - ${props.service.speed} Mbps`}
                         </Col>
                         <Col>
                             <b>Red: </b>{props.service.red}
@@ -207,7 +207,7 @@ function RenderTTT(props) {
                 {/* <Card.Body>
                     <Row>
                         <Col>
-                            <b>Servicio: </b>{` ${props.service.name} - ${props.service.speed} Mbps`}
+                            <b>Servicio: </b>{` ${props.service.service} - ${props.service.speed} Mbps`}
                         </Col>
                         <Col>
                             <b>Tipo: </b> {` ${props.service.type}`}

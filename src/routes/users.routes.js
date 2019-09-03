@@ -8,7 +8,7 @@ const Client = require('../models/client.js')
 //     res.json({status: "API is good for it, from /"});
 // });
 
-router.use(function(req, res, next) {
+router.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
@@ -48,7 +48,10 @@ router.delete('/clients/:id', async (req, res) => {
     res.send(`Client ${req.body.name} was deleted succesfully`)
 });
 
+router.post('/clients/service/:id', async (req, res) => {
+    const service = { ...req.body }
+    await Client.findOneAndUpdate({ abonado: req.body.id }, {$push: { services: service}});
+    res.json()
+});
+
 module.exports = router;
-// const Client = require('../models/client.js')
-
-

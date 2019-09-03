@@ -33,9 +33,7 @@ export default class ViewClient extends Component {
         fetch(`/clients/search/${this.state.search}`)
             .then(res => res.json())
             .then(data => {
-                // console.log(data)
                 this.setState({ ...data })
-                console.log(this.state)
             })
             .catch(err => console.error(err));
         e.preventDefault();
@@ -104,16 +102,16 @@ export default class ViewClient extends Component {
                     <Card.Body>
                         <Accordion >
                             {this.state.services.map((service, idx) => {
-                                if (service.name === "ADI") {
+                                if (service.service === "ADI") {
 
                                     return (
                                         <RenderADI service={service} idx={idx} />
                                     )
-                                } else if (service.name === "L2VPN") {
+                                } else if (service.service === "L2VPN") {
                                     return (
                                         <RenderL2VPN service={service} idx={idx} />
                                     )
-                                } else if (service.name === "TTT") {
+                                } else if (service.service === "TTT") {
                                     return (
                                         <RenderTTT service={service} idx={idx} />
                                     )
@@ -121,10 +119,7 @@ export default class ViewClient extends Component {
                                     return (<div style={{ display: 'flex', justifyContent: 'center' }}><h3 >Agrega un Servicio</h3></div>)
                                 }
                             })}
-                            <MyModal
-                                children={<AddService abonado={this.state.abonado} />}
-                                title={"Agregar Servicio"}
-                            />
+                            <MyModal abonado={this.state.abonado}/>
                         </Accordion>
                     </Card.Body>
                 </Card>

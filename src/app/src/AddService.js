@@ -6,13 +6,12 @@ export default class AddService extends Component {
     constructor(props) {
         super(props);
         if (props) {
-            this.state = { abonado: props.abonado, service: ""}
-            console.log(props)
-            console.log(this.state)
+            this.state = { ...props }
         } else {
             this.state = { service: "" }
         }
         this.handleChange = this.handleChange.bind(this);
+        this.addService = this.addService.bind(this);
     }
 
     handleChange(e) {
@@ -28,8 +27,20 @@ export default class AddService extends Component {
     }
 
     addService() {
-        // fetch(`/clients/service/${this.state.ab}`, met)
-        console.log(this.state);
+        fetch(`/clients/service/${this.state.abonado}`, {
+            method: 'POST',
+            body: JSON.stringify(this.state),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+            })
+            .catch(err => console.error(err))
+            this.props.toggle();
     }
 
     adi() {
@@ -451,7 +462,9 @@ export default class AddService extends Component {
                     {this.l2vpn()}
                     {this.ttt()}
                 </Form.Row>
-                <Button variant="warning" onClick={this.addService} />
+                <Button variant="warning" onClick={this.addService}>
+                    Save
+                </Button>
             </Form >
         )
     }

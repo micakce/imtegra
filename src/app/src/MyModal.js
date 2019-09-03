@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import AddService from './AddService';
 
 function MyModal(props) {
     const [show, setShow] = useState(false);
@@ -14,17 +15,15 @@ function MyModal(props) {
     return (
         <>
             <Button variant="primary" onClick={handleShow}>
-                {/* {props.action} */}
-                Add Service
-      </Button>
+                Agregar Servicio
+            </Button>
 
             <Modal show={!show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>{props.title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {props.children}
-                    {/* <AddService /> */}
+                    <AddService toggle={handleClose} abonado={props.abonado} />
                 </Modal.Body>
             </Modal>
         </>
