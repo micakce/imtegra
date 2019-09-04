@@ -49,10 +49,9 @@ router.delete('/clients/:id', async (req, res) => {
 });
 
 router.put('/clients/service/:id', async (req, res) => {
-    const { service, plan, red, ip, dg, mask, vlan } = req.body;
-    const newService = { service, plan, red, ip, dg, mask, vlan };
-    await Client.findOneAndUpdate({ abonado: req.body.id }, { $push: { services: newService}  });
-    res.json();
+    const { service, plan, red, ip, dg, mask, vlan, medium, ip_mon, dg_mon, mask_mon, sites, mode, device, nhead, ntale } = req.body;
+    const newService = { service, plan, red, ip, dg, mask, vlan, medium, ip_mon, dg_mon, mask_mon, sites, mode, device, nhead, ntale };
+    await Client.findOneAndUpdate({ abonado: req.params.id }, { $push: { services: newService } });
 });
 
 module.exports = router;

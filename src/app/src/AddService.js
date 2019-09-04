@@ -18,16 +18,18 @@ export default class AddService extends Component {
         const { name, value, id } = e.target;
 
         if (name === 'mediumRadios') {
-            (id === "CO") ? this.setState({ co: true, fo: false }) : this.setState({ co: false, fo: true })
+            // (id === "CO") ? this.setState({ co: true, fo: false }) : this.setState({ co: false, fo: true })
+            // (id === "CO") ? this.setState({ medium: "CO"}) : this.setState({ medium: "FO"});
+            this.setState({medium: id});
         } else {
             this.setState({
                 [name]: value
             });
         }
+        console.log(this.state);
     }
 
     addService() {
-        console.log(this.state);
         fetch(`/clients/service/${this.state.abonado}`, {
             method: 'PUT',
             body: JSON.stringify(this.state),
@@ -40,18 +42,19 @@ export default class AddService extends Component {
             .then(data => console.log(data))
             .catch(err => console.error(err))
         this.props.toggle();
+        this.props.reload();
     }
 
     adi() {
         if (this.state.service === 'ADI') {
-            if (this.state.fo) {
+            if (this.state.medium === "FO") {
                 return (
                     <div>
 
                         <Form.Row>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Velocidad</Form.Label>
-                                <Form.Control size="sm" value={this.state.plan} name="plan" onChange={this.handleChange} type="number" placeholder="en Mbps" />
+                                <Form.Control size="sm" value={this.state.plan} name="plan" onChange={this.handleChange} type="text" placeholder="en Mbps" />
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>VLAN</Form.Label>
@@ -77,7 +80,7 @@ export default class AddService extends Component {
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>DG Servicio</Form.Label>
-                                <Form.Control size="sm" value={this.state.red} name="dg" onChange={this.handleChange} type="text" placeholder="IP del PE" />
+                                <Form.Control size="sm" value={this.state.dg} name="dg" onChange={this.handleChange} type="text" placeholder="IP del PE" />
                             </Form.Group>
                         </Form.Row>
 
@@ -110,7 +113,7 @@ export default class AddService extends Component {
                     </div>
 
                 )
-            } else if (this.state.co) {
+            } else if (this.state.medium === "CO") {
                 return (
                     <div>
 
@@ -143,7 +146,7 @@ export default class AddService extends Component {
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>DG Servicio</Form.Label>
-                                <Form.Control size="sm" value={this.state.red} name="dg" onChange={this.handleChange} type="text" placeholder="IP del PE" />
+                                <Form.Control size="sm" value={this.state.dg} name="dg" onChange={this.handleChange} type="text" placeholder="IP del PE" />
                             </Form.Group>
                         </Form.Row>
 
@@ -168,14 +171,14 @@ export default class AddService extends Component {
 
     l2vpn() {
         if (this.state.service === 'L2VPN') {
-            if (this.state.fo) {
+            if (this.state.medium === "FO") {
                 return (
                     <div>
 
                         <Form.Row>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Tipo</Form.Label>
-                                <Form.Control size="sm" value={this.state.type} name="type" onChange={this.handleChange} as="select" placeholder="en Mbps">
+                                <Form.Control size="sm" value={this.state.mode} name="mode" onChange={this.handleChange} as="select" placeholder="en Mbps">
                                     <option>...</option>
                                     <option>Punto a punto</option>
                                     <option>Punto Multipunto</option>
@@ -235,7 +238,7 @@ export default class AddService extends Component {
 
                     </div>
                 )
-            } else if (this.state.co) {
+            } else if (this.state.medium === "CO") {
 
                 return (
 
@@ -244,7 +247,7 @@ export default class AddService extends Component {
                         <Form.Row>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Tipo</Form.Label>
-                                <Form.Control size="sm" value={this.state.type} name="type" onChange={this.handleChange} as="select" placeholder="en Mbps">
+                                <Form.Control size="sm" value={this.state.mode} name="mode" onChange={this.handleChange} as="select" placeholder="en Mbps">
                                     <option>...</option>
                                     <option>Punto a punto</option>
                                     <option>Punto Multipunto</option>
@@ -290,7 +293,7 @@ export default class AddService extends Component {
 
     ttt() {
         if (this.state.service === 'TTT') {
-            if (this.state.fo) {
+            if (this.state.medium === "FO") {
                 return (
                     <div>
 
@@ -323,7 +326,7 @@ export default class AddService extends Component {
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>DG Servicio</Form.Label>
-                                <Form.Control size="sm" value={this.state.red} name="dg" onChange={this.handleChange} type="text" placeholder="IP del PE" />
+                                <Form.Control size="sm" value={this.state.dg} name="dg" onChange={this.handleChange} type="text" placeholder="IP del PE" />
                             </Form.Group>
                         </Form.Row>
 
@@ -363,7 +366,7 @@ export default class AddService extends Component {
 
                     </div >
                 )
-            } else if (this.state.co) {
+            } else if (this.state.medium === "CO") {
 
                 return (
 
@@ -398,7 +401,7 @@ export default class AddService extends Component {
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>DG Servicio</Form.Label>
-                                <Form.Control size="sm" value={this.state.red} name="dg" onChange={this.handleChange} type="text" placeholder="IP del PE" />
+                                <Form.Control size="sm" value={this.state.dg} name="dg" onChange={this.handleChange} type="text" placeholder="IP del PE" />
                             </Form.Group>
                         </Form.Row>
 

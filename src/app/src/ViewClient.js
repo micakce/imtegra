@@ -31,10 +31,11 @@ export default class ViewClient extends Component {
         fetch(`/clients/search/${this.state.search}`)
             .then(res => res.json())
             .then(data => {
-                this.setState({ ...data })
+                // this.setState({ ...data })
+                this.setState(data)
             })
             .catch(err => console.error(err));
-        e.preventDefault();
+        if (e) e.preventDefault();
     }
 
     render() {
@@ -89,7 +90,7 @@ export default class ViewClient extends Component {
                                 <Row></Row>
                             </Col>
                         </Row>
-                        <Button variant="primary">Go somewhere</Button>
+                        {/* <Button variant="primary">Go somewhere</Button> */}
                         {/* <Card.Link href="#">Card Link</Card.Link>
                     <Card.Link href="#">Another Link</Card.Link> */}
                     </Card.Body>
@@ -117,7 +118,7 @@ export default class ViewClient extends Component {
                                     return (<div style={{ display: 'flex', justifyContent: 'center' }}><h3 >Agrega un Servicio</h3></div>)
                                 }
                             })}
-                            <MyModal abonado={this.state.abonado}/>
+                            <MyModal reload={this.searchClient} abonado={this.state.abonado} />
                         </Accordion>
                     </Card.Body>
                 </Card>

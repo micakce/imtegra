@@ -15,11 +15,12 @@ const ServiceSchema = new Schema({
   dg_mon: String,
   mask_mon: String,
   vlan_mon: String,
-  type: String,
+  mode: String,
   sites: String,
   device: String,
   nhead: String,
-  ntale: String
+  ntale: String,
+  date: { type: Date, default: Date.now}
 });
 
 const ClientSchema = new Schema({

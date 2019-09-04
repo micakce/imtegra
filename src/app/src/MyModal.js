@@ -23,7 +23,7 @@ function MyModal(props) {
                     <Modal.Title>{props.title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AddService toggle={handleClose} abonado={props.abonado} />
+                    <AddService reload={props.reload} toggle={handleClose} abonado={props.abonado} />
                 </Modal.Body>
             </Modal>
         </>

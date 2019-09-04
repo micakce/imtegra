@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Form, Button } from 'react-bootstrap';
-import { dangeloState, blankState } from './testVariables'
+import { blankState } from './testVariables'
 
 export default class AddClient extends Component {
 
