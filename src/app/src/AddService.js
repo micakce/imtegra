@@ -55,11 +55,12 @@ export default class AddService extends Component {
                     'Content-Type': 'application/json'
                 }
             })
-                .then(res => console.log(res))
-                .then(data => console.log(data))
-                .catch(err => console.error(err))
-            this.props.toggle();
-            this.props.reload();
+                .then(() => {
+                    this.props.toggle();
+                    this.props.reload();
+                })
+            // .then(data => console.log(data))
+            // .catch(err => console.error(err))
         }
     }
 

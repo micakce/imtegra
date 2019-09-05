@@ -3,7 +3,6 @@ import { Accordion, Card, Button, Row, Col, Form, FormControl } from 'react-boot
 import { blankState } from './testVariables';
 import { RenderADI, RenderL2VPN, RenderTTT } from './RenderService';
 import AddServiceModal from './AddServiceModal';
-// import AddService from './AddService';
 
 export default class ViewClient extends Component {
 
@@ -18,6 +17,7 @@ export default class ViewClient extends Component {
 
         this.handleSearchChange = this.handleSearchChange.bind(this);
         this.searchClient = this.searchClient.bind(this);
+        this.deleteService = this.deleteService.bind(this);
 
     }
 
@@ -35,6 +35,18 @@ export default class ViewClient extends Component {
             })
             .catch(err => console.error(err));
         if (e) e.preventDefault();
+    }
+    
+    deleteService(idx) {
+        fetch(`/clients/service/${idx}`, {
+            method: 'DELETE',
+            body: JSON.stringify({abonado: this.state.search}),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then( () => this.searchClient)
     }
 
     render() {
@@ -106,15 +118,15 @@ export default class ViewClient extends Component {
                                 if (service.service === "ADI") {
 
                                     return (
-                                        <RenderADI wrapped={WrappedAddServiceModal} service={service} idx={idx} />
+                                        <RenderADI deleteService={this.deleteService} wrapped={WrappedAddServiceModal} service={service} idx={idx} />
                                     )
                                 } else if (service.service === "L2VPN") {
                                     return (
-                                        <RenderL2VPN wrapped={WrappedAddServiceModal} service={service} idx={idx} />
+                                        <RenderL2VPN deleteService={this.deleteService} wrapped={WrappedAddServiceModal} service={service} idx={idx} />
                                     )
                                 } else if (service.service === "TTT") {
                                     return (
-                                        <RenderTTT wrapped={WrappedAddServiceModal} service={service} idx={idx} />
+                                        <RenderTTT deleteService={this.deleteService} wrapped={WrappedAddServiceModal} service={service} idx={idx} />
                                     )
                                 } else {
                                     return (<div style={{ display: 'flex', justifyContent: 'center' }}><h3 >Agrega un Servicio</h3></div>)

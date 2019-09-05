@@ -42,6 +42,7 @@ function RenderADI(props) {
                             <Col> <b>VLAN: </b>{props.service.vlan} </Col>
                             <Col> </Col>
                         </Row>
+                        <Button onClick={props.deleteService(props.idx)} variant='danger'> Eliminar </Button>
                         {props.wrapped()}
                     </Card.Body>
                 </Accordion.Collapse>
@@ -194,6 +195,7 @@ function RenderTTT(props) {
                         <Col> <b>VLAN: </b>{props.service.vlan} </Col>
                         <Col> </Col>
                     </Row>
+                    <Button onClick={props.deleteService(props.idx)} variant='danger'> Eliminar </Button>
                     {props.wrapped()}
                 </Card.Body>
 
