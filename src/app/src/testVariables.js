@@ -1,25 +1,3 @@
-// const blankState = {
-//     abonado: "",
-//     name: "",
-//     telefono: "",
-//     email: "",
-//     address: {
-//         street: "",
-//         apto: "",
-//         location: "",
-//         city: ""
-//     },
-//     services: [
-//         {
-//             service: "",
-//             plan: "",
-//         }
-//     ],
-//     pm: "",
-//     im: "",
-//     status: ""
-// }
-
 const blankState = {
     abonado: "",
     name: "",
@@ -31,49 +9,11 @@ const blankState = {
         location: "",
         city: ""
     },
-    services: [
-        // {
-        //     service: "",
-        //     plan: "",
-        //     tech: "",
-        //     ip: "",
-        //     mask: "",
-        //     vlan: "",
-        //     ip_mon: "",
-        //     ip_mask: "",
-        // },
-        // {
-        //     service: "",
-        //     plan: "",
-        //     tech: "",
-        //     vlan: "",
-        //     type: "",
-        //     contra: "",
-        //     cm: "",
-        //     mac: "",
-        // },
-        // {
-        //     service: "",
-        //     plan: "",
-        //     tech: "",
-        //     type: "",
-        //     contra: "",
-        //     vlan: "",
-        //     cm: "",
-        //     mac: "",
-        // },
-    ],
-    hardware: [
-        {
-            device: "",
-            code: "",
-            model: "",
-            serial: ""
-        },
-    ],
+    services: [],
+    hardware: [],
     pm: "",
     im: "",
-    status: "",
+    status: "Init",
 }
 
 const dangeloState = {

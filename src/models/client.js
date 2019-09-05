@@ -37,7 +37,7 @@ const ClientSchema = new Schema({
   services: [ServiceSchema],
   pm: String,
   im: String,
-  status: String,
+  status: { type: String, default: 'Init'},
   date: { type: Date, default: Date.now }
 });
 

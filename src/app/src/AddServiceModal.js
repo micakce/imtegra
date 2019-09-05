@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import AddService from './AddService';
 
-function MyModal(props) {
+function AddServiceModal(props) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => {
@@ -15,7 +15,7 @@ function MyModal(props) {
     return (
         <>
             <Button variant="primary" onClick={handleShow}>
-                Agregar Servicio
+            {props.action}
             </Button>
 
             <Modal show={!show} onHide={handleClose}>
@@ -23,11 +23,11 @@ function MyModal(props) {
                     <Modal.Title>{props.title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AddService reload={props.reload} toggle={handleClose} abonado={props.abonado} />
+                    <AddService idx={props.idx} action={props.action} service={props.service} reload={props.reload} toggle={handleClose} abonado={props.abonado} />
                 </Modal.Body>
             </Modal>
         </>
     );
 }
 
-export default MyModal;
+export default AddServiceModal;

@@ -42,7 +42,7 @@ function RenderADI(props) {
                             <Col> <b>VLAN: </b>{props.service.vlan} </Col>
                             <Col> </Col>
                         </Row>
-                        <Button variant="danger">x</Button>
+                        {props.wrapped()}
                     </Card.Body>
                 </Accordion.Collapse>
             </Card>
@@ -81,7 +81,7 @@ function RenderADI(props) {
                             <Col> </Col>
                             <Col> <b>VLAN: </b>{props.service.vlan} </Col>
                         </Row>
-                        <Button variant="danger">x</Button>
+                        {props.wrapped()}
                     </Card.Body>
                 </Accordion.Collapse>
             </Card>
@@ -94,33 +94,63 @@ function RenderADI(props) {
 }
 
 function RenderL2VPN(props) {
-
-    return (
-        <Card>
-            <Accordion.Toggle as={Card.Header} eventKey={props.idx}>
-                <b>{`${props.service.service} - ${props.service.plan}`}</b>
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey={props.idx}>
-                <Card.Body>
-                    <Row>
-                        <Col> <b>Servicio: </b>{` ${props.service.service} - ${props.service.plan} Mbps`} </Col>
-                        <Col> <b>Tipo: </b> {` ${props.service.mode}`} </Col>
-                        <Col> <b>IP: </b>{props.service.ip_mon} </Col>
-                    </Row>
-                    <Row>
-                        <Col> <b>Tecnología: </b>{` ${props.service.medium}`} </Col>
-                        <Col> <b>Contra: </b>{props.service.sites} </Col>
-                        <Col> <b>Mask: </b>{props.service.mask} </Col>
-                    </Row>
-                    <Row>
-                        <Col> <b>Equipo: </b>  {props.service.device}</Col>
-                        <Col> <b>VLAN: </b>{props.service.vlan} </Col>
-                        <Col> <b>DG: </b>{props.service.dg_mon} </Col>
-                    </Row>
-                </Card.Body>
-            </Accordion.Collapse>
-        </Card>
-    )
+    if (props.service.medium === "FO") {
+        return (
+            <Card>
+                <Accordion.Toggle as={Card.Header} eventKey={props.idx}>
+                    <b>{`${props.service.service} - ${props.service.plan}`}</b>
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey={props.idx}>
+                    <Card.Body>
+                        <Row>
+                            <Col> <b>Servicio: </b>{` ${props.service.service} - ${props.service.plan} Mbps`} </Col>
+                            <Col> <b>Tipo: </b> {` ${props.service.mode}`} </Col>
+                            <Col> <b>IP: </b>{props.service.ip_mon} </Col>
+                        </Row>
+                        <Row>
+                            <Col> <b>Tecnología: </b>{` ${props.service.medium}`} </Col>
+                            <Col> <b>Contra: </b>{props.service.sites} </Col>
+                            <Col> <b>Mask: </b>{props.service.mask_mon} </Col>
+                        </Row>
+                        <Row>
+                            <Col> <b>Equipo: </b>  {props.service.device}</Col>
+                            <Col> <b>VLAN: </b>{props.service.vlan} </Col>
+                            <Col> <b>DG: </b>{props.service.dg_mon} </Col>
+                        </Row>
+                        {props.wrapped()}
+                    </Card.Body>
+                </Accordion.Collapse>
+            </Card>
+        )
+    } else if (props.service.medium === "CO") {
+        return (
+            <Card>
+                <Accordion.Toggle as={Card.Header} eventKey={props.idx}>
+                    <b>{`${props.service.service} - ${props.service.plan}`}</b>
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey={props.idx}>
+                    <Card.Body>
+                        <Row>
+                            <Col> <b>Servicio: </b>{` ${props.service.service} - ${props.service.plan} Mbps`} </Col>
+                            <Col> <b>Tipo: </b> {` ${props.service.mode}`} </Col>
+                            {/* <Col> <b>IP: </b>{props.service.ip_mon} </Col> */}
+                        </Row>
+                        <Row>
+                            <Col> <b>Tecnología: </b>{` ${props.service.medium}`} </Col>
+                            <Col> <b>Contra: </b>{props.service.sites} </Col>
+                            {/* <Col> <b>Mask: </b>{props.service.mask} </Col> */}
+                        </Row>
+                        <Row>
+                            <Col> <b>Equipo: </b>  {props.service.device}</Col>
+                            <Col> <b>VLAN: </b>{props.service.vlan} </Col>
+                            {/* <Col> <b>DG: </b>{props.service.dg_mon} </Col> */}
+                        </Row>
+                        {props.wrapped()}
+                    </Card.Body>
+                </Accordion.Collapse>
+            </Card>
+        )
+    }
 }
 
 function RenderTTT(props) {
@@ -140,14 +170,14 @@ function RenderTTT(props) {
                         </Row>
                     </Card.Title>
                     <Row>
-                        <Col> <b>Servicio: </b>{` ${props.service.service} - ${props.service.plan} Mbps`} </Col>
+                        <Col> <b>Servicio: </b>{` ${props.service.service} - ${props.service.plan}`} </Col>
                         <Col> <b>Red: </b>{props.service.red} </Col>
-                        <Col> <b> Head: </b>{props.service.head} </Col>
+                        <Col> <b> Head: </b>{props.service.nhead} </Col>
                     </Row>
                     <Row>
                         <Col> <b>Tecnología: </b>{props.service.medium} </Col>
                         <Col> <b>IP: </b>{props.service.ip} </Col>
-                        <Col> <b> Tale: </b>{props.service.tale} </Col>
+                        <Col> <b> Tale: </b>{props.service.ntale} </Col>
                     </Row>
                     <Row>
                         <Col> <b>Equipo: </b>  {props.service.device}</Col>
@@ -164,6 +194,7 @@ function RenderTTT(props) {
                         <Col> <b>VLAN: </b>{props.service.vlan} </Col>
                         <Col> </Col>
                     </Row>
+                    {props.wrapped()}
                 </Card.Body>
 
             </Accordion.Collapse>

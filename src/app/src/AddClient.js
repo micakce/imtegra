@@ -51,7 +51,7 @@ export default class AddClient extends Component {
       })
         .then(res => res.json())
         .then(data => {
-          this.setState({ ...blankState })
+          this.setState(blankState)
           this.props.toggle();
           this.props.reload();
         })
@@ -74,7 +74,9 @@ export default class AddClient extends Component {
         })
         .catch(err => console.error(err));
       e.preventDefault();
+
     } else {
+
       fetch('/clients', {
         method: 'POST',
         body: JSON.stringify(this.state),

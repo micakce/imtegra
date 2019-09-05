@@ -49,9 +49,28 @@ router.delete('/clients/:id', async (req, res) => {
 });
 
 router.put('/clients/service/:id', async (req, res) => {
-    const { service, plan, red, ip, dg, mask, vlan, medium, ip_mon, dg_mon, mask_mon, sites, mode, device, nhead, ntale } = req.body;
-    const newService = { service, plan, red, ip, dg, mask, vlan, medium, ip_mon, dg_mon, mask_mon, sites, mode, device, nhead, ntale };
-    await Client.findOneAndUpdate({ abonado: req.params.id }, { $push: { services: newService } });
+    const { service, plan, red, ip, dg, mask, vlan, vlan_mon, medium, ip_mon, dg_mon, mask_mon, sites, mode, device, nhead, ntale } = req.body;
+    const newService = { service, plan, red, ip, dg, mask, vlan, vlan_mon, medium, ip_mon, dg_mon, mask_mon, sites, mode, device, nhead, ntale };
+    const response = await Client.findOneAndUpdate({ abonado: req.params.id }, { $push: { services: newService } });
+    res.send(response);
 });
+
+router.put('/clients/service/edit/:id', async (req, res) => {
+    const { idx, service, plan, red, ip, dg, mask, vlan, vlan_mon, medium, ip_mon, dg_mon, mask_mon, sites, mode, device, nhead, ntale } = req.body;
+    const newService = { service, plan, red, ip, dg, mask, vlan, vlan_mon, medium, ip_mon, dg_mon, mask_mon, sites, mode, device, nhead, ntale };
+    const client = await Client.findOne({ abonado: req.params.id });
+    client.services[idx] = newService;
+    await client.save();
+    // await Client.findOne({ abonado: req.params.id }).findByIdAndUpdate( _id, newService);
+    // const currentService = await client.services.id(_id);
+    // currentService = newService;
+    res.json(client);
+});
+
+router.delete('/clients/service/:id', async (req, res) => {
+    await Client.services.id(req.params.id).remove()
+    res.send(response);
+});
+
 
 module.exports = router;

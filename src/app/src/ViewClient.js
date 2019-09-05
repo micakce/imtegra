@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Accordion, Card, Button, Row, Col, Form, FormControl } from 'react-bootstrap';
 import { blankState } from './testVariables';
 import { RenderADI, RenderL2VPN, RenderTTT } from './RenderService';
-import MyModal from './MyModal';
+import AddServiceModal from './AddServiceModal';
 // import AddService from './AddService';
 
 export default class ViewClient extends Component {
@@ -31,7 +31,6 @@ export default class ViewClient extends Component {
         fetch(`/clients/search/${this.state.search}`)
             .then(res => res.json())
             .then(data => {
-                // this.setState({ ...data })
                 this.setState(data)
             })
             .catch(err => console.error(err));
@@ -101,24 +100,27 @@ export default class ViewClient extends Component {
                     <Card.Body>
                         <Accordion >
                             {this.state.services.map((service, idx) => {
+                                const WrappedAddServiceModal = () => {
+                                    return <AddServiceModal idx={idx} action={"Edit"} service={service} reload={this.searchClient} abonado={this.state.abonado} />
+                                }
                                 if (service.service === "ADI") {
 
                                     return (
-                                        <RenderADI service={service} idx={idx} />
+                                        <RenderADI wrapped={WrappedAddServiceModal} service={service} idx={idx} />
                                     )
                                 } else if (service.service === "L2VPN") {
                                     return (
-                                        <RenderL2VPN service={service} idx={idx} />
+                                        <RenderL2VPN wrapped={WrappedAddServiceModal} service={service} idx={idx} />
                                     )
                                 } else if (service.service === "TTT") {
                                     return (
-                                        <RenderTTT service={service} idx={idx} />
+                                        <RenderTTT wrapped={WrappedAddServiceModal} service={service} idx={idx} />
                                     )
                                 } else {
                                     return (<div style={{ display: 'flex', justifyContent: 'center' }}><h3 >Agrega un Servicio</h3></div>)
                                 }
                             })}
-                            <MyModal reload={this.searchClient} abonado={this.state.abonado} />
+                            <AddServiceModal action={"Agregar Servicio"} reload={this.searchClient} abonado={this.state.abonado} />
                         </Accordion>
                     </Card.Body>
                 </Card>

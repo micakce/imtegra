@@ -5,8 +5,10 @@ import { Button, Form, Col, Row } from 'react-bootstrap';
 export default class AddService extends Component {
     constructor(props) {
         super(props);
-        if (props) {
-            this.state = { ...props };
+        if (props.action === "Edit") {
+            // const { abonado, action } = props
+            // this.state = { ...props.service, abonado, action }
+            this.state = props.service;
         } else {
             this.state = { service: "" };
         }
@@ -16,33 +18,49 @@ export default class AddService extends Component {
 
     handleChange(e) {
         const { name, value, id } = e.target;
-
+        // console.log(this.state)
+        console.log(this.props)
         if (name === 'mediumRadios') {
-            // (id === "CO") ? this.setState({ co: true, fo: false }) : this.setState({ co: false, fo: true })
-            // (id === "CO") ? this.setState({ medium: "CO"}) : this.setState({ medium: "FO"});
-            this.setState({medium: id});
+            this.setState({ medium: id });
         } else {
             this.setState({
                 [name]: value
             });
         }
-        console.log(this.state);
     }
 
     addService() {
-        fetch(`/clients/service/${this.state.abonado}`, {
-            method: 'PUT',
-            body: JSON.stringify(this.state),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => console.log(res))
-            .then(data => console.log(data))
-            .catch(err => console.error(err))
-        this.props.toggle();
-        this.props.reload();
+        if (this.props.action === 'Edit') {
+            const idx = this.props.idx;
+            fetch(`/clients/service/edit/${this.props.abonado}`, {
+                method: 'PUT',
+                body: JSON.stringify({ ...this.state, idx }),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(() => {
+                    this.props.toggle();
+                    this.props.reload();
+                })
+
+        } else {
+
+            fetch(`/clients/service/${this.props.abonado}`, {
+                method: 'PUT',
+                body: JSON.stringify(this.state),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(res => console.log(res))
+                .then(data => console.log(data))
+                .catch(err => console.error(err))
+            this.props.toggle();
+            this.props.reload();
+        }
     }
 
     adi() {
@@ -187,7 +205,7 @@ export default class AddService extends Component {
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Contra</Form.Label>
-                                <Form.Control size="sm" value={this.state.contra} name="contra" onChange={this.handleChange} type="text" placeholder="5551212,5559012" />
+                                <Form.Control size="sm" value={this.state.sites} name="sites" onChange={this.handleChange} type="text" placeholder="5551212,5559012" />
                             </Form.Group>
                         </Form.Row>
 
@@ -300,7 +318,7 @@ export default class AddService extends Component {
                         <Form.Row>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Plan</Form.Label>
-                                <Form.Control size="sm" value={this.state.plan} name="plan" onChange={this.handleChange} type="number" placeholder="canales/números" />
+                                <Form.Control size="sm" value={this.state.plan} name="plan" onChange={this.handleChange} type="text" placeholder="canales/números" />
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>VLAN</Form.Label>
