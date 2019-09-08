@@ -69,10 +69,11 @@ router.put('/clients/service/edit/:id', async (req, res) => {
 
 router.delete('/clients/service/:id', async (req, res) => {
     console.log(req.body, req.params.id)
-    const client = await Client.findOne({abonado: req.body.abonado})
-    client.services[req.params.id] = null
+    const client = await Client.findOne({ abonado: req.body.abonado })
+    console.log(client.services);
+    client.services.id(req.params.id).remove();
     await client.save()
-    res.json("Service Deleted")
+    res.send("Service Deleted")
 });
 
 

@@ -42,7 +42,7 @@ function RenderADI(props) {
                             <Col> <b>VLAN: </b>{props.service.vlan} </Col>
                             <Col> </Col>
                         </Row>
-                        <Button onClick={props.deleteService(props.idx)} variant='danger'> Eliminar </Button>
+                        <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
                         {props.wrapped()}
                     </Card.Body>
                 </Accordion.Collapse>
@@ -82,6 +82,7 @@ function RenderADI(props) {
                             <Col> </Col>
                             <Col> <b>VLAN: </b>{props.service.vlan} </Col>
                         </Row>
+                        <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
                         {props.wrapped()}
                     </Card.Body>
                 </Accordion.Collapse>
@@ -103,7 +104,7 @@ function RenderL2VPN(props) {
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey={props.idx}>
                     <Card.Body>
-                        <Row>
+                        <Row key={props.idx}>
                             <Col> <b>Servicio: </b>{` ${props.service.service} - ${props.service.plan} Mbps`} </Col>
                             <Col> <b>Tipo: </b> {` ${props.service.mode}`} </Col>
                             <Col> <b>IP: </b>{props.service.ip_mon} </Col>
@@ -118,6 +119,7 @@ function RenderL2VPN(props) {
                             <Col> <b>VLAN: </b>{props.service.vlan} </Col>
                             <Col> <b>DG: </b>{props.service.dg_mon} </Col>
                         </Row>
+                        <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
                         {props.wrapped()}
                     </Card.Body>
                 </Accordion.Collapse>
@@ -146,6 +148,7 @@ function RenderL2VPN(props) {
                             <Col> <b>VLAN: </b>{props.service.vlan} </Col>
                             {/* <Col> <b>DG: </b>{props.service.dg_mon} </Col> */}
                         </Row>
+                        <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
                         {props.wrapped()}
                     </Card.Body>
                 </Accordion.Collapse>
@@ -195,7 +198,7 @@ function RenderTTT(props) {
                         <Col> <b>VLAN: </b>{props.service.vlan} </Col>
                         <Col> </Col>
                     </Row>
-                    <Button onClick={props.deleteService(props.idx)} variant='danger'> Eliminar </Button>
+                        <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
                     {props.wrapped()}
                 </Card.Body>
 

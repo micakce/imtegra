@@ -27,26 +27,37 @@ export default class ViewClient extends Component {
         })
     }
 
-    searchClient(e) {
-        fetch(`/clients/search/${this.state.search}`)
+    componentDidMount() {
+        const abonado = window.location.pathname.match(/\d.*$/)
+        if (abonado) this.searchClient(null, abonado[0]);
+    }
+
+    searchClient(e, p) {
+        const abonado = p || this.state.abonado || this.state.search
+        console.log(p, this.state.abonado, abonado)
+        fetch(`/clients/search/${abonado}`)
             .then(res => res.json())
             .then(data => {
+                console.log(data)
                 this.setState(data)
             })
             .catch(err => console.error(err));
         if (e) e.preventDefault();
     }
-    
-    deleteService(idx) {
-        fetch(`/clients/service/${idx}`, {
-            method: 'DELETE',
-            body: JSON.stringify({abonado: this.state.search}),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-        .then( () => this.searchClient)
+
+    deleteService(id) {
+        if (window.confirm('Seguro que quieres eliminar este servicio?')) {
+            fetch(`/clients/service/${id}`, {
+                method: 'DELETE',
+                body: JSON.stringify({ abonado: this.state.abonado }),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(res => console.log(res))
+                .then(() => this.searchClient(null, this.state.abonado))
+        }
     }
 
     render() {
@@ -113,20 +124,20 @@ export default class ViewClient extends Component {
                         <Accordion >
                             {this.state.services.map((service, idx) => {
                                 const WrappedAddServiceModal = () => {
-                                    return <AddServiceModal idx={idx} action={"Edit"} service={service} reload={this.searchClient} abonado={this.state.abonado} />
+                                    return <AddServiceModal id={service._id} idx={idx} action={"Edit"} service={service} reload={this.searchClient} abonado={this.state.abonado} />
                                 }
                                 if (service.service === "ADI") {
 
                                     return (
-                                        <RenderADI deleteService={this.deleteService} wrapped={WrappedAddServiceModal} service={service} idx={idx} />
+                                        <RenderADI id={service._id} deleteService={this.deleteService} wrapped={WrappedAddServiceModal} service={service} idx={idx} />
                                     )
                                 } else if (service.service === "L2VPN") {
                                     return (
-                                        <RenderL2VPN deleteService={this.deleteService} wrapped={WrappedAddServiceModal} service={service} idx={idx} />
+                                        <RenderL2VPN id={service._id} deleteService={this.deleteService} wrapped={WrappedAddServiceModal} service={service} idx={idx} />
                                     )
                                 } else if (service.service === "TTT") {
                                     return (
-                                        <RenderTTT deleteService={this.deleteService} wrapped={WrappedAddServiceModal} service={service} idx={idx} />
+                                        <RenderTTT id={service._id} deleteService={this.deleteService} wrapped={WrappedAddServiceModal} service={service} idx={idx} />
                                     )
                                 } else {
                                     return (<div style={{ display: 'flex', justifyContent: 'center' }}><h3 >Agrega un Servicio</h3></div>)

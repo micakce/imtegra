@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import ECModal from './ECModal';
+import { Link } from 'react-router-dom';
 // import ViewClient from './ViewClient';
 // import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
@@ -79,7 +80,11 @@ export default class AllClients extends Component {
 
                                 <tr key={client._id}  >
                                     {/* <td> <Link to={`/clients/client/${client.abonado}`} >{client.abonado}</Link></td> */}
-                                    <td> {client.abonado}</td>
+                                    <td>
+                                        <Link to={`/clients/client/${client.abonado}`}>
+                                            {client.abonado}
+                                        </Link>
+                                    </td>
                                     <td>{client.name}</td>
                                     {/* <td>{client.email}</td> */}
                                     {/* <td>{client.telefono}</td>
