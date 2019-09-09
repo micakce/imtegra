@@ -42,7 +42,9 @@ function RenderADI(props) {
                             <Col> <b>VLAN: </b>{props.service.vlan} </Col>
                             <Col> </Col>
                         </Row>
+                        <br></br>
                         <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
+                        {' '}
                         {props.wrapped()}
                     </Card.Body>
                 </Accordion.Collapse>
@@ -67,22 +69,24 @@ function RenderADI(props) {
                             <Col> <b>Red: </b>{props.service.red} </Col>
                         </Row>
                         <Row>
-                            <Col> <b>Tecnología: </b>{` ${props.service.medium}`} </Col>
+                            <Col> <b>Tecnología: </b> Coaxil </Col>
                             <Col> <b>IP: </b>{props.service.ip} </Col>
                         </Row>
                         <Row>
-                            <Col> <b>Equipo: </b>  {props.service.device}</Col>
+                            <Col><b>HUB: </b> {props.service.hub} </Col>
                             <Col> <b>DG: </b>{props.service.dg} </Col>
                         </Row>
                         <Row>
-                            <Col> </Col>
+                            <Col> <b>CMTS: </b> {props.service.cmts} </Col>
                             <Col> <b>Mask: </b>{props.service.mask} </Col>
                         </Row>
                         <Row>
-                            <Col> </Col>
-                            <Col> <b>VLAN: </b>{props.service.vlan} </Col>
+                            <Col> <b>MAC: </b>  {props.service.mac} </Col>
+                            <Col> <b>VLAN: </b> {props.service.vlan} </Col>
                         </Row>
+                        <br></br>
                         <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
+                        {' '}
                         {props.wrapped()}
                     </Card.Body>
                 </Accordion.Collapse>
@@ -119,7 +123,9 @@ function RenderL2VPN(props) {
                             <Col> <b>VLAN: </b>{props.service.vlan} </Col>
                             <Col> <b>DG: </b>{props.service.dg_mon} </Col>
                         </Row>
+                        <br></br>
                         <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
+                        {' '}
                         {props.wrapped()}
                     </Card.Body>
                 </Accordion.Collapse>
@@ -148,7 +154,9 @@ function RenderL2VPN(props) {
                             <Col> <b>VLAN: </b>{props.service.vlan} </Col>
                             {/* <Col> <b>DG: </b>{props.service.dg_mon} </Col> */}
                         </Row>
+                        <br></br>
                         <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
+                        {' '}
                         {props.wrapped()}
                     </Card.Body>
                 </Accordion.Collapse>
@@ -198,7 +206,9 @@ function RenderTTT(props) {
                         <Col> <b>VLAN: </b>{props.service.vlan} </Col>
                         <Col> </Col>
                     </Row>
-                        <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
+                    <br></br>
+                    <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
+                    {' '}
                     {props.wrapped()}
                 </Card.Body>
 
@@ -206,4 +216,33 @@ function RenderTTT(props) {
         </Card>
     )
 }
-export { RenderADI, RenderL2VPN, RenderTTT };
+
+function RenderHardware(props) {
+
+    return (
+        <Card>
+            <Accordion.Toggle as={Card.Header} eventKey={props.idx}>
+                <b>{`${props.device.device} - ${props.device.model}`}</b>
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey={props.idx}>
+                <Card.Body>
+                    <Card.Title>
+                        <Row>
+                            <Col>Equipo</Col>
+                        </Row>
+                    </Card.Title>
+                    <Row>
+
+                    </Row>
+                    <br></br>
+                    <Button onClick={() => props.deleteDevice(props.id)} variant='danger'> Eliminar </Button>
+                    {' '}
+                    {props.wrapped()}
+                </Card.Body>
+
+            </Accordion.Collapse>
+        </Card>
+    )
+}
+
+export { RenderADI, RenderL2VPN, RenderTTT, RenderHardware };

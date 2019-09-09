@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Accordion, Card, Button, Row, Col, Form, FormControl } from 'react-bootstrap';
 import { blankState } from './testVariables';
-import { RenderADI, RenderL2VPN, RenderTTT } from './RenderService';
+import { RenderADI, RenderL2VPN, RenderTTT, RenderHardware } from './RenderService';
 import AddServiceModal from './AddServiceModal';
+import AddHardwareModal from './AddHardwareModal';
 
 export default class ViewClient extends Component {
 
@@ -12,18 +13,19 @@ export default class ViewClient extends Component {
         if (props.client) {
             this.state = props.client;
         } else {
-            this.state = { search: "", ...blankState };
+            this.state = blankState;
         }
 
         this.handleSearchChange = this.handleSearchChange.bind(this);
         this.searchClient = this.searchClient.bind(this);
         this.deleteService = this.deleteService.bind(this);
+        this.deleteDevice = this.deleteDevice.bind(this);
 
     }
 
     handleSearchChange(e) {
         this.setState({
-            search: e.target.value
+            abonado: e.target.value
         })
     }
 
@@ -33,12 +35,10 @@ export default class ViewClient extends Component {
     }
 
     searchClient(e, p) {
-        const abonado = p || this.state.abonado || this.state.search
-        console.log(p, this.state.abonado, abonado)
+        const abonado = p || this.state.abonado
         fetch(`/clients/search/${abonado}`)
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 this.setState(data)
             })
             .catch(err => console.error(err));
@@ -60,11 +60,26 @@ export default class ViewClient extends Component {
         }
     }
 
+    deleteDevice(id) {
+        if (window.confirm('Seguro que quieres eliminar este servicio?')) {
+            fetch(`/clients/device/${id}`, {
+                method: 'DELETE',
+                body: JSON.stringify({ abonado: this.state.abonado }),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(res => console.log(res))
+                .then(() => this.searchClient(null, this.state.abonado))
+        }
+    }
+
     render() {
         return (
             <div>
                 <Form inline>
-                    <FormControl type="text" placeholder="Search" onChange={this.handleSearchChange} value={this.state.search} className="mr-sm-2" />
+                    <FormControl type="text" placeholder="Search" onChange={this.handleSearchChange} value={this.state.abonado} className="mr-sm-2" />
                     <Button type="submit" variant="outline-success" onClick={this.searchClient}>Search</Button>
                 </Form>
                 <Card>
@@ -72,15 +87,9 @@ export default class ViewClient extends Component {
                     <Card.Body>
                         <Card.Title>
                             <Row>
-                                <Col>
-                                    {`${this.state.abonado} - ${this.state.name}`}
-                                </Col>
-                                <Col>
-                                    Informacion de Contacto
-                            </Col>
-                                <Col>
-                                    Contacto Tecnico
-                            </Col>
+                                <Col> {`${this.state.abonado} - ${this.state.name}`} </Col>
+                                <Col> Informacion de Contacto </Col>
+                                <Col> Contacto Tecnico </Col>
                             </Row>
                         </Card.Title>
                         <Row>
@@ -143,7 +152,25 @@ export default class ViewClient extends Component {
                                     return (<div style={{ display: 'flex', justifyContent: 'center' }}><h3 >Agrega un Servicio</h3></div>)
                                 }
                             })}
+                            <br></br>
                             <AddServiceModal action={"Agregar Servicio"} reload={this.searchClient} abonado={this.state.abonado} />
+                        </Accordion>
+                    </Card.Body>
+                </Card>
+                <br></br>
+                <Card>
+                    <Card.Header as="h5">Hardware</Card.Header>
+                    <Card.Body>
+                        <Accordion >
+                            {this.state.hardware.map((device, idx) => {
+                                const WrappedAddHardwareModal = () => {
+                                    return <AddHardwareModal id={device._id} idx={idx} action={"Edit"} device={device} reload={this.searchClient} abonado={this.state.abonado} />
+                                }
+                                return (
+                                    <RenderHardware id={device._id} deleteDevice={this.deleteDevice} wrapped={WrappedAddHardwareModal} device={device} idx={idx} />
+                                )
+                            })}
+                            <AddHardwareModal action={"Agregar Dispositivo"} reload={this.searchClient} abonado={this.state.abonado} />
                         </Accordion>
                     </Card.Body>
                 </Card>

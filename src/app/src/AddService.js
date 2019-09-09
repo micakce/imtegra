@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import { Button, Form, Col, Row } from 'react-bootstrap';
 
 
-export default class AddService extends Component {
+class AddService extends Component {
     constructor(props) {
         super(props);
         if (props.action === "Edit") {
-            // const { abonado, action } = props
-            // this.state = { ...props.service, abonado, action }
             this.state = props.service;
         } else {
             this.state = { service: "" };
@@ -18,8 +16,6 @@ export default class AddService extends Component {
 
     handleChange(e) {
         const { name, value, id } = e.target;
-        // console.log(this.state)
-        console.log(this.props)
         if (name === 'mediumRadios') {
             this.setState({ medium: id });
         } else {
@@ -59,8 +55,6 @@ export default class AddService extends Component {
                     this.props.toggle();
                     this.props.reload();
                 })
-            // .then(data => console.log(data))
-            // .catch(err => console.error(err))
         }
     }
 
@@ -118,6 +112,7 @@ export default class AddService extends Component {
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Equipo</Form.Label>
                                 <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
+                                    {fetch('/devices')}
                                     <option>Selecciona un equipo</option>
                                     <option>SG350</option>
                                     <option>DELL</option>
@@ -170,14 +165,17 @@ export default class AddService extends Component {
                         </Form.Row>
 
                         <Form.Row>
-                            <Form.Group as={Col} controlId="">
-                                <Form.Label>Equipo</Form.Label>
-                                <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
-                                    <option>Selecciona un equipo</option>
-                                    <option>SG350</option>
-                                    <option>DELL</option>
-                                    <option>CM</option>
-                                </Form.Control>
+                            <Form.Group md={3} as={Col} controlId="">
+                                <Form.Label>HUB</Form.Label>
+                                <Form.Control size="sm" value={this.state.hub} name="hub" onChange={this.handleChange} placeholder="Modelo de CM" />
+                            </Form.Group>
+                            <Form.Group md={4} as={Col} controlId="">
+                                <Form.Label>CMTS</Form.Label>
+                                <Form.Control size="sm" value={this.state.cmts} name="cmts" onChange={this.handleChange} placeholder="0000.0055.5555" />
+                            </Form.Group>
+                            <Form.Group  md={5} as={Col} controlId="">
+                                <Form.Label>MAC</Form.Label>
+                                <Form.Control size="sm" value={this.state.mac} name="mac" onChange={this.handleChange} placeholder="0000.0055.5555" />
                             </Form.Group>
                         </Form.Row>
                     </div>
@@ -490,3 +488,5 @@ export default class AddService extends Component {
         )
     }
 }
+
+export default AddService;

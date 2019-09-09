@@ -20,8 +20,18 @@ const ServiceSchema = new Schema({
   device: String,
   nhead: String,
   ntale: String,
-  date: { type: Date, default: Date.now}
+  hub: String,
+  cmts: String,
+  mac: String,
+  date: { type: Date, default: Date.now }
 });
+
+const HardwareSchema = new Schema({
+  device: String,
+  model: String,
+  code: String,
+  date: { type: Date, default: Date.now }
+})
 
 const ClientSchema = new Schema({
   abonado: { type: Number, required: true },
@@ -35,9 +45,10 @@ const ClientSchema = new Schema({
     city: String,
   },
   services: [ServiceSchema],
+  hardware: [HardwareSchema],
   pm: String,
   im: String,
-  status: { type: String, default: 'Init'},
+  status: { type: String, default: 'Init' },
   date: { type: Date, default: Date.now }
 });
 
