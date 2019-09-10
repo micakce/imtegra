@@ -4,6 +4,7 @@ import { Button, Form, Col, Row } from 'react-bootstrap';
 
 class AddService extends Component {
     constructor(props) {
+        console.log(props)
         super(props);
         if (props.action === "Edit") {
             this.state = props.service;
@@ -15,6 +16,7 @@ class AddService extends Component {
     }
 
     handleChange(e) {
+        console.log(this.props)
         const { name, value, id } = e.target;
         if (name === 'mediumRadios') {
             this.setState({ medium: id });
@@ -112,16 +114,15 @@ class AddService extends Component {
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Equipo</Form.Label>
                                 <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
-                                    {fetch('/devices')}
-                                    <option>Selecciona un equipo</option>
-                                    <option>SG350</option>
-                                    <option>DELL</option>
-                                    <option>CM</option>
+                                    <option>...</option>
+                                    {this.props.hardware.length > 0
+                                        ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
+                                        : <option>No hay equipos asociados </option>}
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
-                                <Form.Label>VLAN</Form.Label>
-                                <Form.Control size="sm" value={this.state.vlan_mon} name="vlan_mon" onChange={this.handleChange} type="text" placeholder="VLAN 152" />
+                                <Form.Label>Interfaz</Form.Label>
+                                <Form.Control size="sm" value={this.state.interfaz} name="interfaz" onChange={this.handleChange} type="text" placeholder="Gi1" />
                             </Form.Group>
                         </Form.Row>
                     </div>
@@ -173,7 +174,7 @@ class AddService extends Component {
                                 <Form.Label>CMTS</Form.Label>
                                 <Form.Control size="sm" value={this.state.cmts} name="cmts" onChange={this.handleChange} placeholder="0000.0055.5555" />
                             </Form.Group>
-                            <Form.Group  md={5} as={Col} controlId="">
+                            <Form.Group md={5} as={Col} controlId="">
                                 <Form.Label>MAC</Form.Label>
                                 <Form.Control size="sm" value={this.state.mac} name="mac" onChange={this.handleChange} placeholder="0000.0055.5555" />
                             </Form.Group>
@@ -245,10 +246,9 @@ class AddService extends Component {
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Equipo</Form.Label>
                                 <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
-                                    <option>Selecciona un equipo</option>
-                                    <option>SG350</option>
-                                    <option>DELL</option>
-                                    <option>CM</option>
+                                    {this.props.hardware.length > 0
+                                        ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
+                                        : <option>No hay equipos asociados </option>}
                                 </Form.Control>
                             </Form.Group>
                         </Form.Row>
@@ -288,16 +288,13 @@ class AddService extends Component {
                             </Form.Group>
                         </Form.Row>
 
-
-
                         <Form.Row>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Equipo</Form.Label>
                                 <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
-                                    <option>Selecciona un equipo</option>
-                                    <option>SG350</option>
-                                    <option>DELL</option>
-                                    <option>CM</option>
+                                    {this.props.hardware.length > 0
+                                        ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
+                                        : <option>No hay equipos asociados </option>}
                                 </Form.Control>
                             </Form.Group>
                         </Form.Row>
@@ -373,10 +370,9 @@ class AddService extends Component {
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Equipo</Form.Label>
                                 <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
-                                    <option>Selecciona un equipo</option>
-                                    <option>SG350</option>
-                                    <option>DELL</option>
-                                    <option>CM</option>
+                                    {this.props.hardware.length > 0
+                                        ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
+                                        : <option>No hay equipos asociados </option>}
                                 </Form.Control>
                             </Form.Group>
                         </Form.Row>
@@ -426,10 +422,9 @@ class AddService extends Component {
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Equipo</Form.Label>
                                 <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
-                                    <option>Selecciona un equipo</option>
-                                    <option>SG350</option>
-                                    <option>DELL</option>
-                                    <option>CM</option>
+                                    {this.props.hardware.length > 0
+                                        ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
+                                        : <option>No hay equipos asociados </option>}
                                 </Form.Control>
                             </Form.Group>
                         </Form.Row>

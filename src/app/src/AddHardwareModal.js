@@ -6,10 +6,10 @@ function AddHardwareModal(props) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => {
-        setShow(!false);
+        setShow(false);
     }
     const handleShow = () => {
-        setShow(!true);
+        setShow(true);
     }
 
     return (
@@ -18,7 +18,7 @@ function AddHardwareModal(props) {
             {props.action}
             </Button>
 
-            <Modal show={!show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>{props.title}</Modal.Title>
                 </Modal.Header>

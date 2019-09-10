@@ -71,15 +71,15 @@ router.delete('/clients/service/:id', async (req, res) => {
 });
 
 router.put('/clients/device/:id', async (req, res) => {
-    const { device, model, code } = req.body;
-    const newDevice = { device, model, code };
+    const { device, model, code, serial, description } = req.body;
+    const newDevice = { device, model, code, serial, description };
     const response = await Client.findOneAndUpdate({ abonado: req.params.id }, { $push: { hardware: newDevice } });
     res.send(response);
 });
 
 router.put('/clients/device/edit/:id', async (req, res) => {
-    const { device, model, code, idx } = req.body;
-    const newDevice = { device, model, code };
+    const { device, model, code, idx, serial, description } = req.body;
+    const newDevice = { device, model, code, serial, description };
     const client = await Client.findOne({ abonado: req.params.id });
     client.hardware[idx] = newDevice;
     await client.save();

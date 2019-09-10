@@ -133,7 +133,7 @@ export default class ViewClient extends Component {
                         <Accordion >
                             {this.state.services.map((service, idx) => {
                                 const WrappedAddServiceModal = () => {
-                                    return <AddServiceModal id={service._id} idx={idx} action={"Edit"} service={service} reload={this.searchClient} abonado={this.state.abonado} />
+                                    return <AddServiceModal id={service._id} idx={idx} action={"Edit"} hardware={this.state.hardware} service={service} reload={this.searchClient} abonado={this.state.abonado} />
                                 }
                                 if (service.service === "ADI") {
 
@@ -153,7 +153,7 @@ export default class ViewClient extends Component {
                                 }
                             })}
                             <br></br>
-                            <AddServiceModal action={"Agregar Servicio"} reload={this.searchClient} abonado={this.state.abonado} />
+                            <AddServiceModal action={"Agregar Servicio"} reload={this.searchClient} hardware={this.state.hardware} abonado={this.state.abonado} />
                         </Accordion>
                     </Card.Body>
                 </Card>

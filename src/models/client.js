@@ -14,15 +14,16 @@ const ServiceSchema = new Schema({
   ip_mon: String,
   dg_mon: String,
   mask_mon: String,
-  vlan_mon: String,
+  vlan_mon: { type: String, default: '152'},
   mode: String,
   sites: String,
   device: String,
   nhead: String,
   ntale: String,
-  hub: String,
-  cmts: String,
-  mac: String,
+  hub: {type: String, uppercase: true},
+  cmts: {type: String, uppercase: true},
+  mac: {type: String, uppercase: true},
+  interfaz: String,
   date: { type: Date, default: Date.now }
 });
 
@@ -30,6 +31,8 @@ const HardwareSchema = new Schema({
   device: String,
   model: String,
   code: String,
+  serial: String,
+  description: String,
   date: { type: Date, default: Date.now }
 })
 

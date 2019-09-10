@@ -6,24 +6,32 @@ function AddServiceModal(props) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => {
-        setShow(!false);
+        setShow(false);
     }
     const handleShow = () => {
-        setShow(!true);
+        setShow(true);
     }
 
     return (
         <>
             <Button variant="primary" onClick={handleShow}>
-            {props.action}
+                {props.action}
             </Button>
 
-            <Modal show={!show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>{props.title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AddService idx={props.idx} action={props.action} service={props.service} reload={props.reload} toggle={handleClose} abonado={props.abonado} />
+                    <AddService
+                        abonado={props.abonado}
+                        action={props.action}
+                        idx={props.idx}
+                        hardware={props.hardware}
+                        reload={props.reload}
+                        service={props.service}
+                        toggle={handleClose}
+                    />
                 </Modal.Body>
             </Modal>
         </>

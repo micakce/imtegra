@@ -62,12 +62,59 @@ class AddHardware extends Component {
                 <Form.Row>
                     <Form.Group as={Col} controlId="">
                         <Form.Label>Equipo</Form.Label>
-                        <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} type="text" placeholder="" />
+                        <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} type="text" as="select" placeholder="">
+                            <option>Seleccionar</option>
+                            <option>Switch</option>
+                            <option>Router</option>
+                            <option>SFP</option>
+                            <option>Patch</option>
+                        </Form.Control>
                     </Form.Group>
                     <Form.Group as={Col} controlId="">
                         <Form.Label>Modelo</Form.Label>
-                        <Form.Control size="sm" value={this.state.model} name="model" onChange={this.handleChange} type="text" placeholder="" />
+                        <Form.Control size="sm" value={this.state.model} name="model" onChange={this.handleChange} type="text" as="select" placeholder="" >
+                            {this.state.device === "Switch"
+                                ?
+                                <React.Fragment>
+                                    <option>Seleccionar</option>
+                                    <option>SG350</option>
+                                    <option>DELL</option>
+                                </React.Fragment>
+                                : this.state.device === "Router"
+                                    ?
+                                    <React.Fragment>
+                                        <option>Seleccionar</option>
+                                        <option>C881</option>
+                                        <option>C1921</option>
+                                    </React.Fragment>
+                                    : this.state.device === "SFP"
+                                        ?
+                                        <React.Fragment>
+                                            <option>Seleccionar</option>
+                                            <option>D20Km</option>
+                                            <option>U20Km</option>
+                                        </React.Fragment>
+                                        :
+                                        <React.Fragment>
+                                            <option>Seleccionar</option>
+                                            <option>UTP</option>
+                                            <option>FO</option>
+                                        </React.Fragment>}
+                        </Form.Control>
                     </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                    <Form.Group as={Col} controlId="">
+                        <Form.Label>Serial</Form.Label>
+                        <Form.Control size="sm" value={this.state.serial} name="serial" onChange={this.handleChange} type="text" placeholder="">
+                        </Form.Control>
+                    </Form.Group>
+                    <Form.Group as={Col} controlId="">
+                        <Form.Label>Descripcion</Form.Label>
+                        <Form.Control size="sm" value={this.state.description} name="description" onChange={this.handleChange} type="text" placeholder="">
+                        </Form.Control>
+                    </Form.Group>
+
                 </Form.Row>
                 <Button type="submit" variant="warning" onClick={this.addDevice}>
                     Save

@@ -33,7 +33,7 @@ function RenderADI(props) {
                             <Col> <b>DG: </b>{props.service.dg_mon} </Col>
                         </Row>
                         <Row>
-                            <Col> </Col>
+                            <Col> <b>Interfaz: </b> {props.service.interfaz} </Col>
                             <Col> <b>Mask: </b>{props.service.mask} </Col>
                             <Col> <b>VLAN: </b> {props.service.vlan_mon} </Col>
                         </Row>
@@ -50,6 +50,7 @@ function RenderADI(props) {
                 </Accordion.Collapse>
             </Card>
         )
+
     } else if (props.service.medium === "CO") {
         return (
             <Card>
@@ -228,11 +229,12 @@ function RenderHardware(props) {
                 <Card.Body>
                     <Card.Title>
                         <Row>
-                            <Col>Equipo</Col>
+                            <Col>Detalles</Col>
                         </Row>
                     </Card.Title>
                     <Row>
-
+                        <Col><b>Serial: </b>{props.device.serial}</Col>
+                        <Col><b>Descripcion: </b>{props.device.description}</Col>
                     </Row>
                     <br></br>
                     <Button onClick={() => props.deleteDevice(props.id)} variant='danger'> Eliminar </Button>
