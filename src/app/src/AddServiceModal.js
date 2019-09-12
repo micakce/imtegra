@@ -20,7 +20,7 @@ function AddServiceModal(props) {
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{props.title}</Modal.Title>
+                    <Modal.Title>{props.action}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <AddService
