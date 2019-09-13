@@ -27,7 +27,7 @@ class AddService extends Component {
         }
     }
 
-    addService() {
+    addService(e) {
         if (this.props.action === 'Edit') {
             const idx = this.props.idx;
             fetch(`/clients/service/edit/${this.props.abonado}`, {
@@ -42,6 +42,7 @@ class AddService extends Component {
                     this.props.toggle();
                     this.props.reload();
                 })
+            e.preventDefault();
 
         } else {
 
@@ -57,6 +58,7 @@ class AddService extends Component {
                     this.props.toggle();
                     this.props.reload();
                 })
+            e.preventDefault();
         }
     }
 
@@ -476,7 +478,7 @@ class AddService extends Component {
                     {this.l2vpn()}
                     {this.ttt()}
                 </Form.Row>
-                <Button variant="warning" onClick={this.addService}>
+                <Button variant="warning" type="submit" onClick={this.addService}>
                     Save
                 </Button>
             </Form >

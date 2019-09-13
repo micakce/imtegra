@@ -15,31 +15,37 @@ function RenderADI(props) {
                                 <Col> Datos </Col>
                                 <Col> Direccionamiento </Col>
                                 <Col> Monitoria </Col>
+                                <Col> Obra</Col>
                             </Row>
                         </Card.Title>
                         <Row>
-                            <Col> <b>Servicio: </b>{` ${props.service.service} - ${props.service.plan} Mbps`} </Col>
+                            <Col> <b>Servicio: </b> {props.service.service} - {props.service.plan} Mbps </Col>
                             <Col> <b>Red: </b>{props.service.red} </Col>
                             <Col> <b>IP: </b>{props.service.ip_mon} </Col>
+                            <Col> <b>Hub: </b>{props.service.hub} </Col>
                         </Row>
                         <Row>
-                            <Col> <b>Tecnología: </b>{` ${props.service.medium}`} </Col>
+                            <Col> <b>Tecnología: </b> {props.service.medium} </Col>
                             <Col> <b>IP: </b>{props.service.ip} </Col>
                             <Col> <b>Mask: </b>{props.service.mask} </Col>
+                            <Col> <b>Patcheo: </b>{props.service.rack} - {props.service.pat} - {props.service.pos} </Col>
                         </Row>
                         <Row>
                             <Col> <b>Equipo: </b>  {props.service.device}</Col>
                             <Col> <b>DG: </b>{props.service.dg} </Col>
                             <Col> <b>DG: </b>{props.service.dg_mon} </Col>
+                            <Col> <b>Dist: </b>{props.service.distance} </Col>
                         </Row>
                         <Row>
                             <Col> <b>Interfaz: </b> {props.service.interfaz} </Col>
                             <Col> <b>Mask: </b>{props.service.mask} </Col>
                             <Col> <b>VLAN: </b> {props.service.vlan_mon} </Col>
+                            <Col> <b>Att: </b>{props.service.att} </Col>
                         </Row>
                         <Row>
                             <Col> </Col>
                             <Col> <b>VLAN: </b>{props.service.vlan} </Col>
+                            <Col> </Col>
                             <Col> </Col>
                         </Row>
                         <br></br>

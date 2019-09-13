@@ -25,7 +25,7 @@ export default class ViewClient extends Component {
 
     handleSearchChange(e) {
         this.setState({
-            abonado: e.target.value
+            search: e.target.value
         })
     }
 
@@ -35,7 +35,7 @@ export default class ViewClient extends Component {
     }
 
     searchClient(e, p) {
-        const abonado = p || this.state.abonado
+        const abonado = p || this.state.search || this.state.abonado
         fetch(`/clients/search/${abonado}`)
             .then(res => res.json())
             .then(data => {
@@ -61,7 +61,7 @@ export default class ViewClient extends Component {
     }
 
     deleteDevice(id) {
-        if (window.confirm('Seguro que quieres eliminar este servicio?')) {
+        if (window.confirm('Seguro que quieres eliminar este dispositivo?')) {
             fetch(`/clients/device/${id}`, {
                 method: 'DELETE',
                 body: JSON.stringify({ abonado: this.state.abonado }),
@@ -79,7 +79,7 @@ export default class ViewClient extends Component {
         return (
             <div>
                 <Form inline>
-                    <FormControl type="text" placeholder="Search" onChange={this.handleSearchChange} value={this.state.abonado} className="mr-sm-2" />
+                    <FormControl type="text" placeholder="Search" onChange={this.handleSearchChange} value={this.state.search} className="mr-sm-2" />
                     <Button type="submit" variant="outline-success" onClick={this.searchClient}>Search</Button>
                 </Form>
                 <Card>
