@@ -15,7 +15,7 @@ function AddHardwareModal(props) {
     return (
         <>
             <Button variant="primary" onClick={handleShow}>
-            {props.action}
+                {props.action}
             </Button>
 
             <Modal show={show} onHide={handleClose}>
@@ -23,7 +23,13 @@ function AddHardwareModal(props) {
                     <Modal.Title>{props.title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AddHardware idx={props.idx} action={props.action} device={props.device} reload={props.reload} toggle={handleClose} abonado={props.abonado} />
+                    <AddHardware
+                        idx={props.idx}
+                        action={props.action}
+                        device={props.device}
+                        reload={props.reload}
+                        toggle={handleClose}
+                        abonado={props.abonado} />
                 </Modal.Body>
             </Modal>
         </>

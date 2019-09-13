@@ -4,14 +4,6 @@ import { blankState } from './testVariables';
 import { RenderADI, RenderL2VPN, RenderTTT, RenderHardware } from './RenderService';
 import AddServiceModal from './AddServiceModal';
 import AddHardwareModal from './AddHardwareModal';
-import MyModal from './ModalWrapper'
-import AddService from './AddService';
-
-const ModalWrapper = (props) => (
-    <MyModal>
-        <AddService />
-    </MyModal>
-)
 
 export default class ViewClient extends Component {
 
@@ -162,9 +154,6 @@ export default class ViewClient extends Component {
                             })}
                             <br></br>
                             <AddServiceModal action={"Agregar Servicio"} reload={this.searchClient} hardware={this.state.hardware} abonado={this.state.abonado} />
-                            <MyModal action={"My Modal"}  hardware={this.state.hardware} abonado={this.state.abonado} show={this.state.modal} toggle={() => this.setState({ modal: !this.state.modal })} >
-                                <AddService reload={this.searchClient} toggle={() => this.setState({ modal: !this.state.modal })} abonado={this.state.abonado} />
-                            </MyModal>
                         </Accordion>
                     </Card.Body>
                 </Card>

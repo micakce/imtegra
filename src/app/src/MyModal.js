@@ -7,7 +7,7 @@ function MyModal(props) {
     return (
         <>
             <Button variant="primary" onClick={props.toggle}>
-            {props.action}
+                {props.action}
             </Button>
 
             <Modal show={props.show} onHide={props.toggle} >
