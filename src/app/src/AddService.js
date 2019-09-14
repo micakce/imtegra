@@ -71,51 +71,105 @@ class AddService extends Component {
                         <Form.Row>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Velocidad</Form.Label>
-                                <Form.Control size="sm" value={this.state.plan} name="plan" onChange={this.handleChange} type="text" placeholder="en Mbps" />
+                                <Form.Control
+                                    size="sm"
+                                    value={this.state.plan}
+                                    name="plan"
+                                    onChange={this.handleChange}
+                                    type="text"
+                                    placeholder="en Mbps" />
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>VLAN</Form.Label>
-                                <Form.Control size="sm" value={this.state.vlan} name="vlan" onChange={this.handleChange} type="text" placeholder="VLAN del Servicio" />
+                                <Form.Control
+                                    size="sm"
+                                    value={this.state.vlan}
+                                    name="vlan"
+                                    onChange={this.handleChange}
+                                    type="text"
+                                    placeholder="VLAN del Servicio" />
                             </Form.Group>
                         </Form.Row>
 
                         <Form.Row>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Red</Form.Label>
-                                <Form.Control size="sm" value={this.state.red} name="red" onChange={this.handleChange} type="text" placeholder="10.0.0.0/30" />
+                                <Form.Control
+                                    size="sm"
+                                    value={this.state.red}
+                                    name="red"
+                                    onChange={this.handleChange}
+                                    type="text"
+                                    placeholder="10.0.0.0/30" />
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Mascara Servicio</Form.Label>
-                                <Form.Control size="sm" value={this.state.mask} name="mask" onChange={this.handleChange} type="text" placeholder="255.255.255.0" />
+                                <Form.Control
+                                    size="sm"
+                                    value={this.state.mask}
+                                    name="mask"
+                                    onChange={this.handleChange}
+                                    type="text"
+                                    placeholder="255.255.255.0" />
                             </Form.Group>
                         </Form.Row>
 
                         <Form.Row>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>IP Servicio</Form.Label>
-                                <Form.Control size="sm" value={this.state.ip} name="ip" onChange={this.handleChange} type="text" placeholder="IP del cliente" />
+                                <Form.Control
+                                    size="sm"
+                                    value={this.state.ip}
+                                    name="ip"
+                                    onChange={this.handleChange}
+                                    type="text"
+                                    placeholder="IP del cliente" />
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>DG Servicio</Form.Label>
-                                <Form.Control size="sm" value={this.state.dg} name="dg" onChange={this.handleChange} type="text" placeholder="IP del PE" />
+                                <Form.Control
+                                    size="sm"
+                                    value={this.state.dg}
+                                    name="dg"
+                                    onChange={this.handleChange}
+                                    type="text"
+                                    placeholder="IP del PE" />
                             </Form.Group>
                         </Form.Row>
 
                         <Form.Row>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>IP Monitoria</Form.Label>
-                                <Form.Control size="sm" value={this.state.ip_mon} name="ip_mon" onChange={this.handleChange} type="text" placeholder="IP equipo cliente" />
+                                <Form.Control
+                                    size="sm"
+                                    value={this.state.ip_mon}
+                                    name="ip_mon"
+                                    onChange={this.handleChange}
+                                    type="text"
+                                    placeholder="IP equipo cliente" />
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>DG Monitoria</Form.Label>
-                                <Form.Control size="sm" value={this.state.dg_mon} name="dg_mon" onChange={this.handleChange} type="text" placeholder="IP del PE" />
+                                <Form.Control
+                                    size="sm"
+                                    value={this.state.dg_mon}
+                                    name="dg_mon"
+                                    onChange={this.handleChange}
+                                    type="text"
+                                    placeholder="IP del PE" />
                             </Form.Group>
                         </Form.Row>
 
                         <Form.Row>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Equipo</Form.Label>
-                                <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
+                                <Form.Control
+                                    size="sm"
+                                    value={this.state.device}
+                                    name="device"
+                                    onChange={this.handleChange}
+                                    as="select"
+                                    placeholder="" >
                                     <option>...</option>
                                     {this.props.hardware.length > 0
                                         ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
@@ -124,7 +178,13 @@ class AddService extends Component {
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Interfaz</Form.Label>
-                                <Form.Control size="sm" value={this.state.interfaz} name="interfaz" onChange={this.handleChange} type="text" placeholder="Gi1" />
+                                <Form.Control
+                                    size="sm"
+                                    value={this.state.interfaz}
+                                    name="interfaz"
+                                    onChange={this.handleChange}
+                                    type="text"
+                                    placeholder="Gi1" />
                             </Form.Group>
                         </Form.Row>
                     </div>
@@ -440,8 +500,8 @@ class AddService extends Component {
     render() {
         return (
             <Form>
-                <Form.Row>
-                    <Form.Group as={Col} controlId="formGridState" md={6} >
+                <Form.Row className="text-center">
+                    <Form.Group as={Col} controlId="formGridState" >
                         <Form.Label>Servicio</Form.Label>
                         <Form.Control size="sm" name="service" value={this.state.service} onChange={this.handleChange} as="select" >
                             <option>Selecciona un servicio</option>
@@ -453,11 +513,11 @@ class AddService extends Component {
                         </Form.Control>
                     </Form.Group>
 
-                    <Form.Group as={Col} md={3} >
+                    <Form.Group as={Col} >
                         <Form.Label >
                             Medio
                         </Form.Label>
-                        <div style={{ display: "flex", justifyContent: "space-between" }} >
+                        <div style={{ display: "flex", justifyContent: "space-around" }} >
                             <Form.Check
                                 type="radio"
                                 label="CO"
@@ -474,10 +534,10 @@ class AddService extends Component {
                             />
                         </div>
                     </Form.Group>
-                    {this.adi()}
-                    {this.l2vpn()}
-                    {this.ttt()}
                 </Form.Row>
+                {this.adi()}
+                {this.l2vpn()}
+                {this.ttt()}
                 <Button variant="warning" type="submit" onClick={this.addService}>
                     Save
                 </Button>
