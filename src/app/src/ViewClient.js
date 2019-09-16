@@ -13,7 +13,7 @@ export default class ViewClient extends Component {
         if (props.client) {
             this.state = props.client;
         } else {
-            this.state = { ...blankState, modal: false };
+            this.state = blankState;
         }
 
         this.handleSearchChange = this.handleSearchChange.bind(this);

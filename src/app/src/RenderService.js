@@ -10,44 +10,49 @@ function RenderADI(props) {
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey={props.idx}>
                     <Card.Body >
-                        <Card.Title>
-                            <Row>
-                                <Col> Datos </Col>
-                                <Col> Direccionamiento </Col>
-                                <Col> Monitoria </Col>
-                                <Col> Obra</Col>
-                            </Row>
-                        </Card.Title>
                         <Row>
-                            <Col> <b>Servicio: </b> {props.service.service} - {props.service.plan} Mbps </Col>
-                            <Col> <b>Red: </b>{props.service.red} </Col>
-                            <Col> <b>IP: </b>{props.service.ip_mon} </Col>
-                            <Col> <b>Hub: </b>{props.service.hub} </Col>
+                            <Col>
+                                <Card.Title> Datos </Card.Title>
+                                <div> <b>Red: </b>{props.service.red} </div>
+                                <div> <b>Tecnología: </b> {props.service.medium} </div>
+                                <div> <b>Equipo: </b>  {props.service.device}</div>
+                                <div> <b>Interfaz: </b> {props.service.interfaz} </div>
+                            </Col>
+                            <Col>
+                                <Card.Title> Direccionamiento </Card.Title>
+                            </Col>
+                            <Col>
+                                <Card.Title> Monitoria </Card.Title>
+                                <div> <b>IP: </b>{props.service.ip_mon} </div>
+                            </Col>
+                            <Col>
+                                <Card.Title> Obra </Card.Title>
+                            </Col>
                         </Row>
-                        <Row>
-                            <Col> <b>Tecnología: </b> {props.service.medium} </Col>
-                            <Col> <b>IP: </b>{props.service.ip} </Col>
-                            <Col> <b>Mask: </b>{props.service.mask} </Col>
-                            <Col> <b>Patcheo: </b>{props.service.rack} - {props.service.pat} - {props.service.pos} </Col>
-                        </Row>
-                        <Row>
-                            <Col> <b>Equipo: </b>  {props.service.device}</Col>
-                            <Col> <b>DG: </b>{props.service.dg} </Col>
-                            <Col> <b>DG: </b>{props.service.dg_mon} </Col>
-                            <Col> <b>Dist: </b>{props.service.distance} </Col>
-                        </Row>
-                        <Row>
-                            <Col> <b>Interfaz: </b> {props.service.interfaz} </Col>
-                            <Col> <b>Mask: </b>{props.service.mask} </Col>
-                            <Col> <b>VLAN: </b> {props.service.vlan_mon} </Col>
-                            <Col> <b>Att: </b>{props.service.att} </Col>
-                        </Row>
-                        <Row>
-                            <Col> </Col>
-                            <Col> <b>VLAN: </b>{props.service.vlan} </Col>
-                            <Col> </Col>
-                            <Col> </Col>
-                        </Row>
+
+
+                        <Col> <b>Hub: </b>{props.service.hub} </Col>
+
+
+                        <Col> <b>Mask: </b>{props.service.mask} </Col>
+                        <Col> <b>Patcheo: </b>{props.service.rack} - {props.service.pat} - {props.service.pos} </Col>
+
+
+                        <Col> <b>DG: </b>{props.service.dg} </Col>
+                        <Col> <b>DG: </b>{props.service.dg_mon} </Col>
+                        <Col> <b>Dist: </b>{props.service.distance} </Col>
+
+
+                        <Col> <b>Mask: </b>{props.service.mask} </Col>
+                        <Col> <b>VLAN: </b> {props.service.vlan_mon} </Col>
+                        <Col> <b>Att: </b>{props.service.att} </Col>
+
+
+                        <Col> </Col>
+                        <Col> <b>VLAN: </b>{props.service.vlan} </Col>
+                        <Col> </Col>
+                        <Col> </Col>
+
                         <br></br>
                         <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
                         {' '}
@@ -65,31 +70,27 @@ function RenderADI(props) {
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey={props.idx}>
                     <Card.Body >
-                        <Card.Title>
-                            <Row>
-                                <Col> Datos </Col>
-                                <Col> Direccionamiento </Col>
-                            </Row>
-                        </Card.Title>
-                        <Row>
-                            <Col> <b>Servicio: </b>{` ${props.service.service} - ${props.service.plan} Mbps`} </Col>
-                            <Col> <b>Red: </b>{props.service.red} </Col>
-                        </Row>
-                        <Row>
-                            <Col> <b>Tecnología: </b> Coaxil </Col>
-                            <Col> <b>IP: </b>{props.service.ip} </Col>
-                        </Row>
-                        <Row>
-                            <Col><b>HUB: </b> {props.service.hub} </Col>
-                            <Col> <b>DG: </b>{props.service.dg} </Col>
-                        </Row>
-                        <Row>
-                            <Col> <b>CMTS: </b> {props.service.cmts} </Col>
-                            <Col> <b>Mask: </b>{props.service.mask} </Col>
-                        </Row>
-                        <Row>
-                            <Col> <b>MAC: </b>  {props.service.mac} </Col>
-                            <Col> <b>VLAN: </b> {props.service.vlan} </Col>
+                        <Row >
+                            <Col md={4} sm={12} className="mx-auto" >
+                                <Card.Title>
+                                    <Col> Datos </Col>
+                                </Card.Title>
+                                <div> <b>Servicio: </b>{` ${props.service.service} - ${props.service.plan} Mbps`} </div>
+                                <div> <b>Tecnología: </b> Coaxil </div>
+                                <div><b>HUB: </b> {props.service.hub} </div>
+                                <div> <b>CMTS: </b> {props.service.cmts} </div>
+                                <div> <b>MAC: </b>  {props.service.mac} </div>
+                            </Col>
+                            <Col md={4} sm={12} className="mx-auto" >
+                                <Card.Title>
+                                    <Col> Direccionamiento </Col>
+                                </Card.Title>
+                                <div> <b>Red: </b>{props.service.red} </div>
+                                <div> <b>IP: </b>{props.service.ip} </div>
+                                <div> <b>DG: </b>{props.service.dg} </div>
+                                <div> <b>Mask: </b>{props.service.mask} </div>
+                                <div> <b>VLAN: </b> {props.service.vlan} </div>
+                            </Col>
                         </Row>
                         <br></br>
                         <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
