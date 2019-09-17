@@ -36,7 +36,8 @@ export default class ViewClient extends Component {
 
     searchClient(e, p) {
         const abonado = p || this.state.search || this.state.abonado
-        fetch(`/clients/search/${abonado}`)
+        const path = `/clients/client/${abonado}`;
+        fetch(path)
             .then(res => res.json())
             .then(data => {
                 this.setState(data)

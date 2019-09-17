@@ -63,10 +63,11 @@ class AddService extends Component {
     }
 
     adi() {
+
         if (this.state.service === 'ADI') {
             if (this.state.medium === "FO") {
                 return (
-                    <div>
+                    <React.Fragment>
 
                         <Form.Row>
                             <Form.Group as={Col} controlId="">
@@ -187,12 +188,51 @@ class AddService extends Component {
                                     placeholder="Gi1" />
                             </Form.Group>
                         </Form.Row>
-                    </div>
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>Patcheo</Form.Label>
+                                <Form.Control
+                                    size="sm"
+                                    value={this.state.hub}
+                                    name="hub"
+                                    onChange={this.handleChange}
+                                    placeholder="HUB" >
+                                </Form.Control>
+                            </Form.Group>
+                            <Form.Group as={Col} >
+                                <Form.Control
+                                    size="sm"
+                                    value={this.state.rack}
+                                    name="rack"
+                                    onChange={this.handleChange}
+                                    placeholder="Patchera" >
+                                </Form.Control>
+                            </Form.Group>
+                            <Form.Group as={Col} >
+                                <Form.Control
+                                    size="sm"
+                                    value={this.state.patchera}
+                                    name="patchera"
+                                    onChange={this.handleChange}
+                                    placeholder="Patchera" >
+                                </Form.Control>
+                            </Form.Group>
+                            <Form.Group as={Col} >
+                                <Form.Control
+                                    size="sm"
+                                    value={this.state.position}
+                                    name="position"
+                                    onChange={this.handleChange}
+                                    placeholder="Posicion" >
+                                </Form.Control>
+                            </Form.Group>
+                        </Form.Row>
+                    </React.Fragment>
 
                 )
             } else if (this.state.medium === "CO") {
                 return (
-                    <div>
+                    <React.Fragment>
 
                         <Form.Row>
                             <Form.Group as={Col} controlId="">
@@ -241,7 +281,7 @@ class AddService extends Component {
                                 <Form.Control size="sm" value={this.state.mac} name="mac" onChange={this.handleChange} placeholder="0000.0055.5555" />
                             </Form.Group>
                         </Form.Row>
-                    </div>
+                    </React.Fragment>
 
                 )
             }
@@ -308,10 +348,21 @@ class AddService extends Component {
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Equipo</Form.Label>
                                 <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
+                                    <option>...</option>
                                     {this.props.hardware.length > 0
                                         ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
                                         : <option>No hay equipos asociados </option>}
                                 </Form.Control>
+                            </Form.Group>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>Interfaz</Form.Label>
+                                <Form.Control
+                                    size="sm"
+                                    value={this.state.interfaz}
+                                    name="interfaz"
+                                    onChange={this.handleChange}
+                                    type="text"
+                                    placeholder="Gi1" />
                             </Form.Group>
                         </Form.Row>
 
@@ -335,7 +386,7 @@ class AddService extends Component {
                             </Form.Group>
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Contra</Form.Label>
-                                <Form.Control size="sm" value={this.state.contra} name="contra" onChange={this.handleChange} type="text" placeholder="5551212,5559012" />
+                                <Form.Control size="sm" value={this.state.sites} name="sites" onChange={this.handleChange} type="text" placeholder="5551212,5559012" />
                             </Form.Group>
                         </Form.Row>
 
@@ -354,6 +405,7 @@ class AddService extends Component {
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Equipo</Form.Label>
                                 <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
+                                    <option>...</option>
                                     {this.props.hardware.length > 0
                                         ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
                                         : <option>No hay equipos asociados </option>}
@@ -432,10 +484,21 @@ class AddService extends Component {
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Equipo</Form.Label>
                                 <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
+                                    <option>...</option>
                                     {this.props.hardware.length > 0
                                         ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
                                         : <option>No hay equipos asociados </option>}
                                 </Form.Control>
+                            </Form.Group>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>Interfaz</Form.Label>
+                                <Form.Control
+                                    size="sm"
+                                    value={this.state.interfaz}
+                                    name="interfaz"
+                                    onChange={this.handleChange}
+                                    type="text"
+                                    placeholder="Gi1" />
                             </Form.Group>
                         </Form.Row>
 
@@ -484,6 +547,7 @@ class AddService extends Component {
                             <Form.Group as={Col} controlId="">
                                 <Form.Label>Equipo</Form.Label>
                                 <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
+                                    <option>...</option>
                                     {this.props.hardware.length > 0
                                         ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
                                         : <option>No hay equipos asociados </option>}

@@ -15,7 +15,7 @@ router.get('/clients', async (req, res) => {
     res.json(clients);
 });
 
-router.get('/clients/search/:id', async (req, res) => {
+router.get('/clients/client/:id', async (req, res) => {
     const client = await Client.findOne({ abonado: req.params.id });
     res.json(client);
 });
