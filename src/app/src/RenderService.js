@@ -35,8 +35,8 @@ function RenderADI(props) {
                             <Col>
                                 <Card.Title> Obra </Card.Title>
                                 <div> <b>Hub: </b>{props.service.hub} </div>
-                                <div> <b>Patcheo: </b>{props.service.rack} - {props.service.pat} - {props.service.pos} </div>
-                                <div> <b>Dist: </b>{props.service.distance} </div>
+                                <div> <b>Patcheo: </b>{props.service.rack} - {props.service.patchera} - {props.service.position} </div>
+                                <div> <b>Dist: </b>{props.service.dist} </div>
                                 <div> <b>Att: </b>{props.service.att} </div>
                             </Col>
                         </Row>
@@ -142,17 +142,17 @@ function RenderL2VPN(props) {
                 <Accordion.Collapse eventKey={props.idx}>
                     <Card.Body>
                         <Row>
-                            <Col>
-                                <Card.Title>Datos</Card.Title>
+                            <Col md={4} className="mx-auto" >
+                                <Card.Title> Datos </Card.Title>
                                 <div> <b>Servicio: </b>{` ${props.service.service} - ${props.service.plan} Mbps`} </div>
                                 <div> <b>Tecnología: </b> <Badge variant="primary"> {` ${props.service.medium}`} </Badge> </div>
-                                <div> <b>Equipo: </b>  {props.service.device}</div>
-                                <div> <b>Interfaz: </b> {props.service.interfaz} </div>
+                                <div> <b>HUB: </b> {props.service.hub} </div>
+                                <div> <b>CMTS: </b> {props.service.cmts} </div>
+                                <div> <b>MAC: </b>  {props.service.mac} </div>
                             </Col>
-                            <Col>
+                            <Col md={4} className="mx-auto" >
                                 <Card.Title>TLS</Card.Title>
                                 <div> <b>Tipo: </b> {` ${props.service.mode}`} </div>
-                                {/* <div> <b>Contra: </b>{props.service.sites} </div> */}
                                 <div> <b>Contra: </b>{props.service.sites.split(',').map(site => <Badge variant="secondary" className="mx-1">{site}</Badge>)} </div>
                                 <div> <b>VLAN: </b>{props.service.vlan} </div>
                             </Col>
