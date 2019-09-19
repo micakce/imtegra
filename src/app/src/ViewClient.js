@@ -71,7 +71,6 @@ export default class ViewClient extends Component {
                     'Content-Type': 'application/json'
                 }
             })
-                .then(res => console.log(res))
                 .then(() => this.searchClient(null, this.state.abonado))
         }
     }
@@ -86,40 +85,21 @@ export default class ViewClient extends Component {
                 <Card>
                     <Card.Header as="h5">Datos del Cliente</Card.Header>
                     <Card.Body>
-                        <Card.Title>
-                            <Row>
-                                <Col> {`${this.state.abonado} - ${this.state.name}`} </Col>
-                                <Col> Informacion de Contacto </Col>
-                                <Col> Contacto Tecnico </Col>
-                            </Row>
-                        </Card.Title>
                         <Row>
                             <Col>
-                                <Row>
-                                    <Col><b>Domicilio:</b> {` ${this.state.address.street}, ${this.state.address.apto}`} </Col>
-                                </Row>
-                                <Row>
-                                    <Col><b>Localidad:</b> {` ${this.state.address.location}, ${this.state.address.city}`} </Col>
-                                </Row>
-                                <Row></Row>
+                                <Card.Title> {`${this.state.abonado} - ${this.state.name}`} </Card.Title>
+                                <div><b>Domicilio:</b> {` ${this.state.address.street}, ${this.state.address.apto}`} </div>
+                                <div><b>Localidad:</b> {` ${this.state.address.location}, ${this.state.address.city}`} </div>
                             </Col>
                             <Col>
-                                <Row>
-                                    <Col><b>Telefono:</b> {` ${this.state.telefono}`}</Col>
-                                </Row>
-                                <Row>
-                                    <Col><b>Email:</b> {` ${this.state.email}`} </Col>
-                                </Row>
-                                <Row></Row>
+                                <Card.Title> Informacion de Contacto </Card.Title>
+                                <div><b>Telefono:</b> {` ${this.state.telefono}`}</div>
+                                <div><b>Email:</b> {` ${this.state.email}`} </div>
                             </Col>
                             <Col>
-                                <Row>
-                                    <Col><b>Domicilio:</b> {` ${this.state.address.street}, ${this.state.address.apto}`} </Col>
-                                </Row>
-                                <Row>
-                                    <Col><b>Localidad:</b> {` ${this.state.address.location}, ${this.state.address.city}`} </Col>
-                                </Row>
-                                <Row></Row>
+                                <Card.Title> Contacto Tecnico </Card.Title>
+                                <div><b>Domicilio:</b> {` ${this.state.address.street}, ${this.state.address.apto}`} </div>
+                                <div><b>Localidad:</b> {` ${this.state.address.location}, ${this.state.address.city}`} </div>
                             </Col>
                         </Row>
                     </Card.Body>
@@ -129,27 +109,27 @@ export default class ViewClient extends Component {
                     <Card.Header as="h5">Servicios</Card.Header>
                     <Card.Body>
                         <Accordion >
-                            {this.state.services.map((service, idx) => {
-                                const WrappedAddServiceModal = () => {
-                                    return <AddServiceModal id={service._id} idx={idx} action={"Edit"} hardware={this.state.hardware} service={service} reload={this.searchClient} abonado={this.state.abonado} />
-                                }
-                                if (service.service === "ADI") {
+                            {
+                                this.state.services.map((service, idx) => {
+                                    const WrappedAddServiceModal = () => {
+                                        return <AddServiceModal id={service._id} idx={idx} action={"Edit"} hardware={this.state.hardware} service={service} reload={this.searchClient} abonado={this.state.abonado} />
+                                    }
+                                    if (service.service === "ADI") {
 
-                                    return (
-                                        <RenderADI id={service._id} deleteService={this.deleteService} wrapped={WrappedAddServiceModal} service={service} idx={idx} />
-                                    )
-                                } else if (service.service === "L2VPN") {
-                                    return (
-                                        <RenderL2VPN id={service._id} deleteService={this.deleteService} wrapped={WrappedAddServiceModal} service={service} idx={idx} />
-                                    )
-                                } else if (service.service === "TTT") {
-                                    return (
-                                        <RenderTTT id={service._id} deleteService={this.deleteService} wrapped={WrappedAddServiceModal} service={service} idx={idx} />
-                                    )
-                                } else {
-                                    return (<div style={{ display: 'flex', justifyContent: 'center' }}><h3 >Agrega un Servicio</h3></div>)
-                                }
-                            })}
+                                        return (
+                                            <RenderADI id={service._id} deleteService={this.deleteService} wrapped={WrappedAddServiceModal} service={service} idx={idx} />
+                                        )
+                                    } else if (service.service === "L2VPN") {
+                                        return (
+                                            <RenderL2VPN id={service._id} deleteService={this.deleteService} wrapped={WrappedAddServiceModal} service={service} idx={idx} />
+                                        )
+                                    } else if (service.service === "TTT") {
+                                        return (
+                                            <RenderTTT id={service._id} deleteService={this.deleteService} wrapped={WrappedAddServiceModal} service={service} idx={idx} />
+                                        )
+                                    }
+                                })
+                            }
                             <br></br>
                             <AddServiceModal action={"Agregar Servicio"} reload={this.searchClient} hardware={this.state.hardware} abonado={this.state.abonado} />
                         </Accordion>
@@ -160,14 +140,17 @@ export default class ViewClient extends Component {
                     <Card.Header as="h5">Hardware</Card.Header>
                     <Card.Body>
                         <Accordion >
-                            {this.state.hardware.map((device, idx) => {
-                                const WrappedAddHardwareModal = () => {
-                                    return <AddHardwareModal id={device._id} idx={idx} action={"Edit"} device={device} reload={this.searchClient} abonado={this.state.abonado} />
-                                }
-                                return (
-                                    <RenderHardware id={device._id} deleteDevice={this.deleteDevice} wrapped={WrappedAddHardwareModal} device={device} idx={idx} />
-                                )
-                            })}
+                            {
+                                this.state.hardware.map((device, idx) => {
+                                    const WrappedAddHardwareModal = () => {
+                                        return <AddHardwareModal id={device._id} idx={idx} action={"Edit"} device={device} reload={this.searchClient} abonado={this.state.abonado} />
+                                    }
+                                    return (
+                                        <RenderHardware id={device._id} deleteDevice={this.deleteDevice} wrapped={WrappedAddHardwareModal} device={device} idx={idx} />
+                                    )
+                                })
+                            }
+                            <br></br>
                             <AddHardwareModal action={"Agregar Dispositivo"} reload={this.searchClient} abonado={this.state.abonado} />
                         </Accordion>
                     </Card.Body>

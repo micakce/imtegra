@@ -30,14 +30,17 @@ function RenderADI(props) {
                                 <Card.Title> Monitoria </Card.Title>
                                 <div> <b>IP: </b>{props.service.ip_mon} </div>
                                 <div> <b>DG: </b>{props.service.dg_mon} </div>
+                                <div> <b>Mask: </b>{props.service.mask_mon} </div>
                                 <div> <b>VLAN: </b> {props.service.vlan_mon} </div>
                             </Col>
                             <Col>
-                                <Card.Title> Obra </Card.Title>
-                                <div> <b>Hub: </b>{props.service.hub} </div>
+                                <Card.Title>Patcheo</Card.Title>
+                                <div> <b>Hub: </b>{props.service.hub} {props.service.obra ? `/${props.service.obra}` : ""}</div>
                                 <div> <b>Patcheo: </b>{props.service.rack} - {props.service.patchera} - {props.service.position} </div>
-                                <div> <b>Dist: </b>{props.service.dist} </div>
-                                <div> <b>Att: </b>{props.service.att} </div>
+                                <div> <b>Switch: </b>{props.service.nexus} </div>
+                                <div> <b>Port: </b>{props.service.nexus_port} </div>
+                                <div> <b>Dist: </b>{props.service.dist ? `${props.service.dist} mts` : ""} </div>
+                                <div> <b>Att: </b>{props.service.att ? `${props.service.att} dB` : ""} </div>
                             </Col>
                         </Row>
 
@@ -115,13 +118,16 @@ function RenderL2VPN(props) {
                                 <div> <b>IP: </b>{props.service.ip_mon} </div>
                                 <div> <b>DG: </b>{props.service.dg_mon} </div>
                                 <div> <b>Mask: </b>{props.service.mask_mon} </div>
+                                <div> <b>VLAN: </b> {props.service.vlan_mon} </div>
                             </Col>
                             <Col>
-                                <Card.Title> Obra </Card.Title>
-                                <div> <b>Hub: </b>{props.service.hub} </div>
-                                <div> <b>Patcheo: </b>{props.service.rack} - {props.service.pat} - {props.service.pos} </div>
-                                <div> <b>Dist: </b>{props.service.distance} </div>
-                                <div> <b>Att: </b>{props.service.att} </div>
+                                <Card.Title>Patcheo</Card.Title>
+                                <div> <b>Hub: </b>{props.service.hub} {props.service.obra ? `/ ${props.service.obra}` : ""}</div>
+                                <div> <b>Patcheo: </b>{props.service.rack} - {props.service.patchera} - {props.service.position} </div>
+                                <div> <b>Switch: </b>{props.service.nexus} </div>
+                                <div> <b>Port: </b>{props.service.nexus_port} </div>
+                                <div> <b>Dist: </b>{props.service.dist ? `${props.service.dist} mts` : ""} </div>
+                                <div> <b>Att: </b>{props.service.att ? `${props.service.att} dB` : ""} </div>
                             </Col>
                         </Row>
                         <br></br>
@@ -169,55 +175,99 @@ function RenderL2VPN(props) {
 }
 
 function RenderTTT(props) {
-
-    return (
-        <Card>
-            <Accordion.Toggle as={Card.Header} eventKey={props.idx}>
-                <b>{`${props.service.service} - ${props.service.plan}`}</b>
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey={props.idx}>
-                <Card.Body>
-                    <Card.Title>
+    if (props.service.medium === "FO") {
+        return (
+            <Card>
+                <Accordion.Toggle as={Card.Header} eventKey={props.idx}>
+                    <b>{`${props.service.service} - ${props.service.plan}`}</b>
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey={props.idx}>
+                    <Card.Body >
                         <Row>
-                            <Col> Datos </Col>
-                            <Col> Direccionamiento </Col>
-                            <Col> Rango Numerico </Col>
+                            <Col>
+                                <Card.Title> Datos </Card.Title>
+                                <div> <b>Servicio: </b>{` ${props.service.service} - ${props.service.plan} Mbps`} </div>
+                                <div> <b>Tecnología: </b> <Badge variant="warning"> {` ${props.service.medium}`} </Badge> </div>
+                                <div> <b>Equipo: </b>  {props.service.device}</div>
+                                <div> <b>Interfaz: </b> {props.service.interfaz} </div>
+                                <div> <b>Cabecera: </b> {props.service.nhead} </div>
+                                <div> <b>Cola: </b> {props.service.ntale} </div>
+                            </Col>
+                            <Col>
+                                <Card.Title> Direccionamiento </Card.Title>
+                                <div> <b>Red: </b>{props.service.red} </div>
+                                <div> <b>IP: </b>{props.service.ip} </div>
+                                <div> <b>DG: </b>{props.service.dg} </div>
+                                <div> <b>Mask: </b>{props.service.mask} </div>
+                                <div> <b>VLAN: </b>{props.service.vlan} </div>
+                            </Col>
+                            <Col>
+                                <Card.Title> Monitoria </Card.Title>
+                                <div> <b>IP: </b>{props.service.ip_mon} </div>
+                                <div> <b>DG: </b>{props.service.dg_mon} </div>
+                                <div> <b>Mask: </b>{props.service.mask_mon} </div>
+                                <div> <b>VLAN: </b> {props.service.vlan_mon} </div>
+                            </Col>
+                            <Col>
+                                <Card.Title>Patcheo</Card.Title>
+                                <div> <b>Hub: </b>{props.service.hub} {props.service.obra ? `/${props.service.obra}` : ""}</div>
+                                <div> <b>Patcheo: </b>{props.service.rack} - {props.service.patchera} - {props.service.position} </div>
+                                <div> <b>Switch: </b>{props.service.nexus} </div>
+                                <div> <b>Port: </b>{props.service.nexus_port} </div>
+                                <div> <b>Dist: </b>{props.service.dist ? `${props.service.dist} mts` : ""} </div>
+                                <div> <b>Att: </b>{props.service.att ? `${props.service.att} dB` : ""} </div>
+                            </Col>
                         </Row>
-                    </Card.Title>
-                    <Row>
-                        <Col> <b>Servicio: </b>{` ${props.service.service} - ${props.service.plan}`} </Col>
-                        <Col> <b>Red: </b>{props.service.red} </Col>
-                        <Col> <b> Head: </b>{props.service.nhead} </Col>
-                    </Row>
-                    <Row>
-                        <div> <b>Tecnología: </b> <Badge variant="warning"> {` ${props.service.medium}`} </Badge> </div>
-                        <Col> <b>IP: </b>{props.service.ip} </Col>
-                        <Col> <b> Tale: </b>{props.service.ntale} </Col>
-                    </Row>
-                    <Row>
-                        <Col> <b>Equipo: </b>  {props.service.device}</Col>
-                        <Col> </Col>
-                        <Col> <b> DG: </b>{props.service.dg} </Col>
-                    </Row>
-                    <Row>
-                        <Col> </Col>
-                        <Col> <b>Mask: </b>{props.service.mask} </Col>
-                        <Col> </Col>
-                    </Row>
-                    <Row>
-                        <Col> </Col>
-                        <Col> <b>VLAN: </b>{props.service.vlan} </Col>
-                        <Col> </Col>
-                    </Row>
-                    <br></br>
-                    <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
-                    {' '}
-                    {props.wrapped()}
-                </Card.Body>
 
-            </Accordion.Collapse>
-        </Card>
-    )
+                        <br></br>
+                        <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
+                        {' '}
+                        {props.wrapped()}
+                    </Card.Body>
+                </Accordion.Collapse>
+            </Card>
+        )
+
+    } else if (props.service.medium === "CO") {
+        return (
+            <Card>
+                <Accordion.Toggle as={Card.Header} eventKey={props.idx}>
+                    <b>{`${props.service.service} - ${props.service.plan}`}</b>
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey={props.idx}>
+                    <Card.Body >
+                        <Row >
+                            <Col md={3} sm={12} className="mx-auto" >
+                                <Card.Title> Datos </Card.Title>
+                                <div> <b>Servicio: </b>{` ${props.service.service} - ${props.service.plan} Mbps`} </div>
+                                <div> <b>Tecnología: </b> <Badge variant="primary"> {` ${props.service.medium}`} </Badge> </div>
+                                <div> <b>Cabecera: </b>{props.service.nhead} </div>
+                                <div> <b>Cola: </b>{props.service.ntale} </div>
+                            </Col>
+                            <Col md={3} sm={12} className="mx-auto" >
+                                <Card.Title> Direccionamiento </Card.Title>
+                                <div> <b>Red: </b>{props.service.red} </div>
+                                <div> <b>IP: </b>{props.service.ip} </div>
+                                <div> <b>DG: </b>{props.service.dg} </div>
+                                <div> <b>Mask: </b>{props.service.mask} </div>
+                                <div> <b>VLAN: </b> {props.service.vlan} </div>
+                            </Col>
+                            <Col md={3} sm={12} className="mx-auto" >
+                                <Card.Title> Equipamiento </Card.Title>
+                                <div> <b>HUB: </b> {props.service.hub} </div>
+                                <div> <b>CMTS: </b> {props.service.cmts} </div>
+                                <div> <b>MAC: </b>  {props.service.mac} </div>
+                            </Col>
+                        </Row>
+                        <br ></br>
+                        <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
+                        {' '}
+                        {props.wrapped()}
+                    </Card.Body>
+                </Accordion.Collapse>
+            </Card>
+        )
+    }
 }
 
 function RenderHardware(props) {
