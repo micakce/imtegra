@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TabPane, Modal, Button } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import AddService from './AddService';
 
 function AddServiceModal(props) {
@@ -30,8 +30,7 @@ function AddServiceModal(props) {
                             hardware={props.hardware}
                             reload={props.reload}
                             service={props.service}
-                            toggle={handleClose}
-                        />
+                            toggle={handleClose} />
                     </Modal.Body>
             </Modal>
         </>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Col, Row, Tabs, Tab } from 'react-bootstrap';
+import { Button, Form, Col, Tabs, Tab } from 'react-bootstrap';
 
 
 class AddService extends Component {
@@ -191,113 +191,113 @@ class AddService extends Component {
                                         placeholder="" >
                                         <option>...</option>
                                         {this.props.hardware.length > 0
-                                            ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
-                                            : <option>No hay equipos asociados </option>}
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group as={Col} controlId="">
-                                    <Form.Label>Interfaz</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.interfaz}
-                                        name="interfaz"
-                                        onChange={this.handleChange}
-                                        type="text"
-                                        placeholder="Gi1" />
-                                </Form.Group>
-                                <Form.Group as={Col} controlId="">
-                                    <Form.Label>VLAN</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.vlan}
-                                        name="vlan"
-                                        onChange={this.handleChange}
-                                        type="text"
-                                        placeholder="VLAN del Servicio" />
-                                </Form.Group>
-                            </Form.Row>
-                        </Tab>
+                                                ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
+                                                : <option>No hay equipos asociados </option>}
+                                            </Form.Control>
+                                        </Form.Group>
+                                        <Form.Group as={Col} controlId="">
+                                            <Form.Label>Interfaz</Form.Label>
+                                            <Form.Control
+                                                size="sm"
+                                                value={this.state.interfaz}
+                                                name="interfaz"
+                                                onChange={this.handleChange}
+                                                type="text"
+                                                placeholder="Gi1" />
+                                        </Form.Group>
+                                        <Form.Group as={Col} controlId="">
+                                            <Form.Label>VLAN</Form.Label>
+                                            <Form.Control
+                                                size="sm"
+                                                value={this.state.vlan}
+                                                name="vlan"
+                                                onChange={this.handleChange}
+                                                type="text"
+                                                placeholder="VLAN del Servicio" />
+                                        </Form.Group>
+                                    </Form.Row>
+                                </Tab>
 
-                        <Tab eventKey="patcheo" title="Patcheo" >
-                            <br></br>
-                            <Form.Row>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Rack</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.rack}
-                                        name="rack"
-                                        onChange={this.handleChange}
-                                        placeholder="Rack/FDF" >
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Patchera</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.patchera}
-                                        name="patchera"
-                                        onChange={this.handleChange}
-                                        placeholder="Patchera" >
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Posición</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.position}
-                                        name="position"
-                                        onChange={this.handleChange}
-                                        placeholder="Posicion" >
-                                    </Form.Control>
-                                </Form.Group>
-                            </Form.Row>
+                                <Tab eventKey="patcheo" title="Patcheo" >
+                                    <br></br>
+                                    <Form.Row>
+                                        <Form.Group as={Col} >
+                                            <Form.Label>Rack</Form.Label>
+                                            <Form.Control
+                                                size="sm"
+                                                value={this.state.rack}
+                                                name="rack"
+                                                onChange={this.handleChange}
+                                                placeholder="Rack/FDF" >
+                                            </Form.Control>
+                                        </Form.Group>
+                                        <Form.Group as={Col} >
+                                            <Form.Label>Patchera</Form.Label>
+                                            <Form.Control
+                                                size="sm"
+                                                value={this.state.patchera}
+                                                name="patchera"
+                                                onChange={this.handleChange}
+                                                placeholder="Patchera" >
+                                            </Form.Control>
+                                        </Form.Group>
+                                        <Form.Group as={Col} >
+                                            <Form.Label>Posición</Form.Label>
+                                            <Form.Control
+                                                size="sm"
+                                                value={this.state.position}
+                                                name="position"
+                                                onChange={this.handleChange}
+                                                placeholder="Posicion" >
+                                            </Form.Control>
+                                        </Form.Group>
+                                    </Form.Row>
 
-                            <Form.Row>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Distancia</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.dist}
-                                        name="dist"
-                                        onChange={this.handleChange}
-                                        placeholder="en mts" >
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Att</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.att}
-                                        name="att"
-                                        onChange={this.handleChange}
-                                        placeholder="en dB" >
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Switch</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.nexus}
-                                        name="nexus"
-                                        onChange={this.handleChange}
-                                        placeholder="Switch en HUB" >
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Puerto</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.nexus_port}
-                                        name="nexus_port"
-                                        onChange={this.handleChange}
-                                        placeholder="Numero de puerto" >
-                                    </Form.Control>
-                                </Form.Group>
-                            </Form.Row>
-                        </Tab>
+                                    <Form.Row>
+                                        <Form.Group as={Col} >
+                                            <Form.Label>Distancia</Form.Label>
+                                            <Form.Control
+                                                size="sm"
+                                                value={this.state.dist}
+                                                name="dist"
+                                                onChange={this.handleChange}
+                                                placeholder="en mts" >
+                                            </Form.Control>
+                                        </Form.Group>
+                                        <Form.Group as={Col} >
+                                            <Form.Label>Att</Form.Label>
+                                            <Form.Control
+                                                size="sm"
+                                                value={this.state.att}
+                                                name="att"
+                                                onChange={this.handleChange}
+                                                placeholder="en dB" >
+                                            </Form.Control>
+                                        </Form.Group>
+                                        <Form.Group as={Col} >
+                                            <Form.Label>Switch</Form.Label>
+                                            <Form.Control
+                                                size="sm"
+                                                value={this.state.nexus}
+                                                name="nexus"
+                                                onChange={this.handleChange}
+                                                placeholder="Switch en HUB" >
+                                            </Form.Control>
+                                        </Form.Group>
+                                        <Form.Group as={Col} >
+                                            <Form.Label>Puerto</Form.Label>
+                                            <Form.Control
+                                                size="sm"
+                                                value={this.state.nexus_port}
+                                                name="nexus_port"
+                                                onChange={this.handleChange}
+                                                placeholder="Numero de puerto" >
+                                            </Form.Control>
+                                        </Form.Group>
+                                    </Form.Row>
+                                </Tab>
 
-                    </Tabs>
+                            </Tabs>
 
                 )
             } else if (this.state.medium === "CO") {
@@ -391,7 +391,7 @@ class AddService extends Component {
                                     value={this.state.cmts}
                                     name="cmts"
                                     onChange={this.handleChange}
-                                    placeholder="0000.0055.5555" />
+                                    placeholder="" />
                             </Form.Group>
                             <Form.Group md={5} as={Col} controlId="">
                                 <Form.Label>MAC</Form.Label>
@@ -492,113 +492,113 @@ class AddService extends Component {
                             </Form.Group>
                         </Form.Row> */}
 
-                            <Form.Row>
-                                <Form.Group as={Col} controlId="">
-                                    <Form.Label>Equipo</Form.Label>
-                                    <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
-                                        <option>...</option>
-                                        {this.props.hardware.length > 0
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="">
+                                <Form.Label>Equipo</Form.Label>
+                                <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
+                                    <option>...</option>
+                                    {this.props.hardware.length > 0
                                             ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
                                             : <option>No hay equipos asociados </option>}
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group as={Col} controlId="">
-                                    <Form.Label>Interfaz</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.interfaz}
-                                        name="interfaz"
-                                        onChange={this.handleChange}
-                                        type="text"
-                                        placeholder="Gi1" />
-                                </Form.Group>
-                                <Form.Group as={Col} controlId="">
-                                    <Form.Label>VLAN</Form.Label>
-                                    <Form.Control size="sm" value={this.state.vlan} name="vlan" onChange={this.handleChange} type="text" placeholder="VLAN del Servicio" />
-                                </Form.Group>
-                            </Form.Row>
-                        </Tab>
+                                        </Form.Control>
+                                    </Form.Group>
+                                    <Form.Group as={Col} controlId="">
+                                        <Form.Label>Interfaz</Form.Label>
+                                        <Form.Control
+                                            size="sm"
+                                            value={this.state.interfaz}
+                                            name="interfaz"
+                                            onChange={this.handleChange}
+                                            type="text"
+                                            placeholder="Gi1" />
+                                    </Form.Group>
+                                    <Form.Group as={Col} controlId="">
+                                        <Form.Label>VLAN</Form.Label>
+                                        <Form.Control size="sm" value={this.state.vlan} name="vlan" onChange={this.handleChange} type="text" placeholder="VLAN del Servicio" />
+                                    </Form.Group>
+                                </Form.Row>
+                            </Tab>
 
-                        <Tab eventKey="patcheo" title="Patcheo" >
-                            <br></br>
-                            <Form.Row>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Rack</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.rack}
-                                        name="rack"
-                                        onChange={this.handleChange}
-                                        placeholder="Rack/FDF" >
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Patchera</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.patchera}
-                                        name="patchera"
-                                        onChange={this.handleChange}
-                                        placeholder="Patchera" >
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Posición</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.position}
-                                        name="position"
-                                        onChange={this.handleChange}
-                                        placeholder="Posicion" >
-                                    </Form.Control>
-                                </Form.Group>
-                            </Form.Row>
+                            <Tab eventKey="patcheo" title="Patcheo" >
+                                <br></br>
+                                <Form.Row>
+                                    <Form.Group as={Col} >
+                                        <Form.Label>Rack</Form.Label>
+                                        <Form.Control
+                                            size="sm"
+                                            value={this.state.rack}
+                                            name="rack"
+                                            onChange={this.handleChange}
+                                            placeholder="Rack/FDF" >
+                                        </Form.Control>
+                                    </Form.Group>
+                                    <Form.Group as={Col} >
+                                        <Form.Label>Patchera</Form.Label>
+                                        <Form.Control
+                                            size="sm"
+                                            value={this.state.patchera}
+                                            name="patchera"
+                                            onChange={this.handleChange}
+                                            placeholder="Patchera" >
+                                        </Form.Control>
+                                    </Form.Group>
+                                    <Form.Group as={Col} >
+                                        <Form.Label>Posición</Form.Label>
+                                        <Form.Control
+                                            size="sm"
+                                            value={this.state.position}
+                                            name="position"
+                                            onChange={this.handleChange}
+                                            placeholder="Posicion" >
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Form.Row>
 
-                            <Form.Row>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Distancia</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.dist}
-                                        name="dist"
-                                        onChange={this.handleChange}
-                                        placeholder="en mts" >
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Att</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.att}
-                                        name="att"
-                                        onChange={this.handleChange}
-                                        placeholder="en dB" >
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Switch</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.nexus}
-                                        name="nexus"
-                                        onChange={this.handleChange}
-                                        placeholder="Switch en HUB" >
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Puerto</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.nexus_port}
-                                        name="nexus_port"
-                                        onChange={this.handleChange}
-                                        placeholder="Numero de puerto" >
-                                    </Form.Control>
-                                </Form.Group>
-                            </Form.Row>
-                        </Tab>
+                                <Form.Row>
+                                    <Form.Group as={Col} >
+                                        <Form.Label>Distancia</Form.Label>
+                                        <Form.Control
+                                            size="sm"
+                                            value={this.state.dist}
+                                            name="dist"
+                                            onChange={this.handleChange}
+                                            placeholder="en mts" >
+                                        </Form.Control>
+                                    </Form.Group>
+                                    <Form.Group as={Col} >
+                                        <Form.Label>Att</Form.Label>
+                                        <Form.Control
+                                            size="sm"
+                                            value={this.state.att}
+                                            name="att"
+                                            onChange={this.handleChange}
+                                            placeholder="en dB" >
+                                        </Form.Control>
+                                    </Form.Group>
+                                    <Form.Group as={Col} >
+                                        <Form.Label>Switch</Form.Label>
+                                        <Form.Control
+                                            size="sm"
+                                            value={this.state.nexus}
+                                            name="nexus"
+                                            onChange={this.handleChange}
+                                            placeholder="Switch en HUB" >
+                                        </Form.Control>
+                                    </Form.Group>
+                                    <Form.Group as={Col} >
+                                        <Form.Label>Puerto</Form.Label>
+                                        <Form.Control
+                                            size="sm"
+                                            value={this.state.nexus_port}
+                                            name="nexus_port"
+                                            onChange={this.handleChange}
+                                            placeholder="Numero de puerto" >
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Form.Row>
+                            </Tab>
 
-                    </Tabs >
+                        </Tabs >
                 )
             } else if (this.state.medium === "CO") {
 
@@ -815,113 +815,113 @@ class AddService extends Component {
                                         placeholder="" >
                                         <option>...</option>
                                         {this.props.hardware.length > 0
-                                            ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
-                                            : <option>No hay equipos asociados </option>}
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group as={Col} controlId="">
-                                    <Form.Label>Interfaz</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.interfaz}
-                                        name="interfaz"
-                                        onChange={this.handleChange}
-                                        type="text"
-                                        placeholder="Gi1" />
-                                </Form.Group>
-                                <Form.Group as={Col} controlId="">
-                                    <Form.Label>VLAN</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.vlan}
-                                        name="vlan"
-                                        onChange={this.handleChange}
-                                        type="text"
-                                        placeholder="VLAN del Servicio" />
-                                </Form.Group>
-                            </Form.Row>
-                        </Tab>
+                                                ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
+                                                : <option>No hay equipos asociados </option>}
+                                            </Form.Control>
+                                        </Form.Group>
+                                        <Form.Group as={Col} controlId="">
+                                            <Form.Label>Interfaz</Form.Label>
+                                            <Form.Control
+                                                size="sm"
+                                                value={this.state.interfaz}
+                                                name="interfaz"
+                                                onChange={this.handleChange}
+                                                type="text"
+                                                placeholder="Gi1" />
+                                        </Form.Group>
+                                        <Form.Group as={Col} controlId="">
+                                            <Form.Label>VLAN</Form.Label>
+                                            <Form.Control
+                                                size="sm"
+                                                value={this.state.vlan}
+                                                name="vlan"
+                                                onChange={this.handleChange}
+                                                type="text"
+                                                placeholder="VLAN del Servicio" />
+                                        </Form.Group>
+                                    </Form.Row>
+                                </Tab>
 
-                        <Tab eventKey="patcheo" title="Patcheo" >
-                            <br></br>
-                            <Form.Row>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Rack</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.rack}
-                                        name="rack"
-                                        onChange={this.handleChange}
-                                        placeholder="Rack/FDF" >
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Patchera</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.patchera}
-                                        name="patchera"
-                                        onChange={this.handleChange}
-                                        placeholder="Patchera" >
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Posición</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.position}
-                                        name="position"
-                                        onChange={this.handleChange}
-                                        placeholder="Posicion" >
-                                    </Form.Control>
-                                </Form.Group>
-                            </Form.Row>
+                                <Tab eventKey="patcheo" title="Patcheo" >
+                                    <br></br>
+                                    <Form.Row>
+                                        <Form.Group as={Col} >
+                                            <Form.Label>Rack</Form.Label>
+                                            <Form.Control
+                                                size="sm"
+                                                value={this.state.rack}
+                                                name="rack"
+                                                onChange={this.handleChange}
+                                                placeholder="Rack/FDF" >
+                                            </Form.Control>
+                                        </Form.Group>
+                                        <Form.Group as={Col} >
+                                            <Form.Label>Patchera</Form.Label>
+                                            <Form.Control
+                                                size="sm"
+                                                value={this.state.patchera}
+                                                name="patchera"
+                                                onChange={this.handleChange}
+                                                placeholder="Patchera" >
+                                            </Form.Control>
+                                        </Form.Group>
+                                        <Form.Group as={Col} >
+                                            <Form.Label>Posición</Form.Label>
+                                            <Form.Control
+                                                size="sm"
+                                                value={this.state.position}
+                                                name="position"
+                                                onChange={this.handleChange}
+                                                placeholder="Posicion" >
+                                            </Form.Control>
+                                        </Form.Group>
+                                    </Form.Row>
 
-                            <Form.Row>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Distancia</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.dist}
-                                        name="dist"
-                                        onChange={this.handleChange}
-                                        placeholder="en mts" >
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Att</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.att}
-                                        name="att"
-                                        onChange={this.handleChange}
-                                        placeholder="en dB" >
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Switch</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.nexus}
-                                        name="nexus"
-                                        onChange={this.handleChange}
-                                        placeholder="Switch en HUB" >
-                                    </Form.Control>
-                                </Form.Group>
-                                <Form.Group as={Col} >
-                                    <Form.Label>Puerto</Form.Label>
-                                    <Form.Control
-                                        size="sm"
-                                        value={this.state.nexus_port}
-                                        name="nexus_port"
-                                        onChange={this.handleChange}
-                                        placeholder="Numero de puerto" >
-                                    </Form.Control>
-                                </Form.Group>
-                            </Form.Row>
-                        </Tab>
+                                    <Form.Row>
+                                        <Form.Group as={Col} >
+                                            <Form.Label>Distancia</Form.Label>
+                                            <Form.Control
+                                                size="sm"
+                                                value={this.state.dist}
+                                                name="dist"
+                                                onChange={this.handleChange}
+                                                placeholder="en mts" >
+                                            </Form.Control>
+                                        </Form.Group>
+                                        <Form.Group as={Col} >
+                                            <Form.Label>Att</Form.Label>
+                                            <Form.Control
+                                                size="sm"
+                                                value={this.state.att}
+                                                name="att"
+                                                onChange={this.handleChange}
+                                                placeholder="en dB" >
+                                            </Form.Control>
+                                        </Form.Group>
+                                        <Form.Group as={Col} >
+                                            <Form.Label>Switch</Form.Label>
+                                            <Form.Control
+                                                size="sm"
+                                                value={this.state.nexus}
+                                                name="nexus"
+                                                onChange={this.handleChange}
+                                                placeholder="Switch en HUB" >
+                                            </Form.Control>
+                                        </Form.Group>
+                                        <Form.Group as={Col} >
+                                            <Form.Label>Puerto</Form.Label>
+                                            <Form.Control
+                                                size="sm"
+                                                value={this.state.nexus_port}
+                                                name="nexus_port"
+                                                onChange={this.handleChange}
+                                                placeholder="Numero de puerto" >
+                                            </Form.Control>
+                                        </Form.Group>
+                                    </Form.Row>
+                                </Tab>
 
-                    </Tabs>
+                            </Tabs>
                 )
             } else if (this.state.medium === "CO") {
 
@@ -1099,7 +1099,7 @@ class AddService extends Component {
                 <Button variant="warning" type="submit" onClick={this.addService}>
                     Save
                 </Button>
-            </Form >
+            </Form>
         )
     }
 }
