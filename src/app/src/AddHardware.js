@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Col, Row } from 'react-bootstrap';
+import { Button, Form, Col } from 'react-bootstrap';
 
 class AddHardware extends Component {
     constructor(props) {

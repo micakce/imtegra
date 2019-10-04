@@ -22,15 +22,38 @@ export default class AddClient extends Component {
       const name_value = name.match(/\.(\D+)/)[1];
       if (name_key === 'address') {
         this.setState({ [name_key]: { ...this.state[name_key], [name_value]: value } });
-        console.log(name_key, name_value, this.state[name_key])
-      } else if (name_key === 'services') {
-        if (this.state.services && this.state.services.length < 2) {
-          this.setState({
-            [name_key]: [{ ...this.state.services[0], [name_value]: value }]
-          })
-        } else {
-          console.log("Only allowed to edit one service over here")
-        }
+      }
+    } else if (name === 'abonado') {
+      this.setState({ [name]: value });
+      if (value.match(/^\d{2}$/)) {
+        fetch(`/clients/client/${value}`)
+          .then(res => res.json())
+          .then(data => {
+            if (!data) {
+              this.setState({
+                validation: {
+                  ...this.state.validation,
+                  abonado: { valid: true, invalid: false },
+                  submit: true
+                }
+              });
+            } else {
+              this.setState({
+                validation: {
+                  ...this.state.validation,
+                  [name]: { valid: false, invalid: true,  message: 'Abonado ya existe' },
+                  submit: false
+                }
+              });
+            }
+          });
+      } else {
+        this.setState({
+          validation: { ...this.state.validation,
+            [name]: { valid: false, invalid: true, message: 'Debe tener al menos x digitos' },
+            submit: false
+          }
+        })
       }
     } else {
       this.setState({
@@ -97,17 +120,20 @@ export default class AddClient extends Component {
   }
 
   render() {
+    const validation = this.state.validation;
     return (
-      <Form>
+      <Form onSubmit={this.addClient} >
         <Form.Row>
-          <Form.Group md="3" as={Col} controlId="">
+          <Form.Group md="3" as={Col} controlId="" >
             <Form.Label>Abonado</Form.Label>
-            <Form.Control value={this.state.abonado} name="abonado" onChange={this.handleChange} type="number" placeholder="5555555" />
+            <Form.Control  isValid={validation.abonado.valid} isInvalid={validation.abonado.invalid} value={this.state.abonado} maxLength="2"  name="abonado" onChange={this.handleChange} type="text" placeholder="5555555" required />
+            <Form.Control.Feedback type="invalid">{validation.abonado.message}</Form.Control.Feedback>
+            <Form.Control.Feedback type="valid">Valido!</Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group md as={Col} controlId="">
             <Form.Label>Nombre</Form.Label>
-            <Form.Control value={this.state.name} name="name" onChange={this.handleChange} type="text" placeholder="Telecentro SA" />
+            <Form.Control value={this.state.name} name="name" onChange={this.handleChange} type="text" placeholder="Telecentro SA" required />
           </Form.Group>
         </Form.Row>
 
@@ -171,12 +197,12 @@ export default class AddClient extends Component {
             <Form.Control value={this.services ? this.services[0].plan : "Nope"} name="services.plan" onChange={this.handleChange} placeholder="" />
           </Form.Group>
         </Form.Row> */}
-        <Button onClick={this.addClient} variant="primary" type="submit">
+        <Button variant="primary" type="submit" disabled={!validation.submit}>
           Submit
         </Button>
-        <Button variant="secondary" onClick={this.props.toggle}>
+        <Button className="ml-1" variant="secondary" onClick={this.props.toggle}>
           Cancel
-          </Button>
+        </Button>
       </Form>
     );
   }
