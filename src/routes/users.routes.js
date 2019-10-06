@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const Client = require('../models/client.js')
-// const Device = require('../models/client')
+const Client = require('../models/client');
+const Service = require('../models/service');
+const Hardware = require('../models/hardware');
 
 router.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -45,27 +46,43 @@ router.put('/clients/:id', async (req, res) => {
 });
 
 router.delete('/clients/:id', async (req, res) => {
-  await Client.findByIdAndDelete(req.params.id);
-  res.send(`Client ${req.body.name} was deleted succesfully`)
+  const { client_id , service_id, what} = req.body
+  if (what === 'service') {
+    await Client.findByIdAndUpdate( client_id, {
+      $pull: {
+        services: { _id: service_id }
+      }
+    });
+    res.send(`Service ${req.body.name} was deleted succesfully`)
+  } else {
+    await Client.findByIdAndDelete(req.params.id);
+    res.send(`Client ${req.body.name} was deleted succesfully`)
+  }
 });
 
 router.put('/clients/service/:id', async (req, res) => {
-  // const { service, plan, red, ip, dg, mask, vlan, vlan_mon, medium, ip_mon, dg_mon, mask_mon, sites, mode, device, nhead, ntale, hub, cmts, mac } = req.body;
-  // const newService = { hub, cmts, mac, service, plan, red, ip, dg, mask, vlan, vlan_mon, medium, ip_mon, dg_mon, mask_mon, sites, mode, device, nhead, ntale };
-  const newService = { ...req.body };
-  const response = await Client.findOneAndUpdate({ abonado: req.params.id }, { $push: { services: newService } });
-  res.send(response);
+  const newService = new Service(req.body);
+  await Client.findOneAndUpdate({ abonado: req.params.id }, { $push: { services: newService } });
+  res.send("Servicio agregado!");
 });
 
 router.put('/clients/service/edit/:id', async (req, res) => {
-  // const { idx, service, plan, red, ip, dg, mask, vlan, vlan_mon, medium, ip_mon, dg_mon, mask_mon, sites, mode, device, nhead, ntale, hub, cmts, mac } = req.body;
-  // const newService = { service, plan, red, ip, dg, mask, vlan, vlan_mon, medium, ip_mon, dg_mon, mask_mon, sites, mode, device, nhead, ntale, hub, cmts, mac };
-  const { idx } = req.body;
-  const newService = { ...req.body };
-  const client = await Client.findOne({ abonado: req.params.id });
-  client.services[idx] = newService;
-  await client.save();
-  res.json(client);
+  const newService = new Service(req.body);
+  Client.findOne(
+    { abonado: req.params.id},
+    function (err, client) {
+      var service = client.services.id(req.body._id)
+      service.set(newService)
+
+      client.save().then(function(savedService) {
+        res.json({ message: "Servicio editado!" });
+      })
+        .catch(function(err) {
+          res.status(500).send(err);
+        })
+
+    }
+  );
 });
 
 router.delete('/clients/service/:id', async (req, res) => {

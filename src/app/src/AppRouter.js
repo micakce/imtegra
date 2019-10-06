@@ -36,7 +36,7 @@ function AppRouter() {
             <Route path="/clients/" exact component={AllClients} />
             <Route path="/clients/implementacion" component={AllClients} />
             <Route path="/clients/add" component={AddClient} />
-            <Route path="/clients/client" component={ViewClient} />
+            <Route path="/clients/client" render={props  => <ViewClient {...props} />} />
         </Router>
 
     );

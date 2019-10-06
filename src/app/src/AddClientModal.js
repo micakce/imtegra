@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import AddClient from './AddClient';
 
-function ECModal(props) {
+function AddClientModal(props) {
   const [show, setShow] = useState(false);
 
-  const handleClose = () => 
+  const handleClose = () =>
   {
-    setShow(false); 
+    setShow(false);
   }
   const handleShow = () => {
     setShow(true);
@@ -31,4 +31,4 @@ function ECModal(props) {
   );
 }
 
-export default ECModal;
+export default AddClientModal;

@@ -481,10 +481,12 @@ class AddService extends Component {
           'Content-Type': 'application/json'
         }
       })
-        .then(() => {
+        .then((res) => {
+          console.log(res.json());
           this.props.toggle();
           this.props.reload();
         })
+        .then(data => console.log(data))
       e.preventDefault();
 
     } else {
