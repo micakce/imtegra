@@ -6,14 +6,15 @@ const ServicioCM = (props) => (
   <React.Fragment>
     <Form.Row>
       <Form.Group as={Col} controlId="">
-        <Form.Label>Velocidad</Form.Label>
+        <Form.Label>{props.modifier ? props.modifier.plan : 'Velocidad'}</Form.Label>
         <Form.Control
           size="sm"
           value={props.state.plan}
           name="plan"
           onChange={props.handleChange}
           type="string"
-          placeholder="en Mbps"
+          placeholder={props.modifier ? props.modifier.placeholder : 'en Mbps'}
+          required
         />
       </Form.Group>
       <Form.Group as={Col} controlId="">
@@ -104,36 +105,38 @@ const ServicioFO = props => (
 
     <Form.Row>
       <Form.Group as={Col} controlId="">
-        <Form.Label>Velocidad</Form.Label>
+        <Form.Label>{props.modifier ? props.modifier.plan : 'Velocidad'}</Form.Label>
         <Form.Control
           size="sm"
           value={props.state.plan}
           name="plan"
           onChange={props.handleChange}
           type="text"
-          placeholder="en Mbps" />
-        </Form.Group>
-        <Form.Group as={Col} controlId="">
-          <Form.Label>HUB</Form.Label>
-          <Form.Control
-            size="sm"
-            value={props.state.hub}
-            name="hub"
-            onChange={props.handleChange}
-            placeholder="HUB" >
-          </Form.Control>
-        </Form.Group>
-        <Form.Group as={Col} controlId="">
-          <Form.Label>Obra</Form.Label>
-          <Form.Control
-            size="sm"
-            value={props.state.obra}
-            name="obra"
-            onChange={props.handleChange}
-            placeholder="XXFO" >
-          </Form.Control>
-        </Form.Group>
-      </Form.Row>
+          placeholder={props.modifier ? props.modifier.placeholder : 'en Mbps'}
+          required
+        />
+      </Form.Group>
+      <Form.Group as={Col} controlId="">
+        <Form.Label>HUB</Form.Label>
+        <Form.Control
+          size="sm"
+          value={props.state.hub}
+          name="hub"
+          onChange={props.handleChange}
+          placeholder="HUB" >
+        </Form.Control>
+      </Form.Group>
+      <Form.Group as={Col} controlId="">
+        <Form.Label>Obra</Form.Label>
+        <Form.Control
+          size="sm"
+          value={props.state.obra}
+          name="obra"
+          onChange={props.handleChange}
+          placeholder="XXFO" >
+        </Form.Control>
+      </Form.Group>
+    </Form.Row>
 
       {props.children}
 
@@ -972,7 +975,7 @@ class AddService extends Component {
             <Tab eventKey="service" title="Service" >
               <br></br>
 
-              <ServicioFO state={this.state} hardware={this.props.hardware} handleChange={this.handleChange}>
+              <ServicioFO state={this.state} modifier={{plan: 'Plan', placeholder: 'Canales/Numeros'}} hardware={this.props.hardware} handleChange={this.handleChange}>
                 <Form.Row>
                   <Form.Group as={Col} controlId="">
                     <Form.Label>Cabecera</Form.Label>
@@ -1016,7 +1019,7 @@ class AddService extends Component {
       } else if (this.state.medium === "CO") {
 
         return (
-          <ServicioCM state={this.state} handleChange={this.handleChange}>
+          <ServicioCM state={this.state} handleChange={this.handleChange} modifier={{plan: 'Plan', placeholder: 'Canales/Numeros'}}>
             <Form.Row>
               <Form.Group as={Col} controlId="">
                 <Form.Label>Cabecera</Form.Label>
@@ -1099,11 +1102,11 @@ class AddService extends Component {
 
   render() {
     return (
-      <Form>
+      <Form  onSubmit={this.addService}>
         <Form.Row className="text-center">
           <Form.Group as={Col} controlId="formGridState" >
             <Form.Label>Servicio</Form.Label>
-            <Form.Control size="sm" name="service" value={this.state.service} onChange={this.handleChange} as="select" >
+            <Form.Control size="sm" name="service" value={this.state.service} onChange={this.handleChange} as="select" required >
               <option>Selecciona un servicio</option>
               <option>ADI</option>
               <option>L2VPN</option>
@@ -1123,6 +1126,7 @@ class AddService extends Component {
                 name="mediumRadios"
                 id="CO"
                 onChange={this.handleChange}
+                required
               />
               <Form.Check
                 type="radio"
@@ -1130,6 +1134,7 @@ class AddService extends Component {
                 name="mediumRadios"
                 id="FO"
                 onChange={this.handleChange}
+                required
               />
             </div>
           </Form.Group>
@@ -1138,7 +1143,7 @@ class AddService extends Component {
         {this.l2vpn()}
         {this.l3vpn()}
         {this.ttt()}
-        <Button variant="warning" type="submit" onClick={this.addService}>
+        <Button variant="warning" type="submit" >
           Save
         </Button>
       </Form>

@@ -7,7 +7,18 @@ export default class AddClient extends Component {
   constructor(props) {
     super(props);
     if (props.client) {
-      this.state = props.client;
+      this.state = {
+        ...props.client,
+        validation: {
+          abonado: {
+            valid: false,
+            invalid: false,
+            message: '' ,
+            editable: false
+          },
+          submit: true
+        } 
+      };
     } else {
       this.state = blankState;
     }
@@ -91,7 +102,6 @@ export default class AddClient extends Component {
         }
       })
         .then(res => {
-          console.log(res.json())
           this.props.toggle();
           this.props.reload();
         })
@@ -111,7 +121,7 @@ export default class AddClient extends Component {
         .then(res => res.json())
         .then(data => {
           console.log(data);
-          this.setState({ ...blankState });
+          this.setState(blankState);
         })
         .catch(err => console.error(err));
       e.preventDefault();
@@ -126,7 +136,7 @@ export default class AddClient extends Component {
         <Form.Row>
           <Form.Group md="3" as={Col} controlId="" >
             <Form.Label>Abonado</Form.Label>
-            <Form.Control  isValid={validation.abonado.valid} isInvalid={validation.abonado.invalid} value={this.state.abonado} maxLength="2"  name="abonado" onChange={this.handleChange} type="text" placeholder="5555555" required />
+            <Form.Control  disabled={!validation.abonado.editable} isValid={validation.abonado.valid} isInvalid={validation.abonado.invalid} value={this.state.abonado} maxLength="2"  name="abonado" onChange={this.handleChange} type="text" placeholder="5555555" required />
             <Form.Control.Feedback type="invalid">{validation.abonado.message}</Form.Control.Feedback>
             <Form.Control.Feedback type="valid">Valido!</Form.Control.Feedback>
           </Form.Group>

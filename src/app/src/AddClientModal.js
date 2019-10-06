@@ -15,7 +15,7 @@ function AddClientModal(props) {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button variant="primary" onClick={handleShow} hidden={props.disableButton} >
       {props.action}
       </Button>
 

@@ -15,8 +15,9 @@ const blankState = {
   im: "",
   status: "Implementacion",
   validation: {
-    abonado: { valid: false, invalid: false, message: '' }
+    abonado: { valid: false, invalid: false, message: '', editable: true }
   },
+    disableButton: true
 }
 
 const dangeloState = {
