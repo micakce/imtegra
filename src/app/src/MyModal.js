@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import AddService from './AddService';
 
 function MyModal(props) {
 

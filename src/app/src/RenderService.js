@@ -1,5 +1,6 @@
 import React from 'react';
 import { Badge, Button, Card, Accordion, Row, Col } from 'react-bootstrap';
+import CreateConfigModal from './CreateConfigModal';
 
 const AccordionToggle = (props) => (
 
@@ -67,6 +68,8 @@ function RenderADI(props) {
             <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
             {' '}
             {props.wrapped()}
+            {' '}
+            <CreateConfigModal service={props} />
           </Card.Body>
         </Accordion.Collapse>
       </Card>

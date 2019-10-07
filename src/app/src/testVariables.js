@@ -17,7 +17,7 @@ const blankState = {
   validation: {
     abonado: { valid: false, invalid: false, message: '', editable: true }
   },
-    disableButton: true
+    hideEditButton: true
 }
 
 const dangeloState = {
@@ -169,4 +169,7 @@ const rogerState = {
   status: "Creado"
 }
 
-export { dangeloState, blankState, rogerState };
+const ADIConfigTemplate = 'conf terminal\n inter gi1 \n ip address {ip} {mask}\n end'
+
+export { dangeloState, blankState, rogerState, ADIConfigTemplate };
+

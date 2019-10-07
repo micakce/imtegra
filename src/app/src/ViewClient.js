@@ -9,18 +9,14 @@ import AddClientModal from './AddClientModal';
 export default class ViewClient extends Component {
 
     constructor(props) {
-        super(props);
+      super(props);
 
-        if (props.client) {
-            this.state = props.state;
-        } else {
-            this.state = blankState;
-        }
+      this.state = blankState;
 
-        this.handleSearchChange = this.handleSearchChange.bind(this);
-        this.searchClient = this.searchClient.bind(this);
-        this.deleteService = this.deleteService.bind(this);
-        this.deleteDevice = this.deleteDevice.bind(this);
+      this.handleSearchChange = this.handleSearchChange.bind(this);
+      this.searchClient = this.searchClient.bind(this);
+      this.deleteService = this.deleteService.bind(this);
+      this.deleteDevice = this.deleteDevice.bind(this);
 
     }
 
@@ -45,7 +41,8 @@ export default class ViewClient extends Component {
         fetch(path)
             .then(res => res.json())
             .then(data => {
-                this.setState(data || blankState)
+                this.setState(data ? { ...data, hideEditButton: false } : blankState)
+              console.log(data ? {...data, hideEditButton: false} : blankState);
                 this.props.history.push(`/clients/client/${abonado}`)
             }
             )
@@ -82,44 +79,49 @@ export default class ViewClient extends Component {
         }
     }
 
-    render() {
-        return (
-            <div>
-                <Form inline style={{position: 'absolute', right: 90, top: 8}}  >
-                    <Form.Control
-                        type="text"
-                        placeholder="Search"
-                        onChange={this.handleSearchChange}
-                        value={this.state.search}
-                        className="mr-sm-2" />
-                    <Button
-                        type="submit"
-                        variant="outline-success"
-                        onClick={this.searchClient}>Search</Button>
-                </Form>
-                <Card>
-                    <Card.Header as="h5">Datos del Cliente</Card.Header>
-                    <Card.Body>
-                        <Row>
-                            <Col>
-                                <Card.Title> {`${this.state.abonado} - ${this.state.name}`} </Card.Title>
-                                <div><b>Domicilio:</b> {` ${this.state.address.street}, ${this.state.address.apto}`} </div>
-                                <div><b>Localidad:</b> {` ${this.state.address.location}, ${this.state.address.city}`} </div>
-                            </Col>
-                            <Col>
-                                <Card.Title> Informacion de Contacto </Card.Title>
-                                <div><b>Telefono:</b> {` ${this.state.telefono}`}</div>
-                                <div><b>Email:</b> {` ${this.state.email}`} </div>
-                            </Col>
-                            <Col>
-                                <Card.Title> Contacto Tecnico </Card.Title>
-                                <div><b>Domicilio:</b> {` ${this.state.address.street}, ${this.state.address.apto}`} </div>
-                                <div><b>Localidad:</b> {` ${this.state.address.location}, ${this.state.address.city}`} </div>
-                            </Col>
-                        </Row>
-                    </Card.Body>
-                <br></br>
-                <AddClientModal action={'edit'} client={this.state} reload={this.searchClient} />
+  render() {
+    return (
+      <div>
+        <Form inline style={{position: 'absolute', right: 90, top: 8}}  >
+          <Form.Control
+            type="text"
+            placeholder="Search"
+            onChange={this.handleSearchChange}
+            value={this.state.search}
+            className="mr-sm-2" />
+          <Button
+            type="submit"
+            variant="outline-success"
+            onClick={this.searchClient}>Search</Button>
+          </Form>
+          <Card>
+            <Card.Header as="h5">Datos del Cliente</Card.Header>
+            <Card.Body>
+              <Row>
+                <Col>
+                  <Card.Title> {`${this.state.abonado} - ${this.state.name}`} </Card.Title>
+                  <div><b>Domicilio:</b> {` ${this.state.address.street}, ${this.state.address.apto}`} </div>
+                  <div><b>Localidad:</b> {` ${this.state.address.location}, ${this.state.address.city}`} </div>
+                </Col>
+                <Col>
+                  <Card.Title> Informacion de Contacto </Card.Title>
+                  <div><b>Telefono:</b> {` ${this.state.telefono}`}</div>
+                  <div><b>Email:</b> {` ${this.state.email}`} </div>
+                </Col>
+                <Col>
+                  <Card.Title> Contacto Tecnico </Card.Title>
+                  <div><b>Domicilio:</b> {` ${this.state.address.street}, ${this.state.address.apto}`} </div>
+                  <div><b>Localidad:</b> {` ${this.state.address.location}, ${this.state.address.city}`} </div>
+                </Col>
+              </Row>
+            </Card.Body>
+            <br></br>
+            <AddClientModal
+              action={'edit'}
+              client={this.state}
+              hideEditButton={this.state.hideEditButton}
+              reload={this.searchClient}
+            />
 
                 </Card>
 

@@ -15,16 +15,24 @@ function AddClientModal(props) {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow} hidden={props.disableButton} >
-      {props.action}
-      </Button>
+      <div className="text-right">
+        <Button className="mr-3 mb-3" variant="primary" onClick={handleShow} hidden={props.hideEditButton} >
+          Editar
+        </Button>
+      </div>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <AddClient action={props.action} client={props.client} reload={props.reload} toggle={handleClose} />
+          <AddClient
+            action={props.action}
+            client={props.client}
+            reload={props.reload}
+            toggle={handleClose}
+            hidden={props.hideEditButton}
+          />
         </Modal.Body>
       </Modal>
     </>
