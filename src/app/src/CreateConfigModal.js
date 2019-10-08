@@ -3,6 +3,11 @@ import { Modal, Button } from 'react-bootstrap';
 import { ADIConfigTemplate } from './testVariables';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
+const templates = {
+    ADIFO: ADIConfigTemplate,
+    L2VPN: ADIConfigTemplate
+}
+
 function CreateConfigModal(props) {
 
     const [show, setShow] = useState(false);
@@ -11,7 +16,8 @@ function CreateConfigModal(props) {
     const [copied, setCopied] = useState(false);
 
     const handleClick = () => {
-        const output = ADIConfigTemplate(props);
+        // const output = ADIConfigTemplate(props);
+        const output = templates[props.template](props);
         setConfig(output)
         setLinkhref(makeTextFile(output))
         setShow(true);
@@ -42,6 +48,7 @@ function CreateConfigModal(props) {
                     {config}
                 </Modal.Body>
                 <Modal.Footer>
+                    <b hidden={!copied} className="mr-8" >Copiado al portapapeles!</b>
                     <CopyToClipboard onCopy={() => setCopied(true)} text={config} >
                             <Button
                                 variant="info"

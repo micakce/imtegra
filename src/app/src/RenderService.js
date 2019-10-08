@@ -70,7 +70,7 @@ function RenderService(props) {
               {' '}
               {props.wrapped()}
               {' '}
-              <CreateConfigModal {...props } />
+              <CreateConfigModal {...props } template='ADIFO' />
             </Card.Body>
           </Accordion.Collapse>
         </Card>
@@ -104,6 +104,8 @@ function RenderService(props) {
               <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
               {' '}
               {props.wrapped()}
+              {' '}
+              <CreateConfigModal {...props } template='ADICO' />
             </Card.Body>
           </Accordion.Collapse>
         </Card>
@@ -154,6 +156,8 @@ function RenderService(props) {
                   <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
                   {' '}
                   {props.wrapped()}
+                  {' '}
+                  <CreateConfigModal { ...props } template='L2VPN' />
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
