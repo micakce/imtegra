@@ -107,7 +107,7 @@ export default class AllClients extends Component {
                         <td>{service.im}</td>
                         <td>{service.status}</td>
                         <td  ><Button variant="danger" onClick={() => this.deleteClient(client._id, service._id, 'service')} >X </Button> </td>
-                        <td ><AddClientModal action={'edit'} client={client} reload={this.fetchClients} /></td>
+                        <td ><AddClientModal title="Editar" action="edit" client={client} reload={this.fetchClients} /></td>
                       </tr>
                     )
                   } else {
@@ -121,7 +121,7 @@ export default class AllClients extends Component {
                       <td>{client.name}</td>
                       <td  colSpan="4" > No posee servicios en implementacion</td>
                       <td  ><Button variant="danger" onClick={() => this.deleteClient(client._id)} >X </Button> </td>
-                      <td ><AddClientModal action={'edit'} client={client} reload={this.fetchClients} /></td>
+                      <td ><AddClientModal title="Editar" action="edit" client={client} reload={this.fetchClients} /></td>
                       </tr>
                     )
                   }
@@ -138,14 +138,14 @@ export default class AllClients extends Component {
                   <td>{client.name}</td>
                   <td  colSpan="4" > No posee servicios en implementacion</td>
                   <td  ><Button variant="danger" onClick={() => this.deleteClient(client._id)} >X </Button> </td>
-                  <td ><AddClientModal action={'edit'} client={client} reload={this.fetchClients} /></td>
+                  <td ><AddClientModal title="Editar" action="edit" client={client} reload={this.fetchClients} /></td>
                   </tr>
                 )
               }
             })}
           </tbody>
         </Table>
-        <AddClientModal reload={this.fetchClients} action={'Agregar'} />
+        <AddClientModal title="Agregar" reload={this.fetchClients} action="Agregar" />
       </React.Fragment>
     )
   }

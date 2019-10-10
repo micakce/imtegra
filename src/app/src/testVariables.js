@@ -15,7 +15,7 @@ const blankState = {
     im: "",
     status: "Implementacion",
     validation: {
-        abonado: { valid: false, invalid: false, message: '', editable: false }
+        abonado: { valid: false, invalid: false, message: '', editable: true }
     },
     hideEditButton: true
 }
@@ -239,7 +239,7 @@ shutdown
 snmp-server server
 snmp-server community TELECENTRO-${abonado} ro view Default
 sntp server 192.168.15.74
-clock source sntp 
+clock source sntp
 clock timezone 1 -3
 exit`
     return output

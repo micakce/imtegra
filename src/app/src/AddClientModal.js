@@ -15,11 +15,9 @@ function AddClientModal(props) {
 
   return (
     <>
-      <div className="text-right">
-        <Button className="mr-3 mb-3" variant="primary" onClick={handleShow} hidden={props.hideEditButton} >
-        {props.action}
-        </Button>
-      </div>
+      <Button  variant="primary" onClick={handleShow} hidden={props.hideEditButton} >
+        {props.title}
+      </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

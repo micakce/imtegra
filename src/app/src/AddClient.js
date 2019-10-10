@@ -35,6 +35,9 @@ export default class AddClient extends Component {
         this.setState({ [name_key]: { ...this.state[name_key], [name_value]: value } });
       }
     } else if (name === 'abonado') {
+      if (value.match(/[^0-9]/)){
+        return
+      }
       this.setState({ [name]: value });
       if (value.match(/^\d{2}$/)) {
         fetch(`/clients/client/${value}`)
@@ -44,7 +47,7 @@ export default class AddClient extends Component {
               this.setState({
                 validation: {
                   ...this.state.validation,
-                  abonado: { valid: true, invalid: false },
+                  abonado: { valid: true, invalid: false, editable: true, message: '' },
                   submit: true
                 }
               });
@@ -52,7 +55,7 @@ export default class AddClient extends Component {
               this.setState({
                 validation: {
                   ...this.state.validation,
-                  [name]: { valid: false, invalid: true,  message: 'Abonado ya existe', editable: false },
+                  [name]: { valid: false, invalid: true,  message: 'Abonado ya existe', editable: true },
                   submit: false
                 }
               });
@@ -60,7 +63,8 @@ export default class AddClient extends Component {
           });
       } else {
         this.setState({
-          validation: { ...this.state.validation,
+          validation: {
+            ...this.state.validation,
             [name]: { valid: false, invalid: true, message: 'Debe tener al menos 7 digitos', editable: true },
             submit: false
           }
@@ -136,7 +140,7 @@ export default class AddClient extends Component {
         <Form.Row>
           <Form.Group md="3" as={Col} controlId="" >
             <Form.Label>Abonado</Form.Label>
-            <Form.Control  disabled={validation.abonado.editable} isValid={validation.abonado.valid} isInvalid={validation.abonado.invalid} value={this.state.abonado} maxLength="2"  name="abonado" onChange={this.handleChange} type="text" placeholder="5555555" required />
+            <Form.Control  disabled={!validation.abonado.editable} isValid={validation.abonado.valid} isInvalid={validation.abonado.invalid} value={this.state.abonado} maxLength="2"  name="abonado" onChange={this.handleChange} type="text" placeholder="5555555" required />
             <Form.Control.Feedback type="invalid">{validation.abonado.message}</Form.Control.Feedback>
             <Form.Control.Feedback type="valid">Valido!</Form.Control.Feedback>
           </Form.Group>
