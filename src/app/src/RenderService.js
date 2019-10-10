@@ -134,8 +134,11 @@ function RenderService(props) {
                   <Card.Title>TLS</Card.Title>
                   <div> <b>Tipo: </b> {` ${props.service.mode}`} </div>
                   <div>
-                    <b>Contra: </b>{props.service.sites ?
-                    props.service.sites.split(',').map(site => <Badge variant="secondary" className="mx-1">{site}</Badge>): ''}
+                    <b>Hub: </b> <Badge variant="info" className="mx-1" > {props.service.sites.hub}</Badge>
+                  </div>
+                  <div>
+                    <b>Spokes: </b>{props.service.sites.spokes ?
+                    props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>): ''}
                   </div>
                   <div> <b>VLAN: </b>{props.service.vlan} </div>
                 </Col>

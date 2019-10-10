@@ -13,11 +13,11 @@ export default class AddClient extends Component {
           abonado: {
             valid: false,
             invalid: false,
-            message: '' ,
+            message: '',
             editable: false
           },
           submit: true
-        } 
+        }
       };
     } else {
       this.state = blankState;
@@ -35,11 +35,11 @@ export default class AddClient extends Component {
         this.setState({ [name_key]: { ...this.state[name_key], [name_value]: value } });
       }
     } else if (name === 'abonado') {
-      if (value.match(/[^0-9]/)){
+      if (value.match(/[^0-9]/)) {
         return
       }
       this.setState({ [name]: value });
-      if (value.match(/^\d{2}$/)) {
+      if (value.match(/^\d{7}$/)) {
         fetch(`/clients/client/${value}`)
           .then(res => res.json())
           .then(data => {
@@ -55,7 +55,7 @@ export default class AddClient extends Component {
               this.setState({
                 validation: {
                   ...this.state.validation,
-                  [name]: { valid: false, invalid: true,  message: 'Abonado ya existe', editable: true },
+                  [name]: { valid: false, invalid: true, message: 'Abonado ya existe', editable: true },
                   submit: false
                 }
               });
@@ -140,7 +140,18 @@ export default class AddClient extends Component {
         <Form.Row>
           <Form.Group md="3" as={Col} controlId="" >
             <Form.Label>Abonado</Form.Label>
-            <Form.Control  disabled={!validation.abonado.editable} isValid={validation.abonado.valid} isInvalid={validation.abonado.invalid} value={this.state.abonado} maxLength="2"  name="abonado" onChange={this.handleChange} type="text" placeholder="5555555" required />
+            <Form.Control
+              disabled={!validation.abonado.editable}
+              isValid={validation.abonado.valid}
+              isInvalid={validation.abonado.invalid}
+              value={this.state.abonado}
+              maxLength="7"
+              name="abonado"
+              onChange={this.handleChange}
+              type="text"
+              placeholder="5555555"
+              required
+            />
             <Form.Control.Feedback type="invalid">{validation.abonado.message}</Form.Control.Feedback>
             <Form.Control.Feedback type="valid">Valido!</Form.Control.Feedback>
           </Form.Group>
@@ -189,28 +200,10 @@ export default class AddClient extends Component {
 
         <Form.Row>
           <Form.Group md="4" as={Col} controlId="personal">
-            <Form.Label>PM</Form.Label>
-            <Form.Control value={this.state.pm} name="pm" onChange={this.handleChange} placeholder="" />
-          </Form.Group>
-          <Form.Group md="4" as={Col} controlId="personal">
-            <Form.Label>Implementador</Form.Label>
-            <Form.Control value={this.state.im} name="im" onChange={this.handleChange} placeholder="" />
-          </Form.Group>
-          <Form.Group md="4" as={Col} controlId="personal">
             <Form.Label>Estatus</Form.Label>
             <Form.Control value={this.state.status} name="status" onChange={this.handleChange} placeholder="" />
           </Form.Group>
         </Form.Row>
-        {/* <Form.Row>
-          <Form.Group md="4" as={Col} controlId="personal">
-            <Form.Label>Service</Form.Label>
-            <Form.Control value={this.services ? this.services[0].service : "Nope"} name="services.service" onChange={this.handleChange} placeholder="" />
-          </Form.Group>
-          <Form.Group md="4" as={Col} controlId="personal">
-            <Form.Label>Speed</Form.Label>
-            <Form.Control value={this.services ? this.services[0].plan : "Nope"} name="services.plan" onChange={this.handleChange} placeholder="" />
-          </Form.Group>
-        </Form.Row> */}
         <Button variant="primary" type="submit" disabled={!validation.submit}>
           Submit
         </Button>

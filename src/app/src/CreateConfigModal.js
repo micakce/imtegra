@@ -42,7 +42,7 @@ function CreateConfigModal(props) {
 
             <Modal show={show} onHide={handleClose}  scrollable xl >
                 <Modal.Header closeButton>
-                    <Modal.Title>{props.action}</Modal.Title>
+                    <Modal.Title>{ props.abonado } - { props.clientName }</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {config}

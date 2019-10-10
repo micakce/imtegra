@@ -1,3 +1,45 @@
+const serviceBlankState = {
+  service: '',
+  plan: '',
+  medium: '',
+  red: '',
+  ip: '',
+  dg: '',
+  mask: '',
+  vlan: '',
+  ip_mon: '',
+  ip_mon_router: '',
+  dg_mon: '',
+  mask_mon: '',
+  vlan_mon: '152',
+  lan_red: '',
+  lan_ip: '',
+  lan_dg: '',
+  lan_mask: '',
+  mode: '',
+  sites: {hub: '', spokes: ''},
+  device: '',
+  device_router: '',
+  nhead: '112120',
+  ntale: '112120',
+  hub: '',
+  obra: '',
+  rack: '',
+  patchera: '',
+  position: '',
+  nexus: 'N93180-',
+  nexus_port: '',
+  dist: '',
+  att: '',
+  cmts: '',
+  mac: '',
+  interface: '',
+  interface_router: '',
+  pm: '',
+  im: '',
+  status: '',
+};
+
 const blankState = {
     abonado: "",
     name: "",
@@ -214,7 +256,7 @@ no macro auto smartport
 no shutdown
 !
 interface gigabitethernet1
-description ##CLIENTE##${service.service}-${service.plan}Mbps
+description ##CLIENTE##${service.service}-${service.plan}Mbps${service.sites ? `Contra ${service.sites}`: ''}
 switchport mode access
 switchport access vlan ${service.vlan}
 no macro auto smartport
@@ -244,5 +286,5 @@ clock timezone 1 -3
 exit`
     return output
 }
-export { dangeloState, blankState, rogerState, ADIConfigTemplate };
+export { dangeloState, blankState, serviceBlankState, ADIConfigTemplate };
 

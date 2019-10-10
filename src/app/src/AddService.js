@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, Col, Tabs, Tab } from 'react-bootstrap';
+import { serviceBlankState } from './testVariables';
 
 const ServicioCM = (props) => (
 
@@ -138,9 +139,9 @@ const ServicioFO = props => (
       </Form.Group>
     </Form.Row>
 
-      {props.children}
+    {props.children}
 
-      {props.state.service === 'L3VPN' ?
+    {props.state.service === 'L3VPN' ?
       <Form.Row>
         <Form.Group as={Col} controlId="">
           <Form.Label>Tipo</Form.Label>
@@ -192,8 +193,8 @@ const ServicioFO = props => (
             placeholder="" >
             <option>...</option>
             {props.hardware.length > 0
-                ? props.hardware.map(device => <option>{device.device} {device.model}</option>)
-            : <option>No hay equipos asociados </option>}
+              ? props.hardware.map(device => <option>{device.device} {device.model}</option>)
+              : <option>No hay equipos asociados </option>}
           </Form.Control>
         </Form.Group>
         <Form.Group as={Col} controlId="">
@@ -220,41 +221,41 @@ const ServicioFO = props => (
         </Form.Group>
       </Form.Row>
 
-      }
+    }
 
 
-      <Form.Row>
-        <Form.Group as={Col} controlId="">
-          <Form.Label>IM</Form.Label>
-          <Form.Control
-            size="sm"
-            value={props.state.im}
-            name="im"
-            onChange={props.handleChange}
-            placeholder=""
-          />
-        </Form.Group><Form.Group as={Col} controlId="">
-          <Form.Label>PM</Form.Label>
-          <Form.Control
-            size="sm"
-            value={props.state.pm}
-            name="pm"
-            onChange={props.handleChange}
-            placeholder=""
-          />
-        </Form.Group><Form.Group as={Col} controlId="">
-          <Form.Label>Status</Form.Label>
-          <Form.Control
-            size="sm"
-            value={props.state.status}
-            name="status"
-            onChange={props.handleChange}
-            placeholder=""
-          />
-        </Form.Group>
-      </Form.Row>
+    <Form.Row>
+      <Form.Group as={Col} controlId="">
+        <Form.Label>IM</Form.Label>
+        <Form.Control
+          size="sm"
+          value={props.state.im}
+          name="im"
+          onChange={props.handleChange}
+          placeholder=""
+        />
+      </Form.Group><Form.Group as={Col} controlId="">
+        <Form.Label>PM</Form.Label>
+        <Form.Control
+          size="sm"
+          value={props.state.pm}
+          name="pm"
+          onChange={props.handleChange}
+          placeholder=""
+        />
+      </Form.Group><Form.Group as={Col} controlId="">
+        <Form.Label>Status</Form.Label>
+        <Form.Control
+          size="sm"
+          value={props.state.status}
+          name="status"
+          onChange={props.handleChange}
+          placeholder=""
+        />
+      </Form.Group>
+    </Form.Row>
 
-    </React.Fragment>
+  </React.Fragment>
 )
 
 const DireccionamientoFO = (props) => (
@@ -437,7 +438,7 @@ class AddService extends Component {
     if (props.action === "Edit") {
       this.state = props.service;
     } else {
-      this.state = { service: "" };
+      this.state = serviceBlankState;
     }
     this.handleChange = this.handleChange.bind(this);
     this.addService = this.addService.bind(this);
@@ -445,9 +446,17 @@ class AddService extends Component {
 
   handleChange(e) {
     const { name, value, id } = e.target;
-    console.log(value, name);
+
+    console.log("Props");
+    console.log(this.props);
+    console.log("State");
+    console.log(this.state);
     if (name === 'mediumRadios') {
       this.setState({ medium: id });
+    } else if (name.match(/\./)) {
+      const name_key = name.match(/(\D+)\./)[1];
+      const name_value = name.match(/\.(\D+)/)[1];
+      this.setState({ [name_key]: { ...this.state[name_key], [name_value]: value } });
     } else if (name === 'red') {
       if (value.match(/^\d{1,3}(\.\d{1,3}){3}\/\d{2}$/)) {
         console.log('It matches');
@@ -461,10 +470,10 @@ class AddService extends Component {
           dg: service_dg,
           mask: '255.255.255.252'
         });
-      } else{
-      this.setState({
-        [name]: value
-      });
+      } else {
+        this.setState({
+          [name]: value
+        });
       }
     } else {
       this.setState({
@@ -527,7 +536,7 @@ class AddService extends Component {
             </Tab>
 
             <Tab eventKey="patcheo" title="Patcheo" >
-              <Patcheo state={this.state} handleChange={this.handleChange}  />
+              <Patcheo state={this.state} handleChange={this.handleChange} />
             </Tab>
 
           </Tabs>
@@ -604,7 +613,7 @@ class AddService extends Component {
             <Tab eventKey="service" title="Service" >
               <ServicioFO state={this.state} hardware={this.props.hardware} handleChange={this.handleChange}>
                 <Form.Row>
-                  <Form.Group as={Col} controlId="">
+                  <Form.Group as={Col} md={4} controlId="">
                     <Form.Label>Tipo</Form.Label>
                     <Form.Control size="sm" value={this.state.mode} name="mode" onChange={this.handleChange} as="select" placeholder="en Mbps">
                       <option>...</option>
@@ -613,11 +622,25 @@ class AddService extends Component {
                       <option>Multipunto</option>
                     </Form.Control>
                   </Form.Group>
-                  <Form.Group as={Col} controlId="">
-                    <Form.Label>Contra</Form.Label>
-                    <Form.Control size="sm" value={this.state.sites} name="sites" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
-                    />
-                  </Form.Group>
+                  {this.state.mode === 'Punto Multipunto'
+                    ?
+                    (<><Form.Group as={Col} md={3} controlId="">
+                      <Form.Label>Concentrador</Form.Label>
+                      <Form.Control size="sm" value={this.state.sites.hub} name="sites.hub" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
+                      />
+                    </Form.Group>
+                      <Form.Group as={Col} md={5} controlId="">
+                        <Form.Label>Spokes</Form.Label>
+                        <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
+                        />
+                      </Form.Group></>)
+                    :
+                    <Form.Group as={Col} controlId="">
+                      <Form.Label>Contra</Form.Label>
+                      <Form.Control size="sm" value={this.state.sites.hub} name="sites.hub" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
+                      />
+                    </Form.Group>
+                  }
                 </Form.Row>
 
                 <Form.Row>
@@ -642,7 +665,7 @@ class AddService extends Component {
             </Tab>
 
             <Tab eventKey="patcheo" title="Patcheo" >
-              <Patcheo state={this.state} handleChange={this.handleChange}  />
+              <Patcheo state={this.state} handleChange={this.handleChange} />
             </Tab>
 
           </Tabs >
@@ -710,8 +733,8 @@ class AddService extends Component {
                   <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
                     <option>...</option>
                     {this.props.hardware.length > 0
-                        ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
-                    : <option>No hay equipos asociados </option>}
+                      ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
+                      : <option>No hay equipos asociados </option>}
                   </Form.Control>
                 </Form.Group>
                 <Form.Group as={Col} controlId="">
@@ -873,8 +896,8 @@ class AddService extends Component {
                     placeholder="" >
                     <option>...</option>
                     {this.props.hardware.length > 0
-                        ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
-                    : <option>No hay equipos asociados </option>}
+                      ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
+                      : <option>No hay equipos asociados </option>}
                   </Form.Control>
                 </Form.Group>
                 <Form.Group as={Col} controlId="">
@@ -975,7 +998,7 @@ class AddService extends Component {
             <Tab eventKey="service" title="Service" >
               <br></br>
 
-              <ServicioFO state={this.state} modifier={{plan: 'Plan', placeholder: 'Canales/Numeros'}} hardware={this.props.hardware} handleChange={this.handleChange}>
+              <ServicioFO state={this.state} modifier={{ plan: 'Plan', placeholder: 'Canales/Numeros' }} hardware={this.props.hardware} handleChange={this.handleChange}>
                 <Form.Row>
                   <Form.Group as={Col} controlId="">
                     <Form.Label>Cabecera</Form.Label>
@@ -1019,7 +1042,7 @@ class AddService extends Component {
       } else if (this.state.medium === "CO") {
 
         return (
-          <ServicioCM state={this.state} handleChange={this.handleChange} modifier={{plan: 'Plan', placeholder: 'Canales/Numeros'}}>
+          <ServicioCM state={this.state} handleChange={this.handleChange} modifier={{ plan: 'Plan', placeholder: 'Canales/Numeros' }}>
             <Form.Row>
               <Form.Group as={Col} controlId="">
                 <Form.Label>Cabecera</Form.Label>
@@ -1049,7 +1072,7 @@ class AddService extends Component {
               <Form.Group as={Col} controlId="">
                 <Form.Label>Red</Form.Label>
                 <Form.Control size="sm"
-                  value={this.state.red || "172.31." }
+                  value={this.state.red || "172.31."}
                   name="red"
                   onChange={this.handleChange}
                   type="text"
@@ -1102,7 +1125,7 @@ class AddService extends Component {
 
   render() {
     return (
-      <Form  onSubmit={this.addService}>
+      <Form onSubmit={this.addService}>
         <Form.Row className="text-center">
           <Form.Group as={Col} controlId="formGridState" >
             <Form.Label>Servicio</Form.Label>
@@ -1126,6 +1149,7 @@ class AddService extends Component {
                 name="mediumRadios"
                 id="CO"
                 onChange={this.handleChange}
+                checked={this.state.medium === 'CO' ? true : false}
                 required
               />
               <Form.Check
@@ -1134,6 +1158,7 @@ class AddService extends Component {
                 name="mediumRadios"
                 id="FO"
                 onChange={this.handleChange}
+                checked={this.state.medium === 'FO' ? true : false}
                 required
               />
             </div>
