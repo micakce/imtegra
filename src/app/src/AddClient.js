@@ -52,7 +52,7 @@ export default class AddClient extends Component {
               this.setState({
                 validation: {
                   ...this.state.validation,
-                  [name]: { valid: false, invalid: true,  message: 'Abonado ya existe' },
+                  [name]: { valid: false, invalid: true,  message: 'Abonado ya existe', editable: false },
                   submit: false
                 }
               });
@@ -61,7 +61,7 @@ export default class AddClient extends Component {
       } else {
         this.setState({
           validation: { ...this.state.validation,
-            [name]: { valid: false, invalid: true, message: 'Debe tener al menos x digitos' },
+            [name]: { valid: false, invalid: true, message: 'Debe tener al menos 7 digitos', editable: true },
             submit: false
           }
         })
@@ -136,7 +136,7 @@ export default class AddClient extends Component {
         <Form.Row>
           <Form.Group md="3" as={Col} controlId="" >
             <Form.Label>Abonado</Form.Label>
-            <Form.Control  disabled={!validation.abonado.editable} isValid={validation.abonado.valid} isInvalid={validation.abonado.invalid} value={this.state.abonado} maxLength="2"  name="abonado" onChange={this.handleChange} type="text" placeholder="5555555" required />
+            <Form.Control  disabled={validation.abonado.editable} isValid={validation.abonado.valid} isInvalid={validation.abonado.invalid} value={this.state.abonado} maxLength="2"  name="abonado" onChange={this.handleChange} type="text" placeholder="5555555" required />
             <Form.Control.Feedback type="invalid">{validation.abonado.message}</Form.Control.Feedback>
             <Form.Control.Feedback type="valid">Valido!</Form.Control.Feedback>
           </Form.Group>

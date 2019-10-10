@@ -145,7 +145,7 @@ export default class AllClients extends Component {
             })}
           </tbody>
         </Table>
-        <AddClientModal reload={this.fetchClients} action={'add'} />
+        <AddClientModal reload={this.fetchClients} action={'Agregar'} />
       </React.Fragment>
     )
   }

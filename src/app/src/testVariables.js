@@ -15,7 +15,7 @@ const blankState = {
     im: "",
     status: "Implementacion",
     validation: {
-        abonado: { valid: false, invalid: false, message: '', editable: true }
+        abonado: { valid: false, invalid: false, message: '', editable: false }
     },
     hideEditButton: true
 }

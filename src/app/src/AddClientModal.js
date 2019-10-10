@@ -17,7 +17,7 @@ function AddClientModal(props) {
     <>
       <div className="text-right">
         <Button className="mr-3 mb-3" variant="primary" onClick={handleShow} hidden={props.hideEditButton} >
-          Editar
+        {props.action}
         </Button>
       </div>
 
