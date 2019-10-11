@@ -20,7 +20,7 @@ const serviceSchema = new Schema({
   lan_dg: String,
   lan_mask: String,
   mode: String,
-  sites: String,
+  sites: { hub: String, spokes: String},
   device: String,
   device_router: String,
   nhead: String,
