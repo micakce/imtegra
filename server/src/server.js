@@ -7,7 +7,7 @@ require('./database.js');
 const app = express();
 
 // Settings
-app.set('port', process.env.PORT || 9000);
+app.set('port', process.env.PORT || 4000);
 // const env = process.env.NODE_ENV
 // console.log(process.env.NODE_ENV);
 

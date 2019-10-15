@@ -132,7 +132,7 @@ export default class ViewClient extends Component {
           <Card>
             <Card.Header as="h5">Servicios</Card.Header>
             <Card.Body>
-              <Accordion >
+              <Accordion  >
                 {
                   this.state.services.map((service, idx) => {
                     const WrappedAddServiceModal = () => (

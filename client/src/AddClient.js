@@ -96,7 +96,8 @@ export default class AddClient extends Component {
         .catch(err => console.error(err));
       e.preventDefault();
 
-    } else if (this.props.action === 'add') {
+    // } else if (this.props.action === 'add') {
+    } else if (this.props.action === 'Agregar') {
       fetch('/clients', {
         method: 'POST',
         body: JSON.stringify(this.state),
@@ -105,7 +106,7 @@ export default class AddClient extends Component {
           'Content-Type': 'application/json'
         }
       })
-        .then(res => {
+        .then(() => {
           this.props.toggle();
           this.props.reload();
         })
