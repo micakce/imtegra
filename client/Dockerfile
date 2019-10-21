@@ -12,7 +12,7 @@ RUN npm install --production=true
 COPY . /usr/src/app/
 
 # Build the production build
-RUN npm run-script build
+RUN npm run build
 
 # Start and nginx container
 FROM nginx

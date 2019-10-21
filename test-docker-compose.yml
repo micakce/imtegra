@@ -7,7 +7,8 @@ services:
   server:
     build: ./server
     environment:
-      - MONGO_URI=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@${MONGO_URI}
+    #   - MONGO_URI=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@${MONGO_URI}
+      - MONGO_URI=mongodb://db:27017/db
       - PORT=${PORT}
       - NODE_ENV=${NODE_ENV}
     ports:
@@ -34,9 +35,9 @@ services:
     ports:
       - ${MONGO_PORT}:${MONGO_PORT}
     restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+    #   MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
       # Map physical volume to virtual for data persistence
       # On server could be /data/db
