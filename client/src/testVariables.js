@@ -37,7 +37,7 @@ const serviceBlankState = {
   interface_router: '',
   pm: '',
   im: '',
-  status: '',
+  status: 'Init',
 };
 
 const blankState = {
