@@ -1,20 +1,22 @@
+import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
 function MyModal(props) {
 
+  const [show, setShow] = useState(false);
+
     return (
         <>
-            <Button variant="primary" onClick={props.toggle}>
-                {props.action}
+          <Button variant="primary" onClick={() => setShow(true)}>
+              TestModal
             </Button>
 
-            <Modal show={props.show} onHide={props.toggle} >
+            <Modal show={show} onHide={() => setShow(false)} >
                 <Modal.Header closeButton>
                     <Modal.Title>{props.action}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {/* <AddService reload={props.reload} toggle={handleClose} abonado={props.abonado} /> */}
-                    {props.children}
+                  {props.render(setShow)}
                 </Modal.Body>
             </Modal>
         </>

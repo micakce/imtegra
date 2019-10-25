@@ -5,6 +5,8 @@ import { RenderService, RenderHardware } from './RenderService';
 import AddServiceModal from './AddServiceModal';
 import AddHardwareModal from './AddHardwareModal';
 import AddClientModal from './AddClientModal';
+import MyModal from './MyModal';
+import AddService from './AddService';
 
 export default class ViewClient extends Component {
 
@@ -163,46 +165,54 @@ export default class ViewClient extends Component {
                   reload={this.searchClient}
                   hardware={this.state.hardware}
                   abonado={this.state.abonado} />
+                <MyModal render={algo => (
+                  <AddService toggle={algo}
+                  action={"Agregar Servicio"}
+                  reload={this.searchClient}
+                  hardware={this.state.hardware}
+                  abonado={this.state.abonado} />
+                )} />
+                />
+              </Accordion>
+            </Card.Body>
+          </Card>
+
+          <br></br>
+          <Card>
+            <Card.Header as="h5">Hardware</Card.Header>
+            <Card.Body>
+              <Accordion >
+                {
+                  this.state.hardware.map((device, idx) => {
+                    const WrappedAddHardwareModal = () => {
+                      return <AddHardwareModal
+                        id={device._id}
+                        idx={idx}
+                        action={"Edit"}
+                        device={device}
+                        reload={this.searchClient}
+                        abonado={this.state.abonado} />
+                    }
+                    return (
+                      <RenderHardware
+                        id={device._id}
+                        deleteDevice={this.deleteDevice}
+                        wrapped={WrappedAddHardwareModal}
+                        device={device}
+                        idx={idx} />
+                    )
+                  })
+                }
+
+                <br></br>
+                <AddHardwareModal
+                  action={"Agregar Dispositivo"}
+                  reload={this.searchClient}
+                  abonado={this.state.abonado} />
                 </Accordion>
               </Card.Body>
             </Card>
-
-            <br></br>
-            <Card>
-              <Card.Header as="h5">Hardware</Card.Header>
-              <Card.Body>
-                <Accordion >
-                  {
-                    this.state.hardware.map((device, idx) => {
-                      const WrappedAddHardwareModal = () => {
-                        return <AddHardwareModal
-                          id={device._id}
-                          idx={idx}
-                          action={"Edit"}
-                          device={device}
-                          reload={this.searchClient}
-                          abonado={this.state.abonado} />
-                      }
-                      return (
-                        <RenderHardware
-                          id={device._id}
-                          deleteDevice={this.deleteDevice}
-                          wrapped={WrappedAddHardwareModal}
-                          device={device}
-                          idx={idx} />
-                      )
-                    })
-                  }
-
-                  <br></br>
-                  <AddHardwareModal
-                    action={"Agregar Dispositivo"}
-                    reload={this.searchClient}
-                    abonado={this.state.abonado} />
-                  </Accordion>
-                </Card.Body>
-              </Card>
-            </div>
+          </div>
     )
   }
 }

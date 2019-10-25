@@ -6,7 +6,7 @@ const AccordionToggle = (props) => {
   const  [expanded, setExpanded] = useState(false);
 
   return (
-    <Accordion.Toggle useAnchor={true} as={Card.Header} eventKey={props.idx} onClick={() => setExpanded(!expanded)}>
+    <Accordion.Toggle as={Card.Header} eventKey={props.idx} onClick={() => setExpanded(!expanded)}>
       <Row className="d-flex justify-content-end" >
         {expanded ? '-' : '+' }
         <Col  className=" text-center" >
@@ -74,7 +74,7 @@ function RenderService(props) {
               {' '}
               {props.wrapped()}
               {' '}
-              <CreateConfigModal {...props } template='ADIFO' />
+              <CreateConfigModal {...props } template='ADI' />
             </Card.Body>
           </Accordion.Collapse>
         </Card>
@@ -109,14 +109,14 @@ function RenderService(props) {
               {' '}
               {props.wrapped()}
               {' '}
-              <CreateConfigModal {...props } template='ADICO' />
+              <CreateConfigModal {...props } template='ADI' />
             </Card.Body>
           </Accordion.Collapse>
         </Card>
       )
     }
-  } else if (props.service.service === 'L2VPN') {
-    if (props.service.medium === "FO") {
+} else if (props.service.service === 'L2VPN') {
+  if (props.service.medium === "FO") {
       return (
         <Card>
           <AccordionToggle {...props} />
@@ -199,6 +199,8 @@ function RenderService(props) {
                   <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button>
                   {' '}
                   {props.wrapped()}
+                  {' '}
+                  <CreateConfigModal { ...props } template='CO_L2VPN' />
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
