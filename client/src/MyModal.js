@@ -8,12 +8,12 @@ function MyModal(props) {
     return (
         <>
           <Button variant="primary" onClick={() => setShow(true)}>
-              TestModal
+            {props.buttonLabel}
             </Button>
 
             <Modal show={show} onHide={() => setShow(false)} >
                 <Modal.Header closeButton>
-                    <Modal.Title>{props.action}</Modal.Title>
+                    <Modal.Title>{props.title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   {props.render(setShow)}

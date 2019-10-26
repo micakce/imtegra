@@ -266,7 +266,7 @@ export default class AddClient extends Component {
           disabled={!validation.submit}>
           Submit
         </Button>
-        <Button className="ml-1" variant="secondary" onClick={this.props.toggle}>
+        <Button className="ml-1" variant="secondary" onClick={() => this.props.toggle(false)}>
           Cancel
         </Button>
       </Form>

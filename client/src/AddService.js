@@ -1171,8 +1171,9 @@ class AddService extends Component {
         <Button variant="warning" type="submit" >
           Save
         </Button>
-        <Button onClick={() => this.props.toggle(false)}  >
-          cancel
+        {' '}
+        <Button variant="secondary" onClick={() => this.props.toggle(false)}  >
+          Cancel
         </Button>
       </Form>
     )
