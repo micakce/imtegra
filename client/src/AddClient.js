@@ -127,6 +127,8 @@ export default class AddClient extends Component {
         .then(res => res.json())
         .then(data => {
           console.log(data);
+          this.props.toggle();
+          this.props.reload();
           this.setState(blankState);
         })
         .catch(err => console.error(err));

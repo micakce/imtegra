@@ -1,6 +1,7 @@
 import React, { useState }from 'react';
 import { Badge, Button, Card, Accordion, Row, Col } from 'react-bootstrap';
 import CreateConfigModal from './CreateConfigModal';
+import CreateDiagramModal from './CreateDiagramModal';
 
 const AccordionToggle = (props) => {
   const  [expanded, setExpanded] = useState(false);
@@ -75,6 +76,8 @@ function RenderService(props) {
               {props.wrapped()}
               {' '}
               <CreateConfigModal {...props } template='ADI' />
+              {' '}
+              <CreateDiagramModal {...props } template='ADI' />
             </Card.Body>
           </Accordion.Collapse>
         </Card>

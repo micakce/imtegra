@@ -167,6 +167,7 @@ export default class ViewClient extends Component {
                           id={service._id}
                           abonado={this.state.abonado}
                           clientName={this.state.name}
+                          clienteAddress={this.state.address}
                           deleteService={this.deleteService}
                           wrapped={WrappedAddServiceModal}
                           service={service}

@@ -1,25 +1,22 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { ADIConfigTemplate, L2VPNConfigTemplate, CO_ADIConfigTemplate } from './configTemplates';
+import { ADIDiagramTemplate } from './diagramTemplates';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const templates = {
-  ADI: ADIConfigTemplate,
-  L2VPN: L2VPNConfigTemplate,
-  ADICO: CO_ADIConfigTemplate,
-  CO_L2VPN: CO_ADIConfigTemplate,
+    ADI: ADIDiagramTemplate
 }
 
-function CreateConfigModal(props) {
+function CreateDiagramModal(props) {
 
   const [show, setShow] = useState(false);
-  const [config, setConfig] = useState('Hola');
+  const [config, setDiagram] = useState('Hola');
   const [linkhref, setLinkhref] = useState('None');
   const [copied, setCopied] = useState(false);
 
   const handleClick = () => {
     const output = templates[props.template](props);
-    setConfig(output)
+    setDiagram(output)
     setLinkhref(makeTextFile(output))
     setShow(true);
   }
@@ -37,8 +34,8 @@ function CreateConfigModal(props) {
 
   return (
     <>
-      <Button variant="secondary" onClick={handleClick} >
-        Template
+      <Button variant="success" onClick={handleClick} >
+      Diagram
       </Button>
 
       <Modal show={show} onHide={handleClose}  scrollable xl >
@@ -55,11 +52,11 @@ function CreateConfigModal(props) {
               Copiar
             </Button>
           </CopyToClipboard>
-          <a href={linkhref} download={`${props.abonado}-${props.clientName}.txt`} > Download </a>
+          <a href={linkhref} download={`${props.abonado}-${props.clientName}.drawio`} > Download </a>
         </Modal.Footer>
       </Modal>
     </>
   );
 }
 
-export default CreateConfigModal;
+export default CreateDiagramModal;
