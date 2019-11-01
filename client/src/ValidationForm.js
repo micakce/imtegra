@@ -10,7 +10,7 @@ const ValidationForm = ({ label, value, name, onChange, type, placeholder, requi
 
   const validateMe = (e) => {
 
-    if (e.target.value.match(/^d{8,11}$/)) {
+    if (e.target.value.match(/^\d{8,11}$/)) {
       setValid(true);
       setInvalid(false);
     }else{

@@ -165,6 +165,7 @@ export default class AllClients extends Component {
               buttonLabel="Agregar"
               render={ toggle => (
                 <AddClient
+                  action="add"
                   toggle={toggle}
                   reload={this.fetchClients}
                 />
