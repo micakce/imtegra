@@ -1,11 +1,24 @@
-import React, { Component } from 'react';
+import React from "react";
+import { Redirect } from "react-router-dom";
 
-class Home extends Component {
-    render() {
-        return (
-            <h1>Here goes main page</h1>
-        )
+import { AuthConsumer } from "./authContext";
+import Login from "./Login";
+// import PostsList from "../components/PostsList";
+
+const HomePage = () => (
+  <AuthConsumer>
+    {({ authenticated }) =>
+      authenticated ? (
+        <Redirect to="/clients" />
+      ) : (
+        <div>
+          <h2>Welcome to React RBAC Tutorial.</h2>
+          <Login />
+          {/* <PostsList /> */}
+        </div>
+      )
     }
-}
+  </AuthConsumer>
+);
 
-export default Home;
+export default HomePage;

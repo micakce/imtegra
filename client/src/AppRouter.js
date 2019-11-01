@@ -7,6 +7,7 @@ import Home from "./Home";
 import ViewClient from "./ViewClient";
 import CallbackPage from "./callback";
 import Auth from './Auth';
+import Profile from './Profile';
 
 
 function AppRouter() {
@@ -30,6 +31,7 @@ function AppRouter() {
               </Nav>
             </Navbar.Collapse>
           </Navbar>
+          <Profile />
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/clients/" exact component={AllClients} />
