@@ -7,7 +7,7 @@ function MyModal(props) {
 
     return (
         <>
-          <Button variant="primary" onClick={() => setShow(true)}>
+          <Button variant="primary" hidden={props.hideEditButton} onClick={() => setShow(true)}>
             {props.buttonLabel}
             </Button>
 

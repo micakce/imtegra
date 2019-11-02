@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Accordion, Card, Button, Row, Col, Form } from 'react-bootstrap';
+
 import { blankState } from './testVariables';
 import { RenderService, RenderHardware } from './RenderService';
 import MyModal from './MyModal';
 import AddService from './AddService';
 import AddHardware from './AddHardware';
 import AddClient from './AddClient';
+import { AuthConsumer } from './authContext';
+import Can from './Can';
 
 export default class ViewClient extends Component {
 
@@ -43,7 +46,7 @@ export default class ViewClient extends Component {
       .then(res => res.json())
       .then(data => {
         this.setState(data ? { ...data, hideEditButton: false } : blankState)
-        this.props.history.push(`/clients/client/${abonado}`)
+        // this.props.history.push(`/clients/client/${abonado}`)
       }
       )
       .catch(err => console.error(err));
@@ -81,172 +84,216 @@ export default class ViewClient extends Component {
 
   render() {
     return (
-      <div>
-        <Form inline style={{position: 'absolute', right: 90, top: 8}}  >
-          <Form.Control
-            type="text"
-            placeholder="Search"
-            onChange={this.handleSearchChange}
-            value={this.state.search}
-            className="mr-sm-2" />
-          <Button
-            type="submit"
-            variant="outline-success"
-            onClick={this.searchClient}>Search</Button>
-          </Form>
-          <Card>
-            <Card.Header as="h5"> Datos del Cliente</Card.Header>
-            <Card.Body>
-              <Row>
-                <Col>
-                  <Card.Title> {`${this.state.abonado} - ${this.state.name}`} </Card.Title>
-                  <div><b>Domicilio:</b> {` ${this.state.address.street}, ${this.state.address.apto}`} </div>
-                  <div><b>Localidad:</b> {` ${this.state.address.location}, ${this.state.address.city}`} </div>
-                </Col>
-                <Col>
-                  <Card.Title> Informacion de Contacto </Card.Title>
-                  <div><b>Telefono:</b> {` ${this.state.telefono}`}</div>
-                  <div><b>Email:</b> {` ${this.state.email}`} </div>
-                </Col>
-                <Col>
-                  <Card.Title> Contacto Tecnico </Card.Title>
-                  <div><b>Domicilio:</b> {` ${this.state.address.street}, ${this.state.address.apto}`} </div>
-                  <div><b>Localidad:</b> {` ${this.state.address.location}, ${this.state.address.city}`} </div>
-                </Col>
-              </Row>
-            </Card.Body>
-            <br></br>
-            <div className="text-right mr-3 mb-3">
-              <MyModal
-                buttonLabel="Editar"
-                title="Agregar Cliente"
-                render={
-                  toggle => (
-                    <AddClient
-                      toggle={toggle}
-                      action="edit"
-                      client={this.state}
-                      hideEditButton={this.state.hideEditButton}
-                      reload={this.searchClient}
-                    />
-                  )} />
-
-                </div>
-
-              </Card>
-
-              <br></br>
-
-              <Card>
-                <Card.Header as="h5">Servicios</Card.Header>
-                <Card.Body>
-                  <Accordion  >
-                    {
-                      this.state.services.map((service, idx) => {
-                        const WrappedAddServiceModal = () => (
-
+      <AuthConsumer>
+        { ({ user }) => (
+          <Can
+            role={user.role}
+            perform="clients:view"
+            yes={() => (
+              <>
+                <Form inline style={{position: 'absolute', right: 90, top: 8}}  >
+                  <Form.Control
+                    type="text"
+                    placeholder="Search"
+                    onChange={this.handleSearchChange}
+                    value={this.state.search}
+                    className="mr-sm-2" />
+                  <Button
+                    type="submit"
+                    variant="outline-success"
+                    onClick={this.searchClient}>Search</Button>
+                  </Form>
+                  <Card>
+                    <Card.Header as="h5"> Datos del Cliente</Card.Header>
+                    <Card.Body>
+                      <Row>
+                        <Col>
+                          <Card.Title> {`${this.state.abonado} - ${this.state.name}`} </Card.Title>
+                          <div><b>Domicilio:</b> {` ${this.state.address.street}, ${this.state.address.apto}`} </div>
+                          <div><b>Localidad:</b> {` ${this.state.address.location}, ${this.state.address.city}`} </div>
+                        </Col>
+                        <Col>
+                          <Card.Title> Informacion de Contacto </Card.Title>
+                          <div><b>Telefono:</b> {` ${this.state.telefono}`}</div>
+                          <div><b>Email:</b> {` ${this.state.email}`} </div>
+                        </Col>
+                        <Col>
+                          <Card.Title> Contacto Tecnico </Card.Title>
+                          <div><b>Domicilio:</b> {` ${this.state.address.street}, ${this.state.address.apto}`} </div>
+                          <div><b>Localidad:</b> {` ${this.state.address.location}, ${this.state.address.city}`} </div>
+                        </Col>
+                      </Row>
+                    </Card.Body>
+                    <br></br>
+                    <div className="text-right mr-3 mb-3">
+                      <Can
+                        role={user.role}
+                        perform="clients:edit"
+                        yes={() => (
                           <MyModal
-                            title="Agregar Servicio"
-                            buttonLabel="Edit"
-                            render={
-                              toggle => (
-                                <AddService toggle={toggle}
-                                id={service._id}
-                                idx={idx}
-                                action="Edit"
+                            buttonLabel="Editar"
+                            hideEditButton={this.state.hideEditButton}
+                            title="Editar Cliente"
+                            render={ toggle => (
+                              <AddClient
+                                toggle={toggle}
+                                action="edit"
+                                client={this.state}
                                 reload={this.searchClient}
-                                service={service}
-                                hardware={this.state.hardware}
-                                abonado={this.state.abonado} />
+                              />
                             )}
                           />
+                        )}
+                      />
+                    </div>
+                  </Card>
 
-                        )
+                  <br></br>
 
-                        return <RenderService
-                          id={service._id}
-                          abonado={this.state.abonado}
-                          clientName={this.state.name}
-                          clienteAddress={this.state.address}
-                          deleteService={this.deleteService}
-                          wrapped={WrappedAddServiceModal}
-                          service={service}
-                          idx={idx} />
-                      })
-                    }
+                  <Card>
+                    <Card.Header as="h5">Servicios</Card.Header>
+                    <Card.Body>
+                      <Accordion  >
+                        { this.state.services.map((service, idx) => {
+                          const WrappedAddServiceModal = () => (
+                            <Can
+                              role={user.role}
+                              perform="clients:add"
+                              yes={() => (
+                                <MyModal
+                                  title="Agregar Servicio"
+                                  buttonLabel="Edit"
+                                  render={ toggle => (
+                                    <AddService
+                                      toggle={toggle}
+                                      id={service._id}
+                                      idx={idx}
+                                      action="Edit"
+                                      reload={this.searchClient}
+                                      service={service}
+                                      hardware={this.state.hardware}
+                                      abonado={this.state.abonado}
+                                    />
+                                  )}
+                                />
+                              )}
+                            />
+                          )
 
-                    <br></br>
+                          return (
+                            <RenderService
+                              id={service._id}
+                              abonado={this.state.abonado}
+                              clientName={this.state.name}
+                              clienteAddress={this.state.address}
+                              deleteService={this.deleteService}
+                              wrapped={WrappedAddServiceModal}
+                              service={service}
+                              idx={idx}
+                            />
+                          )
+                        })
+                        }
 
-                    <MyModal
-                      title="Agregar Servicio"
-                      buttonLabel="Agregar"
-                      render={
-                        toggle => (
-                          <AddService toggle={toggle}
-                          action="Agregar"
-                          reload={this.searchClient}
-                          hardware={this.state.hardware}
-                          abonado={this.state.abonado} />
-                      )}
-                    />
+                        <br></br>
 
-                  </Accordion>
-                </Card.Body>
-              </Card>
+                        <Can
+                          role={user.role}
+                          perform="services:add"
+                          yes={() => (
+                            <MyModal
+                              title="Agregar Servicio"
+                              buttonLabel="Agregar"
+                              render={ toggle => (
+                                <AddService toggle={toggle}
+                                action="Agregar"
+                                reload={this.searchClient}
+                                hardware={this.state.hardware}
+                                abonado={this.state.abonado}
+                              />
+                              )}
+                            />
+                          )}
+                        />
 
-              <br></br>
-              <Card>
-                <Card.Header as="h5">Hardware</Card.Header>
-                <Card.Body>
-                  <Accordion >
-                    {
-                      this.state.hardware.map((device, idx) => {
-                        const WrappedAddHardwareModal = () => (
+                      </Accordion>
+                    </Card.Body>
+                  </Card>
 
-                          <MyModal
-                            title="Editar Dispositivo"
-                            buttonLabel="Editar"
-                            render={
-                              toggle => (
+                  <br></br>
+                  <Card>
+                    <Card.Header as="h5">Hardware</Card.Header>
+                    <Card.Body>
+                      <Accordion >
+                        {
+                          this.state.hardware.map((device, idx) => {
+                            const WrappedAddHardwareModal = () => (
+
+                              <Can
+                                role={user.role}
+                                perform="hardware:add"
+                                yes={() => (
+                                  <MyModal
+                                    title="Editar Dispositivo"
+                                    buttonLabel="Editar"
+                                    render={ toggle => (
+                                      <AddHardware
+                                        id={device._id}
+                                        idx={idx}
+                                        device={device}
+                                        action={"Edit"}
+                                        toggle={toggle}
+                                        reload={this.searchClient}
+                                        abonado={this.state.abonado}
+                                      />
+                                    )}
+                                  />
+                                )}
+                              />
+
+                            )
+
+                            return (
+                              <RenderHardware
+                                id={device._id}
+                                deleteDevice={this.deleteDevice}
+                                wrapped={WrappedAddHardwareModal}
+                                device={device}
+                                idx={idx}
+                              />
+                            )
+                          })
+                        }
+
+                        <br></br>
+
+                        <Can
+                          role={user.role}
+                          perform="hardware:add"
+                          yes={() => (
+                            <MyModal
+                              title="Agregar Dispositivo"
+                              buttonLabel="Agregar"
+                              render={ toggle => (
                                 <AddHardware
-                                  id={device._id}
-                                  idx={idx}
-                                  device={device}
-                                  action={"Edit"}
                                   toggle={toggle}
                                   reload={this.searchClient}
-                                  abonado={this.state.abonado} />
-                              )} />
-                        )
+                                  abonado={this.state.abonado}
+                                />
+                              )}
+                            />
+                          )}
+                        />
 
-                        return (
-                          <RenderHardware
-                            id={device._id}
-                            deleteDevice={this.deleteDevice}
-                            wrapped={WrappedAddHardwareModal}
-                            device={device}
-                            idx={idx} />
-                        )
-                      })
-                    }
+                      </Accordion>
+                    </Card.Body>
+                  </Card>
+                </>
+            )}
+          />
+        )}
+      </AuthConsumer>
 
-                    <br></br>
-
-                    <MyModal
-                      title="Agregar Dispositivo"
-                      buttonLabel="Agregar"
-                      render={
-                        toggle => (
-                          <AddHardware
-                            toggle={toggle}
-                            reload={this.searchClient}
-                            abonado={this.state.abonado} />
-                      )}
-                    />
-                  </Accordion>
-                </Card.Body>
-              </Card>
-            </div>
     )
   }
 }

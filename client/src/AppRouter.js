@@ -8,6 +8,7 @@ import ViewClient from "./ViewClient";
 import CallbackPage from "./callback";
 import Auth from './Auth';
 import Profile from './Profile';
+import Logout from './Logout';
 
 
 function AppRouter() {
@@ -32,13 +33,15 @@ function AppRouter() {
             </Navbar.Collapse>
           </Navbar>
           <Profile />
+          <Logout />
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/clients/" exact component={AllClients} />
             <Route path="/clients/implementacion" component={AllClients} />
             <Route path="/clients/add" component={AddClient} />
-            <Route path="/clients/client" render={props  => <ViewClient {...props} />} />
+            <Route path="/clients/client" component={ViewClient} />
             <Route path="/callback" component={CallbackPage} />
+            {/* <Route path="/clients/client" render={props  => <ViewClient {...props} />} /> */}
             {/* <Route path="/clients/client/:id" render={props  => <ViewClient {...props} />} /> */}
           </Switch>
         </Router>

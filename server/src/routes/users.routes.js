@@ -47,7 +47,7 @@ router.put('/clients/:id', async (req, res) => {
 
 router.delete('/clients/:id', async (req, res) => {
   const { client_id , service_id, what} = req.body
-  if (what === 'service') {
+  if (what) {
     await Client.findByIdAndUpdate( client_id, {
       $pull: {
         services: { _id: service_id }
