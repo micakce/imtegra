@@ -1,4 +1,4 @@
-import React, { useState }from 'react';
+import React, { useState } from 'react';
 import { Badge, Button, Card, Accordion, Row, Col } from 'react-bootstrap';
 
 import CreateConfigModal from './CreateConfigModal';
@@ -6,9 +6,9 @@ import CreateDiagramModal from './CreateDiagramModal';
 import { AuthConsumer } from "./authContext";
 import Can from "./Can";
 
-const CanDeleteService = ( { deleteService } ) => (
+const CanDeleteService = ({ deleteService }) => (
   <AuthConsumer>
-    { ({ user }) => (
+    {({ user }) => (
       <Can
         role={user.role}
         perform="services:delete"
@@ -21,17 +21,17 @@ const CanDeleteService = ( { deleteService } ) => (
 )
 
 const AccordionToggle = (props) => {
-  const  [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   return (
-    <Accordion.Toggle as={Card.Header} eventKey={props.idx} onClick={() => setExpanded(!expanded)} style={{cursor: 'pointer'}} >
+    <Accordion.Toggle as={Card.Header} eventKey={props.idx} onClick={() => setExpanded(!expanded)} style={{ cursor: 'pointer' }} >
       <Row className="d-flex justify-content-end" >
-        {expanded ? '-' : '+' }
-        <Col  className=" text-center" >
+        {expanded ? '-' : '+'}
+        <Col className=" text-center" >
           <b className="mr-2">{`${props.service.service} - ${props.service.plan}`}</b>
-          {props.service.medium === 'CO' ? <Badge  variant="primary">{props.service.medium}</Badge> : <Badge variant="warning">{props.service.medium}</Badge>}
+          {props.service.medium === 'CO' ? <Badge variant="primary">{props.service.medium}</Badge> : <Badge variant="warning">{props.service.medium}</Badge>}
         </Col><b className="text-muted">|</b>
-        <Col  className=" text-center" >
+        <Col className=" text-center" >
           <b>PM:</b> {props.service.pm}
         </Col><b className="text-muted">|</b>
         <Col className=" text-center" >
@@ -88,14 +88,13 @@ function RenderService(props) {
               </Row>
 
               <br></br>
-              {/* <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button> */}
               <CanDeleteService deleteService={() => props.deleteService(props.id)} />
               {' '}
               {props.wrapped()}
               {' '}
-              <CreateConfigModal {...props } template='ADI' />
+              <CreateConfigModal {...props} template='ADI' />
               {' '}
-              <CreateDiagramModal {...props } template='ADI' />
+              <CreateDiagramModal {...props} template='ADI' />
             </Card.Body>
           </Accordion.Collapse>
         </Card>
@@ -126,12 +125,13 @@ function RenderService(props) {
                 </Col>
               </Row>
               <br ></br>
-              {/* <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button> */}
               <CanDeleteService deleteService={() => props.deleteService(props.id)} />
               {' '}
               {props.wrapped()}
               {' '}
-              <CreateConfigModal {...props } template='ADI' />
+              <CreateConfigModal {...props} template='ADI_CO' />
+              {' '}
+              <CreateDiagramModal {...props} template='ADI_CO' />
             </Card.Body>
           </Accordion.Collapse>
         </Card>
@@ -155,13 +155,27 @@ function RenderService(props) {
                 <Col>
                   <Card.Title>TLS</Card.Title>
                   <div> <b>Tipo: </b> {` ${props.service.mode}`} </div>
-                  <div>
-                    <b>Hub: </b> <Badge variant="info" className="mx-1" > {props.service.sites.hub}</Badge>
-                  </div>
-                  <div>
-                    <b>Spokes: </b>{props.service.sites.spokes ?
-                    props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>): ''}
-                  </div>
+                  {props.service.mode === 'Punto Multipunto'
+                    ?
+                    (<><div>
+                      <b>Concentrador: </b> <Badge variant="info" className="mx-1" > {props.service.sites.hub}</Badge>
+                    </div>
+                      <div>
+                        <b>Spokes: </b>
+                        {props.service.sites.spokes
+                          ? props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
+                          : ''}
+                      </div></>)
+                    :
+                    <div>
+                      <b>Contra: </b>
+                      {props.service.sites.spokes
+                        ?
+                        props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
+                        :
+                        ''}
+                    </div>
+                  }
                   <div> <b>VLAN: </b>{props.service.vlan} </div>
                 </Col>
                 <Col>
@@ -182,12 +196,13 @@ function RenderService(props) {
                 </Col>
               </Row>
               <br></br>
-              {/* <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button> */}
               <CanDeleteService deleteService={() => props.deleteService(props.id)} />
               {' '}
               {props.wrapped()}
               {' '}
-              <CreateConfigModal { ...props } template='L2VPN' />
+              <CreateConfigModal {...props} template='L2VPN' />
+              {' '}
+              <CreateDiagramModal {...props} template='L2VPN' />
             </Card.Body>
           </Accordion.Collapse>
         </Card>
@@ -211,26 +226,44 @@ function RenderService(props) {
                 <Col md={4} className="mx-auto" >
                   <Card.Title>TLS</Card.Title>
                   <div> <b>Tipo: </b> {` ${props.service.mode}`} </div>
-                  <div>
-                    <b>Contra: </b>{props.service.sites ?
-                    props.service.sites.split(',').map(site => <Badge variant="secondary" className="mx-1">{site}</Badge>): ''}
-                  </div>
+                  {props.service.mode === 'Punto Multipunto'
+                    ?
+                    (<><div>
+                      <b>Concentrador: </b> <Badge variant="info" className="mx-1" > {props.service.sites.hub}</Badge>
+                    </div>
+                      <div>
+                        <b>Spokes: </b>
+                        {props.service.sites.spokes
+                          ? props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
+                          : ''}
+                      </div></>)
+                    :
+                    <div>
+                      <b>Contra: </b>
+                      {props.service.sites.spokes
+                        ?
+                        props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
+                        :
+                        ''}
+                    </div>
+                  }
                   <div> <b>VLAN: </b>{props.service.vlan} </div>
                 </Col>
               </Row>
               <br></br>
-              {/* <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button> */}
               <CanDeleteService deleteService={() => props.deleteService(props.id)} />
               {' '}
               {props.wrapped()}
               {' '}
-              <CreateConfigModal { ...props } template='CO_L2VPN' />
+              <CreateConfigModal {...props} template='L2VPN_CO' />
+              {' '}
+              <CreateDiagramModal {...props} template='L2VPN_CO' />
             </Card.Body>
           </Accordion.Collapse>
         </Card>
       )
     }
-  } else if (props.service.service === 'L3VPN'){
+  } else if (props.service.service === 'L3VPN') {
     if (props.service.medium === "FO") {
       return (
         <Card>
@@ -286,7 +319,6 @@ function RenderService(props) {
               </Row>
 
               <br></br>
-              {/* <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button> */}
               <CanDeleteService deleteService={() => props.deleteService(props.id)} />
               {' '}
               {props.wrapped()}
@@ -320,7 +352,6 @@ function RenderService(props) {
                 </Col>
               </Row>
               <br ></br>
-              {/* <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button> */}
               <CanDeleteService deleteService={() => props.deleteService(props.id)} />
               {' '}
               {props.wrapped()}
@@ -329,7 +360,7 @@ function RenderService(props) {
         </Card>
       )
     }
-  } else if (props.service.service === 'TTT'){
+  } else if (props.service.service === 'TTT') {
     if (props.service.medium === "FO") {
       return (
         <Card>
@@ -373,7 +404,6 @@ function RenderService(props) {
               </Row>
 
               <br></br>
-              {/* <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button> */}
               <CanDeleteService deleteService={() => props.deleteService(props.id)} />
               {' '}
               {props.wrapped()}
@@ -412,7 +442,6 @@ function RenderService(props) {
                 </Col>
               </Row>
               <br ></br>
-              {/* <Button onClick={() => props.deleteService(props.id)} variant='danger'> Eliminar </Button> */}
               <CanDeleteService deleteService={() => props.deleteService(props.id)} />
               {' '}
               {props.wrapped()}
@@ -430,15 +459,15 @@ function RenderHardware(props) {
     <Card>
       <Accordion.Toggle as={Card.Header} eventKey={props.idx}>
         <Row className="d-flex justify-content-end" >
-          <Col  className=" text-center" >
+          <Col className=" text-center" >
             <b className="mr-2"></b>
             {props.device.device}
           </Col><b className="text-muted">|</b>
-          <Col  className=" text-center" >
+          <Col className=" text-center" >
             <b className="mr-2"></b>
             {props.device.model}
           </Col><b className="text-muted">|</b>
-          <Col  className=" text-center" >
+          <Col className=" text-center" >
             <b className="mr-2"></b>
             {props.device.serial}
           </Col>
@@ -456,7 +485,6 @@ function RenderHardware(props) {
             <Col><b>Descripcion: </b>{props.device.description}</Col>
           </Row>
           <br></br>
-          {/* <Button onClick={() => props.deleteDevice(props.id)} variant='danger'> Eliminar </Button> */}
           <CanDeleteService deleteService={() => props.deleteService(props.id)} />
           {' '}
           {props.wrapped()}

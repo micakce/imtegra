@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { ADIConfigTemplate, L2VPNConfigTemplate, CO_ADIConfigTemplate } from './configTemplates';
+import { configAdiFo } from './templates/configAdiFo';
+import { configAdiCo } from './templates/configAdiCo';
+import { configL2vpnFo } from './templates/configL2vpnFo';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const templates = {
-  ADI: ADIConfigTemplate,
-  L2VPN: L2VPNConfigTemplate,
-  ADICO: CO_ADIConfigTemplate,
-  CO_L2VPN: CO_ADIConfigTemplate,
+  ADI: configAdiFo,
+  L2VPN: configL2vpnFo,
+  ADI_CO: configAdiCo,
+  L2VPN_CO: configAdiCo,
 }
 
 function CreateConfigModal(props) {
@@ -26,6 +29,7 @@ function CreateConfigModal(props) {
 
   const handleClose = () => {
     setShow(false);
+    setCopied(false);
   }
 
   const makeTextFile = (text) => {

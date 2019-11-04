@@ -7,7 +7,6 @@ import Home from "./Home";
 import ViewClient from "./ViewClient";
 import CallbackPage from "./callback";
 import Auth from './Auth';
-import Profile from './Profile';
 import Logout from './Logout';
 import { AuthConsumer } from './authContext';
 
@@ -51,8 +50,6 @@ function App() {
               </AuthConsumer>
             </Navbar.Collapse>
           </Navbar>
-          <Profile />
-          <Logout />
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/clients/" exact component={AllClients} />

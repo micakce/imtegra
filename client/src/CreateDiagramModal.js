@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { ADIDiagramTemplate } from './diagramTemplates';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
+import { diagramAdiFo } from './templates/diagramAdiFo';
+import { diagramAdiCo } from './templates/diagramAdiCo';
+import { diagramL2vpnFo } from './templates/diagramL2vpnFo';
+import { diagramL2vpnCo } from './templates/diagramL2vpnCo';
+
 const templates = {
-    ADI: ADIDiagramTemplate
+    ADI: diagramAdiFo,
+    ADI_CO: diagramAdiCo,
+    L2VPN: diagramL2vpnFo,
+    L2VPN_CO: diagramL2vpnCo,
 }
 
 function CreateDiagramModal(props) {
@@ -23,6 +30,7 @@ function CreateDiagramModal(props) {
 
   const handleClose = () => {
     setShow(false);
+    setCopied(false);
   }
 
   const makeTextFile = (text) => {

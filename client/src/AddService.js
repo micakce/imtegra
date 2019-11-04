@@ -41,7 +41,7 @@ const ServicioCM = (props) => (
           value={props.state.hub}
           name="hub"
           onChange={props.handleChange}
-          placeholder="Modelo de CM"
+          placeholder=""
         />
       </Form.Group>
       <Form.Group md={4} as={Col} controlId="">
@@ -162,8 +162,8 @@ const ServicioFO = props => (
           <Form.Label>Contra</Form.Label>
           <Form.Control
             size="sm"
-            value={props.state.sites}
-            name="sites"
+            value={props.state.sites.spokes}
+            name="sites.spokes"
             onChange={props.handleChange}
             type="text"
             placeholder=""
@@ -637,7 +637,7 @@ class AddService extends Component {
                     :
                     <Form.Group as={Col} controlId="">
                       <Form.Label>Contra</Form.Label>
-                      <Form.Control size="sm" value={this.state.sites.hub} name="sites.hub" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
+                      <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
                       />
                     </Form.Group>
                   }
@@ -690,17 +690,25 @@ class AddService extends Component {
                   <option>Multipunto</option>
                 </Form.Control>
               </Form.Group>
-              <Form.Group as={Col} controlId="">
-                <Form.Label>Contra</Form.Label>
-                <Form.Control
-                  size="sm"
-                  value={this.state.sites}
-                  name="sites"
-                  onChange={this.handleChange}
-                  type="text"
-                  placeholder="5551212,5559012"
-                />
-              </Form.Group>
+              {this.state.mode === 'Punto Multipunto'
+                ?
+                (<><Form.Group as={Col} md={3} controlId="">
+                  <Form.Label>Concentrador</Form.Label>
+                  <Form.Control size="sm" value={this.state.sites.hub} name="sites.hub" onChange={this.handleChange} type="text" placeholder="5559012"
+                  />
+                </Form.Group>
+                  <Form.Group as={Col} md={5} controlId="">
+                    <Form.Label>Spokes</Form.Label>
+                    <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
+                    />
+                  </Form.Group></>)
+                :
+                <Form.Group as={Col} controlId="">
+                  <Form.Label>Contra</Form.Label>
+                  <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
+                  />
+                </Form.Group>
+              }
             </Form.Row>
 
           </ServicioCM>
@@ -975,8 +983,8 @@ class AddService extends Component {
                 <Form.Label>Contra</Form.Label>
                 <Form.Control
                   size="sm"
-                  value={this.state.sites}
-                  name="sites"
+                  value={this.state.sites.spokes}
+                  name="sites.spokes"
                   onChange={this.handleChange}
                   type="text"
                   placeholder="5551212,5559012"

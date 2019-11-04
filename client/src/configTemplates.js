@@ -1,4 +1,3 @@
-
 const ADIConfigTemplate = (props) => {
   const { abonado, service} = props;
   console.log(service.sites);
