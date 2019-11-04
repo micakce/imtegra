@@ -14,9 +14,9 @@ const auth = new auth0.WebAuth({
 
 class Auth extends Component {
   state = {
-    authenticated: false,
+    authenticated: true,
     user: {
-      role: "visitor"
+      role: "pm"
     },
     accessToken: ""
   };
