@@ -61,7 +61,7 @@ export const diagramAdiFo = (props) => {
     <mxCell id="kTQoS7o8W5grcHEcw5Z9-21" value="" style="shape=mxgraph.rack.cisco.cisco_asr_9010;html=1;labelPosition=right;align=left;spacingLeft=15;dashed=0;shadow=0;fillColor=#ffffff;fontFamily=Helvetica;fontSize=14;" parent="1" vertex="1">
       <mxGeometry x="258" y="219" width="48" height="71" as="geometry"/>
     </mxCell>
-    <mxCell id="kTQoS7o8W5grcHEcw5Z9-22" value="DIST: ${service.dist}&lt;br style=&quot;font-size: 13px&quot;&gt;ATT: ${service.att}" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;fontSize=13;fontFamily=Helvetica;" parent="1" vertex="1">
+    <mxCell id="kTQoS7o8W5grcHEcw5Z9-22" value="DIST: ${service.dist} mts&lt;br style=&quot;font-size: 13px&quot;&gt;ATT: ${service.att} dB" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;fontSize=13;fontFamily=Helvetica;" parent="1" vertex="1">
       <mxGeometry x="599" y="290" width="130" height="30" as="geometry"/>
     </mxCell>
     <mxCell id="ndxfs6bcccySf-hzeCZ4-1" value="&lt;font&gt;HUB&lt;/font&gt;&lt;font&gt;: ${service.hub}&lt;/font&gt;&lt;br&gt;&lt;font&gt;FDF&lt;/font&gt;&lt;font&gt;:&amp;nbsp;&lt;/font&gt;${service.rack}&lt;br&gt;&lt;font&gt;PATCHERA&lt;/font&gt;&lt;font&gt;:&amp;nbsp;&lt;/font&gt;${service.patchera}&lt;br&gt;&lt;span&gt;UBICACIÓN:&amp;nbsp;&lt;/span&gt;${service.position}&lt;br&gt;&lt;span&gt;SW:&amp;nbsp;&lt;/span&gt;${service.nexus}&lt;span&gt;&lt;br&gt;PO&lt;/span&gt;&lt;span&gt;RT:&amp;nbsp;&lt;/span&gt;${service.nexus_port}&lt;span&gt;&lt;br&gt;&lt;/span&gt;" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;fontSize=13;fontFamily=Helvetica;" parent="1" vertex="1">

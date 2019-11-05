@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { ADIConfigTemplate, L2VPNConfigTemplate, CO_ADIConfigTemplate } from './configTemplates';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
 import { configAdiFo } from './templates/configAdiFo';
 import { configAdiCo } from './templates/configAdiCo';
 import { configL2vpnFo } from './templates/configL2vpnFo';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const templates = {
   ADI: configAdiFo,
