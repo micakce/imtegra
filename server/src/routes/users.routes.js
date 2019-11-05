@@ -53,10 +53,10 @@ router.delete('/clients/:id', async (req, res) => {
         services: { _id: service_id }
       }
     });
-    res.send(`Service ${req.body.name} was deleted succesfully`)
+    res.send({message: `Service ${req.body.name} was deleted succesfully`})
   } else {
     await Client.findByIdAndDelete(req.params.id);
-    res.send(`Client ${req.body.name} was deleted succesfully`)
+    res.send({message: `Client ${req.body.name} was deleted succesfully`})
   }
 });
 
