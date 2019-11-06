@@ -142,84 +142,92 @@ const ServicioFO = props => (
     {props.children}
 
     {props.state.service === 'L3VPN' ?
-      <Form.Row>
-        <Form.Group as={Col} controlId="">
-          <Form.Label>Tipo</Form.Label>
-          <Form.Control
-            size="sm"
-            value={props.state.mode}
-            name="mode"
-            onChange={props.handleChange}
-            as="select"
-            placeholder="en Mbps">
-            <option>...</option>
-            <option>Punto a punto</option>
-            <option>Punto Multipunto</option>
-            <option>Multipunto</option>
-          </Form.Control>
-        </Form.Group>
-        <Form.Group as={Col} controlId="">
-          <Form.Label>Contra</Form.Label>
-          <Form.Control
-            size="sm"
-            value={props.state.sites.spokes}
-            name="sites.spokes"
-            onChange={props.handleChange}
-            type="text"
-            placeholder=""
+    <Form.Row>
+      <Form.Group as={Col} md={4} controlId="">
+        <Form.Label>Tipo</Form.Label>
+        <Form.Control
+          size="sm"
+          value={props.state.mode}
+          name="mode"
+          onChange={props.handleChange}
+          as="select"
+          placeholder="en Mbps">
+          <option>...</option>
+          <option>Punto a punto</option>
+          <option>Punto Multipunto</option>
+          <option>Multipunto</option>
+        </Form.Control>
+      </Form.Group>
+      {props.state.mode === 'Punto Multipunto'
+          ?
+          (<><Form.Group as={Col} md={2} controlId="">
+          <Form.Label>Hub</Form.Label>
+          <Form.Control size="sm" value={props.state.sites.hub} name="sites.hub" onChange={props.handleChange} type="text" placeholder="5551212,5559012"
           />
         </Form.Group>
-        <Form.Group as={Col} controlId="">
-          <Form.Label>VLAN</Form.Label>
-          <Form.Control
-            size="sm"
-            value={props.state.vlan}
-            name="vlan"
-            onChange={props.handleChange}
-            type="text"
-            placeholder="VLAN del Servicio"
+        <Form.Group as={Col} md={4} controlId="">
+          <Form.Label>Spokes</Form.Label>
+          <Form.Control size="sm" value={props.state.sites.spokes} name="sites.spokes" onChange={props.handleChange} type="text" placeholder="5551212,5559012"
           />
-        </Form.Group>
-      </Form.Row> :
-      <Form.Row>
-        <Form.Group as={Col} controlId="">
-          <Form.Label>Equipo</Form.Label>
-          <Form.Control
-            size="sm"
-            value={props.state.device}
-            name="device"
-            onChange={props.handleChange}
-            as="select"
-            placeholder="" >
-            <option>...</option>
-            {props.hardware.length > 0
+        </Form.Group></>)
+          :
+          <Form.Group as={Col} controlId="">
+            <Form.Label>Contra</Form.Label>
+            <Form.Control size="sm" value={props.state.sites.spokes} name="sites.spokes" onChange={props.handleChange} type="text" placeholder="5551212,5559012"
+            />
+          </Form.Group>
+      }
+      <Form.Group as={Col} md={2} controlId="">
+        <Form.Label>VLAN</Form.Label>
+        <Form.Control
+          size="sm"
+          value={props.state.vlan}
+          name="vlan"
+          onChange={props.handleChange}
+          type="text"
+          placeholder=""
+        />
+      </Form.Group>
+    </Form.Row> :
+    <Form.Row>
+      <Form.Group as={Col} controlId="">
+        <Form.Label>Equipo</Form.Label>
+        <Form.Control
+          size="sm"
+          value={props.state.device}
+          name="device"
+          onChange={props.handleChange}
+          as="select"
+          placeholder="" >
+          <option>...</option>
+          {props.hardware.length > 0
               ? props.hardware.map(device => <option>{device.device} {device.model}</option>)
-              : <option>No hay equipos asociados </option>}
-          </Form.Control>
-        </Form.Group>
-        <Form.Group as={Col} controlId="">
-          <Form.Label>Interfaz</Form.Label>
-          <Form.Control
-            size="sm"
-            value={props.state.interface}
-            name="interface"
-            onChange={props.handleChange}
-            type="text"
-            placeholder="Gi1"
-          />
-        </Form.Group>
-        <Form.Group as={Col} controlId="">
-          <Form.Label>VLAN</Form.Label>
-          <Form.Control
-            size="sm"
-            value={props.state.vlan}
-            name="vlan"
-            onChange={props.handleChange}
-            type="text"
-            placeholder="VLAN del Servicio"
-          />
-        </Form.Group>
-      </Form.Row>
+          : <option>No hay equipos asociados </option>}
+        </Form.Control>
+      </Form.Group>
+      <Form.Group as={Col} controlId="">
+        <Form.Label>Interfaz</Form.Label>
+        <Form.Control
+          size="sm"
+          value={props.state.interface}
+          name="interface"
+          onChange={props.handleChange}
+          type="text"
+          placeholder="Gi1"
+        />
+      </Form.Group>
+      <Form.Group as={Col} controlId="">
+        <Form.Label>VLAN</Form.Label>
+        <Form.Control
+          size="sm"
+          value={props.state.vlan}
+          name="vlan"
+          onChange={props.handleChange}
+          type="text"
+          placeholder="VLAN del Servicio"
+        />
+      </Form.Group>
+    </Form.Row>
 
     }
 
@@ -623,23 +631,23 @@ class AddService extends Component {
                     </Form.Control>
                   </Form.Group>
                   {this.state.mode === 'Punto Multipunto'
-                    ?
-                    (<><Form.Group as={Col} md={3} controlId="">
+                      ?
+                      (<><Form.Group as={Col} md={3} controlId="">
                       <Form.Label>Concentrador</Form.Label>
                       <Form.Control size="sm" value={this.state.sites.hub} name="sites.hub" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
                       />
                     </Form.Group>
-                      <Form.Group as={Col} md={5} controlId="">
-                        <Form.Label>Spokes</Form.Label>
-                        <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
-                        />
-                      </Form.Group></>)
-                    :
-                    <Form.Group as={Col} controlId="">
-                      <Form.Label>Contra</Form.Label>
+                    <Form.Group as={Col} md={5} controlId="">
+                      <Form.Label>Spokes</Form.Label>
                       <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
                       />
-                    </Form.Group>
+                    </Form.Group></>)
+                      :
+                      <Form.Group as={Col} controlId="">
+                        <Form.Label>Contra</Form.Label>
+                        <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
+                        />
+                      </Form.Group>
                   }
                 </Form.Row>
 
@@ -691,23 +699,23 @@ class AddService extends Component {
                 </Form.Control>
               </Form.Group>
               {this.state.mode === 'Punto Multipunto'
-                ?
-                (<><Form.Group as={Col} md={3} controlId="">
+                  ?
+                  (<><Form.Group as={Col} md={3} controlId="">
                   <Form.Label>Concentrador</Form.Label>
                   <Form.Control size="sm" value={this.state.sites.hub} name="sites.hub" onChange={this.handleChange} type="text" placeholder="5559012"
                   />
                 </Form.Group>
-                  <Form.Group as={Col} md={5} controlId="">
-                    <Form.Label>Spokes</Form.Label>
-                    <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
-                    />
-                  </Form.Group></>)
-                :
-                <Form.Group as={Col} controlId="">
-                  <Form.Label>Contra</Form.Label>
+                <Form.Group as={Col} md={5} controlId="">
+                  <Form.Label>Spokes</Form.Label>
                   <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
                   />
-                </Form.Group>
+                </Form.Group></>)
+                  :
+                  <Form.Group as={Col} controlId="">
+                    <Form.Label>Contra</Form.Label>
+                    <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
+                    />
+                  </Form.Group>
               }
             </Form.Row>
 
@@ -741,8 +749,8 @@ class AddService extends Component {
                   <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
                     <option>...</option>
                     {this.props.hardware.length > 0
-                      ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
-                      : <option>No hay equipos asociados </option>}
+                        ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
+                    : <option>No hay equipos asociados </option>}
                   </Form.Control>
                 </Form.Group>
                 <Form.Group as={Col} controlId="">
@@ -904,8 +912,8 @@ class AddService extends Component {
                     placeholder="" >
                     <option>...</option>
                     {this.props.hardware.length > 0
-                      ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
-                      : <option>No hay equipos asociados </option>}
+                        ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
+                    : <option>No hay equipos asociados </option>}
                   </Form.Control>
                 </Form.Group>
                 <Form.Group as={Col} controlId="">
@@ -980,24 +988,24 @@ class AddService extends Component {
                 </Form.Control>
               </Form.Group>
               {this.state.mode === 'Punto Multipunto'
-                    ?
-                    (<><Form.Group as={Col} md={3} controlId="">
-                      <Form.Label>Concentrador</Form.Label>
-                      <Form.Control size="sm" value={this.state.sites.hub} name="sites.hub" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
-                      />
-                    </Form.Group>
-                      <Form.Group as={Col} md={5} controlId="">
-                        <Form.Label>Spokes</Form.Label>
-                        <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
-                        />
-                      </Form.Group></>)
-                    :
-                    <Form.Group as={Col} controlId="">
-                      <Form.Label>Contra</Form.Label>
-                      <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
-                      />
-                    </Form.Group>
-                  }
+                  ?
+                  (<><Form.Group as={Col} md={3} controlId="">
+                  <Form.Label>Concentrador</Form.Label>
+                  <Form.Control size="sm" value={this.state.sites.hub} name="sites.hub" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
+                  />
+                </Form.Group>
+                <Form.Group as={Col} md={5} controlId="">
+                  <Form.Label>Spokes</Form.Label>
+                  <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
+                  />
+                </Form.Group></>)
+                  :
+                  <Form.Group as={Col} controlId="">
+                    <Form.Label>Contra</Form.Label>
+                    <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
+                    />
+                  </Form.Group>
+              }
             </Form.Row>
 
           </ServicioCM>

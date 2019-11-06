@@ -156,25 +156,25 @@ function RenderService(props) {
                   <Card.Title>TLS</Card.Title>
                   <div> <b>Tipo: </b> {` ${props.service.mode}`} </div>
                   {props.service.mode === 'Punto Multipunto'
-                    ?
-                    (<><div>
+                      ?
+                      (<><div>
                       <b>Concentrador: </b> <Badge variant="info" className="mx-1" > {props.service.sites.hub}</Badge>
                     </div>
-                      <div>
-                        <b>Spokes: </b>
-                        {props.service.sites.spokes
-                          ? props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
-                          : ''}
-                      </div></>)
-                    :
                     <div>
-                      <b>Contra: </b>
+                      <b>Spokes: </b>
                       {props.service.sites.spokes
-                        ?
-                        props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
-                        :
+                          ? props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
+                      : ''}
+                    </div></>)
+                      :
+                      <div>
+                        <b>Contra: </b>
+                        {props.service.sites.spokes
+                            ?
+                            props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
+                            :
                         ''}
-                    </div>
+                      </div>
                   }
                   <div> <b>VLAN: </b>{props.service.vlan} </div>
                 </Col>
@@ -227,25 +227,25 @@ function RenderService(props) {
                   <Card.Title>TLS</Card.Title>
                   <div> <b>Tipo: </b> {` ${props.service.mode}`} </div>
                   {props.service.mode === 'Punto Multipunto'
-                    ?
-                    (<><div>
+                      ?
+                      (<><div>
                       <b>Concentrador: </b> <Badge variant="info" className="mx-1" > {props.service.sites.hub}</Badge>
                     </div>
-                      <div>
-                        <b>Spokes: </b>
-                        {props.service.sites.spokes
-                          ? props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
-                          : ''}
-                      </div></>)
-                    :
                     <div>
-                      <b>Contra: </b>
+                      <b>Spokes: </b>
                       {props.service.sites.spokes
-                        ?
-                        props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
-                        :
+                          ? props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
+                      : ''}
+                    </div></>)
+                      :
+                      <div>
+                        <b>Contra: </b>
+                        {props.service.sites.spokes
+                            ?
+                            props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
+                            :
                         ''}
-                    </div>
+                      </div>
                   }
                   <div> <b>VLAN: </b>{props.service.vlan} </div>
                 </Col>
@@ -283,7 +283,27 @@ function RenderService(props) {
                 <Col>
                   <Card.Title>VPN</Card.Title>
                   <div> <b>Tipo: </b> {` ${props.service.mode}`} </div>
-                  <div> <b>Contra: </b>{props.service.sites.split(',').map(site => <Badge variant="secondary" className="mx-1">{site}</Badge>)} </div>
+                  {props.service.mode === 'Punto Multipunto'
+                      ?
+                      (<><div>
+                      <b>Hub: </b> <Badge variant="info" className="mx-1" > {props.service.sites.hub}</Badge>
+                    </div>
+                    <div>
+                      <b>Spokes: </b>
+                      {props.service.sites.spokes
+                          ? props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
+                      : ''}
+                    </div></>)
+                      :
+                      <div>
+                        <b>Contra: </b>
+                        {props.service.sites.spokes
+                            ?
+                            props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
+                            :
+                        ''}
+                      </div>
+                  }
                   <div> <b>VLAN: </b>{props.service.vlan} </div>
                 </Col>
                 <Col>
