@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Accordion, Card, Button, Row, Col, Form } from 'react-bootstrap';
+import { Redirect } from 'react-router';
 
 import { blankState } from './testVariables';
 import { RenderService, RenderHardware } from './RenderService';
@@ -19,6 +20,7 @@ export default class ViewClient extends Component {
 
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.searchClient = this.searchClient.bind(this);
+    this.deleteClient = this.deleteClient.bind(this);
     this.deleteService = this.deleteService.bind(this);
     this.deleteDevice = this.deleteDevice.bind(this);
 
@@ -46,11 +48,26 @@ export default class ViewClient extends Component {
       .then(res => res.json())
       .then(data => {
         this.setState(data ? { ...data, hideEditButton: false } : blankState)
-        // this.props.history.push(`/clients/client/${abonado}`)
       }
       )
       .catch(err => console.error(err));
     if (e) e.preventDefault();
+  }
+
+  deleteClient(client_id) {
+    if (window.confirm('Seguro quieres eliminar este cliente?')) {
+      fetch(`/clients/${client_id}`, {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(res => console.log(res.message))
+        .then(data => console.log(data))
+        .catch(err => console.error(err))
+      this.props.history.push("/");
+    }
   }
 
   deleteService(id) {
@@ -147,6 +164,22 @@ export default class ViewClient extends Component {
                                   />
                                 )}
                               />
+                            )}
+                          />
+                          {' '}
+
+                          <Can
+                            role={user.role}
+                            perform="clients:delete"
+                            yes={() => (
+                              <Button
+                                variant="danger"
+                                onClick={() => this.deleteClient(this.state._id)}
+                                // onClick={() => console.log(this.state)}
+                                hidden={this.state.hideEditButton}
+                              >
+                                Eliminar
+                              </Button>
                             )}
                           />
                         </div>

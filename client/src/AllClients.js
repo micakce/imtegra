@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Table, Button, Badge, InputGroup } from 'react-bootstrap';
+import { Table, Button, Badge } from 'react-bootstrap';
 
 import MyModal from './MyModal';
 import AddClient from './AddClient';
 import { AuthConsumer } from "./authContext";
 import Can from "./Can";
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
 
 export default class AllClients extends Component {
 
@@ -65,51 +67,76 @@ export default class AllClients extends Component {
 
   render() {
 
-    const AddClientModal = ({ client }) => (
-      <MyModal
-        title="Editar Cliente"
-        buttonLabel="Editar"
-        render={toggle => (
-          <AddClient
-            toggle={toggle}
-            action="edit"
-            client={client}
-            reload={this.fetchClients}
-          />
-        )} />
-    )
-
-    const CanEditClient = ({ client, user }) => (
-      <Can
-        role={user.role}
-        perform="clients:edit"
-        yes={() => (
-          <AddClientModal client={client} />
-        )}
-      />
-    )
-
-    const CanDeleteService = ({ client, service,  user }) => (
-      <Can
-        role={user.role}
-        perform="services:delete"
-        yes={() => (
-          <Button variant="danger" onClick={() => this.deleteService(client._id, service._id)} >X </Button>
-        )}
-      />
-    )
-
-    const CanDeleteClient = ({ client, user }) => (
-      <Can
-        role={user.role}
-        perform="clients:delete"
-        yes={() => (
-          <Button variant="danger" onClick={() => this.deleteClient(client._id)} >X </Button>
-        )}
-      />
-    )
-
     const cellStyle = { display: "table-cell", verticalAlign: "middle" };
+
+    const data = [];
+    this.state.clients.map( client => {
+      if (client.services.length > 0) {
+        client.services.map( service => {
+          if (service.status !== "Baja"||"Completado") {
+            data.push({
+              abonado: client.abonado,
+              name: client.name,
+              clientId: client._id,
+              service
+            })
+          }
+        })
+      } else {
+        data.push({
+          abonado: client.abonado,
+          name: client.name,
+          clientId: client._id,
+          service: {service: "Nada en implementacion"}
+        })
+      }
+    } )
+
+    const columns = [{
+      Header: "Abonado",
+      accessor: "abonado",
+      Cell: props => <Link to={ `/clients/client/${props.value}` }>{props.value}</Link>,
+    },{
+      Header: "Nombre",
+      accessor: "name",
+      filterMethod: (filter, row) =>
+      row[filter.id].match(filter.value)
+    },{
+      id: "Servicio",
+      Header: "Servicio",
+      accessor: d => d.service.service,
+      Cell: props => <Badge>{props.value}</Badge>
+    },{
+      id: "pm",
+      Header: "PM",
+      accessor: d => d.service.pm
+    },{
+      id: "im",
+      Header: "Implementador",
+      accessor: d => d.service.im
+    },{
+      id: "serviceStatus",
+      Header: "Status",
+      accessor: d => d.service.status,
+      filterMethod: (filter, row) => {
+        if (filter.value === "all") {
+          return true;
+        }
+        return row[filter.id] === filter.value;
+
+      },
+      Filter: ({ filter, onChange }) =>
+        <select
+          onChange={event => onChange(event.target.value)}
+          style={{ width: "100%" }}
+          value={filter ? filter.value : "all"}
+        >
+          <option  value="all">Todos</option>
+          <option  value="Init">Init</option>
+          <option  >MeH</option>
+          <option  >Pedido</option>
+        </select>
+    },]
 
     return (
       <AuthConsumer>
@@ -119,84 +146,15 @@ export default class AllClients extends Component {
             perform="services:list"
             yes={() =>
               <React.Fragment>
-                <Table className="mt-3" size="sm"  striped hover>
-                  <thead>
-                    <tr  >
-                      <th onClick={() => console.log(this.state)}>Abonado</th>
-                      <th>Nombre</th>
-                      <th>Servicios</th>
-                      <th>PM</th>
-                      <th>Implementador</th>
-                      <th>Estatus</th>
-                      <th>Del</th>
-                      <th>Edit</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.state.clients.map(client => {
+                <ReactTable
+                  data={data}
+                  columns={columns}
+                  filterable
+                  defaultFilterMethod={(filter, row) =>
+                  String(row[filter.id]) === filter.value}
+                  defaultPageSize={10}
+                />
 
-                      if (client.services.length > 0) {
-
-                        return (
-                          client.services.map(service => {
-                            if (client.status === 'Implementacion') {
-                              return (
-                                <tr key={service._id} hidden={false} >
-                                  <td style={cellStyle}>
-                                    <Link to={`/clients/client/${client.abonado}`}>
-                                      {client.abonado}
-                                    </Link>
-                                  </td>
-                                  <td style={cellStyle}>{client.name}</td>
-                                  <td style={cellStyle}><Badge>{service.service} - {service.plan}</Badge></td>
-                                  <td style={cellStyle}>{service.pm}</td>
-                                  <td style={cellStyle}>{service.im}</td>
-                                  <td style={cellStyle}>{service.status}</td>
-                                  {/* <td  ><Button variant="danger" onClick={() => this.deleteClient(client._id, service._id, 'service')} >X </Button> </td>
-                                  <td ><AddClientModal client={client} /></td> */}
-                                  <td style={cellStyle}> <CanDeleteService client={client} service={service} user={user} /></td>
-                                  <td style={cellStyle}> <CanEditClient client={client} user={user} /></td>
-                                </tr>
-                              )
-                            } else {
-                              return (
-                                < tr key={client._id}  >
-                                  <td style={cellStyle}>
-                                    <Link to={`/clients/client/${client.abonado}`}>
-                                      {client.abonado}
-                                    </Link>
-                                  </td>
-                                  <td style={cellStyle}>{client.name}</td>
-                                  <td style={cellStyle} colSpan="4" > No posee servicios en implementacion</td>
-                                  {/* <td  ><Button variant="danger" onClick={() => this.deleteClient(client._id)} >X </Button> </td>
-                                  <td ><AddClientModal client={client} /></td> */}
-                                  <td style={cellStyle}> <CanDeleteClient client={client} user={user} /></td>
-                                  <td style={cellStyle}> <CanEditClient client={client} user={user} /></td>
-                                </tr>
-                              )
-                            }
-                          })
-                        )
-                      } else {
-                        return (
-                          < tr key={client._id}  >
-                            <td style={cellStyle}>
-                              <Link to={`/clients/client/${client.abonado}`}>
-                                {client.abonado}
-                              </Link>
-                            </td>
-                            <td style={cellStyle}>{client.name}</td>
-                                  <td style={cellStyle} colSpan="4" > No posee servicios en implementacion</td>
-                            {/* <td  ><Button variant="danger" onClick={() => this.deleteClient(client._id)} >X </Button> </td> */}
-                            {/* <td > <AddClientModal client={client} /> </td> */}
-                            <td style={cellStyle}> <CanDeleteClient client={client} user={user} /></td>
-                            <td style={cellStyle}> <CanEditClient client={client} user={user} /></td>
-                          </tr>
-                        )
-                      }
-                    })}
-                  </tbody>
-                </Table>
                 <Can
                   role={user.role}
                   perform="clients:add"
@@ -216,7 +174,7 @@ export default class AllClients extends Component {
                 />
               </React.Fragment>
             }
-            no={() => <Redirect to="/" />}
+          no={() => <Redirect to="/" />}
           />
         )}
       </AuthConsumer>

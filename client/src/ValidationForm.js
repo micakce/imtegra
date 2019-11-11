@@ -5,7 +5,6 @@ const ValidationForm = ({ label, value, name, onChange, type, placeholder, requi
 
   const [valid, setValid] = useState(false);
   const [invalid, setInvalid] = useState(false);
-  // const [validMessage, setValidMessage] = useState('');
   const [invalidMessage, setInvalidMessage] = useState('');
 
   const validateMe = (e) => {

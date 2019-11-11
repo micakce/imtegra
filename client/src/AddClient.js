@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Form, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import { blankState } from './testVariables';
 import ValidationForm from './ValidationForm';
@@ -59,7 +60,12 @@ export default class AddClient extends Component {
               this.setState({
                 validation: {
                   ...this.state.validation,
-                  [name]: { valid: false, invalid: true, message: 'Abonado ya existe', editable: true },
+                  [name]: {
+                    valid: false,
+                    invalid: true,
+                    message: <p>Abonado ya <Link style={{color: "red", textDecoration: "underline"}} to={`/clients/client/${this.state.abonado}`}>existe</Link></p>,
+                    editable: true
+                  },
                   submit: false
                 }
               });
@@ -93,6 +99,7 @@ export default class AddClient extends Component {
       })
         .then(res => res.json())
         .then(data => {
+          console.log("First 'edit' rule");
           this.setState(blankState)
           this.props.toggle();
           this.props.reload();
@@ -110,6 +117,7 @@ export default class AddClient extends Component {
         }
       })
         .then(() => {
+          console.log("Second add rule");
           this.props.toggle();
           this.props.reload();
         })
@@ -128,11 +136,11 @@ export default class AddClient extends Component {
       })
         .then(res => res.json())
         .then(data => {
-          console.log(data);
-          this.setState(blankState);
+          console.log("Third add rule");
         })
         .catch(err => console.error(err));
       e.preventDefault();
+      this.props.history.push(`/clients/client/${this.state.abonado}`)
 
     }
   }
@@ -180,24 +188,24 @@ export default class AddClient extends Component {
                 </Form.Row>
 
                 <Form.Row>
-                  {/* <Form.Group md as={Col} controlId=""> */}
-                  {/*   <Form.Label>Telefono</Form.Label> */}
-                  {/*   <Form.Control */}
-                  {/*     value={this.state.telefono} */}
-                  {/*     name="telefono" */}
-                  {/*     onChange={this.handleChange} */}
-                  {/*     type="text" */}
-                  {/*     placeholder="(011) 6380-9500" */}
-                  {/*   /> */}
-                  {/* </Form.Group> */}
-                  <ValidationForm
-                    label="Telefono"
-                    value={this.state.telefono}
-                    name="telefono"
-                    onChange={this.handleChange}
-                    type="number"
-                    placeholder="(011) 6380-9500"
-                  />
+                  <Form.Group md as={Col} controlId="">
+                    <Form.Label>Telefono</Form.Label>
+                    <Form.Control
+                      value={this.state.telefono}
+                      name="telefono"
+                      onChange={this.handleChange}
+                      type="text"
+                      placeholder="(011) 6380-9500"
+                    />
+                  </Form.Group>
+                  {/* <ValidationForm */}
+                  {/*   label="Telefono" */}
+                  {/*   value={this.state.telefono} */}
+                  {/*   name="telefono" */}
+                  {/*   onChange={this.handleChange} */}
+                  {/*   type="number" */}
+                  {/*   placeholder="(011) 6380-9500" */}
+                  {/* /> */}
 
                   <Form.Group md as={Col} controlId="formGridEmail">
                     <Form.Label>Email</Form.Label>

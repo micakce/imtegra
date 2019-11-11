@@ -8,7 +8,7 @@ const HomePage = () => (
   <AuthConsumer>
     {({ authenticated }) =>
       authenticated ? (
-        <Redirect to="/clients" />
+        <Redirect to="/clients/all" />
       ) : (
         <div>
           <h2>Welcome to React RBAC Tutorial.</h2>

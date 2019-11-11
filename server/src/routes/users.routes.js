@@ -11,7 +11,7 @@ router.use(function (req, res, next) {
   next();
 });
 
-router.get('/clients', async (req, res) => {
+router.get('/clients/all', async (req, res) => {
   const clients = await Client.find();
   res.json(clients);
 });
@@ -56,7 +56,7 @@ router.delete('/clients/:id', async (req, res) => {
     res.send({message: `Service ${req.body.name} was deleted succesfully`})
   } else {
     await Client.findByIdAndDelete(req.params.id);
-    res.send({message: `Client ${req.body.name} was deleted succesfully`})
+    res.send({message: `Client ${req.body.abonado} was deleted succesfully`})
   }
 });
 
