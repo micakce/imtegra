@@ -104,7 +104,7 @@ export default class AllClients extends Component {
     },{
       id: "Servicio",
       Header: "Servicio",
-      accessor: d => d.service.service,
+      accessor: d => `${d.service.service} - ${d.service.plan} Mbps`,
       Cell: props => <Badge>{props.value}</Badge>
     },{
       id: "pm",
