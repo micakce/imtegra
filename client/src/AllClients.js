@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Table, Button, Badge } from 'react-bootstrap';
+import { Badge } from 'react-bootstrap';
 
 import MyModal from './MyModal';
 import AddClient from './AddClient';
@@ -70,6 +70,7 @@ export default class AllClients extends Component {
     const cellStyle = { display: "table-cell", verticalAlign: "middle" };
 
     const data = [];
+    const statuses = [];
     this.state.clients.map( client => {
       if (client.services.length > 0) {
         client.services.map( service => {
@@ -80,6 +81,9 @@ export default class AllClients extends Component {
               clientId: client._id,
               service
             })
+          }
+          if (!statuses.includes(service.status)){
+            statuses.push(service.status);
           }
         })
       } else {
@@ -104,7 +108,7 @@ export default class AllClients extends Component {
     },{
       id: "Servicio",
       Header: "Servicio",
-      accessor: d => `${d.service.service} - ${d.service.plan} Mbps`,
+      accessor: d => d.service.plan ? `${d.service.service} - ${d.service.plan} Mbps` : d.service.service,
       Cell: props => <Badge>{props.value}</Badge>
     },{
       id: "pm",
@@ -132,9 +136,7 @@ export default class AllClients extends Component {
           value={filter ? filter.value : "all"}
         >
           <option  value="all">Todos</option>
-          <option  value="Init">Init</option>
-          <option  >MeH</option>
-          <option  >Pedido</option>
+          { statuses.map( status => <option>{status}</option> ) }
         </select>
     },]
 
