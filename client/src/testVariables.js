@@ -59,7 +59,8 @@ const blankState = {
     validation: {
         abonado: { valid: false, invalid: false, message: '', editable: true }
     },
-    hideEditButton: true
+    hideEditButton: true,
+    search: ""
 }
 
 const dangeloState = {

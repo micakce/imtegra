@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
+
 function MyModal(props) {
 
   const [show, setShow] = useState(false);
 
     return (
         <>
-          <Button variant={props.color} hidden={props.hideEditButton} onClick={() => setShow(true)}>
+          <Button variant="primary" hidden={props.hideEditButton} onClick={() => setShow(true)}>
             {props.buttonLabel}
             </Button>
 

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Accordion, Card, Button, Row, Col, Form } from 'react-bootstrap';
-import { Redirect } from 'react-router';
+import { Accordion, Card, Button, Table,  Row, Col, Form } from 'react-bootstrap';
+// import { Redirect } from 'react-router';
 
 import { blankState } from './testVariables';
-import { RenderService, RenderHardware } from './RenderService';
+import RenderService from './RenderService';
 import MyModal from './MyModal';
 import AddService from './AddService';
 import AddHardware from './AddHardware';
 import AddClient from './AddClient';
+import EditHardwareModal from './EditHardwareModal';
 import { AuthConsumer } from './authContext';
 import Can from './Can';
 
@@ -226,6 +227,7 @@ export default class ViewClient extends Component {
                                   deleteService={this.deleteService}
                                   wrapped={WrappedAddServiceModal}
                                   service={service}
+                                  hardware={this.state.hardware}
                                   idx={idx}
                                 />
                               )
@@ -261,46 +263,68 @@ export default class ViewClient extends Component {
                       <Card>
                         <Card.Header as="h5">Hardware</Card.Header>
                         <Card.Body>
-                          <Accordion >
+                          <Table size="sm" bordered hover striped>
+                            <thead>
+                              <tr>
+                                <th>Dispositivo</th>
+                                <th>Modelo</th>
+                                <th>Serial</th>
+                              </tr>
+                            </thead>
+                            <tbody>
                             {
                               this.state.hardware.map((device, idx) => {
-                                const WrappedAddHardwareModal = () => (
 
-                                  <Can
-                                    role={user.role}
-                                    perform="hardware:add"
-                                    yes={() => (
-                                      <MyModal
-                                        title="Editar Dispositivo"
-                                        buttonLabel="Editar"
-                                        render={ toggle => (
-                                          <AddHardware
-                                            id={device._id}
-                                            idx={idx}
-                                            device={device}
-                                            action={"Edit"}
-                                            toggle={toggle}
-                                            reload={this.searchClient}
-                                            abonado={this.state.abonado}
-                                          />
-                                        )}
-                                      />
-                                    )}
-                                  />
-
-                                )
+                                // const CanEditHardware = () => (
+                                //   <Can
+                                //     role={user.role}
+                                //     perform="hardware:add"
+                                //     yes={() => (
+                                //       <MyModal
+                                //         title="Editar Dispositivo"
+                                //         buttonLabel="Editar"
+                                //         render={ toggle => (
+                                //           <AddHardware
+                                //             id={device._id}
+                                //             idx={idx}
+                                //             device={device}
+                                //             action={"Edit"}
+                                //             toggle={toggle}
+                                //             reload={this.searchClient}
+                                //             abonado={this.state.abonado}
+                                //           />
+                                //         )}
+                                //       />
+                                //     )}
+                                //   />
+                                // )
 
                                 return (
-                                  <RenderHardware
+
+                                  <EditHardwareModal
                                     id={device._id}
                                     deleteDevice={this.deleteDevice}
-                                    wrapped={WrappedAddHardwareModal}
+                                    // canEdit={CanEditHardware}
                                     device={device}
                                     idx={idx}
+                                    render={ toggle => (
+                                      <AddHardware
+                                        id={device._id}
+                                        idx={idx}
+                                        device={device}
+                                        action={"Edit"}
+                                        toggle={toggle}
+                                        reload={this.searchClient}
+                                        abonado={this.state.abonado}
+                                        deleteDevice={this.deleteDevice}
+                                      />
+                                    )}
                                   />
                                 )
                               })
                             }
+                            </tbody>
+                          </Table>
 
                             <br></br>
 
@@ -313,6 +337,7 @@ export default class ViewClient extends Component {
                                   buttonLabel="Agregar"
                                   render={ toggle => (
                                     <AddHardware
+                                      action={"Add"}
                                       toggle={toggle}
                                       reload={this.searchClient}
                                       abonado={this.state.abonado}
@@ -321,7 +346,6 @@ export default class ViewClient extends Component {
                                 />
                               )}
                             />
-                          </Accordion>
                         </Card.Body>
                       </Card>
                     </>

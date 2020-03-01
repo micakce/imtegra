@@ -41,7 +41,7 @@ function CreateConfigModal(props) {
 
   return (
     <>
-      <Button variant="secondary" onClick={handleClick} >
+      <Button variant="success" onClick={handleClick} >
         Template
       </Button>
 

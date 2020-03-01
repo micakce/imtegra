@@ -455,10 +455,6 @@ class AddService extends Component {
   handleChange(e) {
     const { name, value, id } = e.target;
 
-    console.log("Props");
-    console.log(this.props);
-    console.log("State");
-    console.log(this.state);
     if (name === 'mediumRadios') {
       this.setState({ medium: id });
     } else if (name.match(/\./)) {
@@ -964,6 +960,9 @@ class AddService extends Component {
                 </Form.Group>
               </Form.Row>
 
+            </Tab>
+            <Tab eventKey="patcheo" title="Patcheo" >
+              <Patcheo state={this.state} handleChange={this.handleChange} />
             </Tab>
           </Tabs >
         )

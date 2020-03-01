@@ -42,7 +42,7 @@ function CreateDiagramModal(props) {
 
   return (
     <>
-      <Button variant="success" onClick={handleClick} >
+      <Button variant="warning" onClick={handleClick} >
       Diagram
       </Button>
 

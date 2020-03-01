@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { Badge, Button, Card, Accordion, Row, Col } from 'react-bootstrap';
 
+import PrintCCADI from './templates/PrintCCADI';
+import PrintOSADI from './templates/PrintOSADI';
+import PrintOSL2VPN from './templates/PrintOSL2VPN';
+
 import CreateConfigModal from './CreateConfigModal';
 import CreateDiagramModal from './CreateDiagramModal';
 import { AuthConsumer } from "./authContext";
+import MyModal from './MyModal';
 import Can from "./Can";
 
 const CanDeleteService = ({ deleteService }) => (
@@ -78,7 +83,7 @@ function RenderService(props) {
                 </Col>
                 <Col>
                   <Card.Title>Patcheo</Card.Title>
-                  <div> <b>Hub: </b>{props.service.hub} {props.service.obra ? `/${props.service.obra}` : ""}</div>
+                  <div> <b>Hub: </b>{props.service.hub} - <b>Obra: </b> {props.service.obra ?  props.service.obra : ""}</div>
                   <div> <b>Patcheo: </b>{props.service.rack} - {props.service.patchera} - {props.service.position} </div>
                   <div> <b>Switch: </b>{props.service.nexus} </div>
                   <div> <b>Port: </b>{props.service.nexus_port} </div>
@@ -95,6 +100,32 @@ function RenderService(props) {
               <CreateConfigModal {...props} template='ADI' />
               {' '}
               <CreateDiagramModal {...props} template='ADI' />
+              {' '}
+              <MyModal
+                title="Print Comodato"
+                buttonLabel="PrintCC"
+                size="lg"
+                color="secondary"
+                render={ toggle => (
+                  <PrintCCADI
+                    {...props}
+                    toggle={toggle}
+                  />
+                )}
+              />
+              {' '}
+              <MyModal
+                title="Print OS"
+                buttonLabel="PrintOS"
+                size="lg"
+                color="secondary"
+                render={ toggle => (
+                  <PrintOSADI
+                    {...props}
+                    toggle={toggle}
+                  />
+                )}
+              />
             </Card.Body>
           </Accordion.Collapse>
         </Card>
@@ -156,25 +187,25 @@ function RenderService(props) {
                   <Card.Title>TLS</Card.Title>
                   <div> <b>Tipo: </b> {` ${props.service.mode}`} </div>
                   {props.service.mode === 'Punto Multipunto'
-                      ?
+                    ?
                       (<><div>
-                      <b>Concentrador: </b> <Badge variant="info" className="mx-1" > {props.service.sites.hub}</Badge>
-                    </div>
-                    <div>
-                      <b>Spokes: </b>
-                      {props.service.sites.spokes
-                          ? props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
-                      : ''}
-                    </div></>)
-                      :
-                      <div>
-                        <b>Contra: </b>
-                        {props.service.sites.spokes
-                            ?
-                            props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
-                            :
-                        ''}
+                        <b>Concentrador: </b> <Badge variant="info" className="mx-1" > {props.service.sites.hub}</Badge>
                       </div>
+                        <div>
+                          <b>Spokes: </b>
+                          {props.service.sites.spokes
+                            ? props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
+                            : ''}
+                        </div></>)
+                        :
+                          <div>
+                            <b>Contra: </b>
+                            {props.service.sites.spokes
+                              ?
+                                props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
+                                :
+                                ''}
+                          </div>
                   }
                   <div> <b>VLAN: </b>{props.service.vlan} </div>
                 </Col>
@@ -187,7 +218,7 @@ function RenderService(props) {
                 </Col>
                 <Col>
                   <Card.Title>Patcheo</Card.Title>
-                  <div> <b>Hub: </b>{props.service.hub} {props.service.obra ? `/ ${props.service.obra}` : ""}</div>
+                  <div> <b>Hub: </b>{props.service.hub} - <b>Obra: </b> {props.service.obra ?  props.service.obra : ""}</div>
                   <div> <b>Patcheo: </b>{props.service.rack} - {props.service.patchera} - {props.service.position} </div>
                   <div> <b>Switch: </b>{props.service.nexus} </div>
                   <div> <b>Port: </b>{props.service.nexus_port} </div>
@@ -203,6 +234,32 @@ function RenderService(props) {
               <CreateConfigModal {...props} template='L2VPN' />
               {' '}
               <CreateDiagramModal {...props} template='L2VPN' />
+              {' '}
+              <MyModal
+                title="Print Comodato"
+                buttonLabel="PrintCC"
+                size="lg"
+                color="secondary"
+                render={ toggle => (
+                  <PrintCCADI
+                    {...props}
+                    toggle={toggle}
+                  />
+                )}
+              />
+              {' '}
+              <MyModal
+                title="Print OS"
+                buttonLabel="PrintOS"
+                size="lg"
+                color="secondary"
+                render={ toggle => (
+                  <PrintOSL2VPN
+                    {...props}
+                    toggle={toggle}
+                  />
+                )}
+              />
             </Card.Body>
           </Accordion.Collapse>
         </Card>
@@ -227,25 +284,25 @@ function RenderService(props) {
                   <Card.Title>TLS</Card.Title>
                   <div> <b>Tipo: </b> {` ${props.service.mode}`} </div>
                   {props.service.mode === 'Punto Multipunto'
-                      ?
+                    ?
                       (<><div>
-                      <b>Concentrador: </b> <Badge variant="info" className="mx-1" > {props.service.sites.hub}</Badge>
-                    </div>
-                    <div>
-                      <b>Spokes: </b>
-                      {props.service.sites.spokes
-                          ? props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
-                      : ''}
-                    </div></>)
-                      :
-                      <div>
-                        <b>Contra: </b>
-                        {props.service.sites.spokes
-                            ?
-                            props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
-                            :
-                        ''}
+                        <b>Concentrador: </b> <Badge variant="info" className="mx-1" > {props.service.sites.hub}</Badge>
                       </div>
+                        <div>
+                          <b>Spokes: </b>
+                          {props.service.sites.spokes
+                            ? props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
+                            : ''}
+                        </div></>)
+                        :
+                          <div>
+                            <b>Contra: </b>
+                            {props.service.sites.spokes
+                              ?
+                                props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
+                                :
+                                ''}
+                          </div>
                   }
                   <div> <b>VLAN: </b>{props.service.vlan} </div>
                 </Col>
@@ -284,25 +341,25 @@ function RenderService(props) {
                   <Card.Title>VPN</Card.Title>
                   <div> <b>Tipo: </b> {` ${props.service.mode}`} </div>
                   {props.service.mode === 'Punto Multipunto'
-                      ?
+                    ?
                       (<><div>
-                      <b>Hub: </b> <Badge variant="info" className="mx-1" > {props.service.sites.hub}</Badge>
-                    </div>
-                    <div>
-                      <b>Spokes: </b>
-                      {props.service.sites.spokes
-                          ? props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
-                      : ''}
-                    </div></>)
-                      :
-                      <div>
-                        <b>Contra: </b>
-                        {props.service.sites.spokes
-                            ?
-                            props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
-                            :
-                        ''}
+                        <b>Hub: </b> <Badge variant="info" className="mx-1" > {props.service.sites.hub}</Badge>
                       </div>
+                        <div>
+                          <b>Spokes: </b>
+                          {props.service.sites.spokes
+                            ? props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
+                            : ''}
+                        </div></>)
+                        :
+                          <div>
+                            <b>Contra: </b>
+                            {props.service.sites.spokes
+                              ?
+                                props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
+                                :
+                                ''}
+                          </div>
                   }
                   <div> <b>VLAN: </b>{props.service.vlan} </div>
                 </Col>
@@ -329,7 +386,7 @@ function RenderService(props) {
                 </Col>
                 <Col>
                   <Card.Title>Patcheo</Card.Title>
-                  <div> <b>Hub: </b>{props.service.hub} {props.service.obra ? `/${props.service.obra}` : ""}</div>
+                  <div> <b>Hub: </b>{props.service.hub} - <b>Obra: </b> {props.service.obra ?  props.service.obra : ""}</div>
                   <div> <b>Patcheo: </b>{props.service.rack} - {props.service.patchera} - {props.service.position} </div>
                   <div> <b>Switch: </b>{props.service.nexus} </div>
                   <div> <b>Port: </b>{props.service.nexus_port} </div>
@@ -342,6 +399,32 @@ function RenderService(props) {
               <CanDeleteService deleteService={() => props.deleteService(props.id)} />
               {' '}
               {props.wrapped()}
+              {' '}
+              <MyModal
+                title="Print Comodato"
+                buttonLabel="PrintCC"
+                size="lg"
+                color="secondary"
+                render={ toggle => (
+                  <PrintCCADI
+                    {...props}
+                    toggle={toggle}
+                  />
+                )}
+              />
+              {' '}
+              <MyModal
+                title="Print OS"
+                buttonLabel="PrintOS"
+                size="lg"
+                color="secondary"
+                render={ toggle => (
+                  <PrintOSL2VPN
+                    {...props}
+                    toggle={toggle}
+                  />
+                )}
+              />
             </Card.Body>
           </Accordion.Collapse>
         </Card>
@@ -414,7 +497,7 @@ function RenderService(props) {
                 </Col>
                 <Col>
                   <Card.Title>Patcheo</Card.Title>
-                  <div> <b>Hub: </b>{props.service.hub} {props.service.obra ? `/${props.service.obra}` : ""}</div>
+                  <div> <b>Hub: </b>{props.service.hub} - <b>Obra: </b> {props.service.obra ?  props.service.obra : ""}</div>
                   <div> <b>Patcheo: </b>{props.service.rack} - {props.service.patchera} - {props.service.position} </div>
                   <div> <b>Switch: </b>{props.service.nexus} </div>
                   <div> <b>Port: </b>{props.service.nexus_port} </div>
@@ -473,46 +556,4 @@ function RenderService(props) {
   }
 }
 
-function RenderHardware(props) {
-
-  return (
-    <Card>
-      <Accordion.Toggle as={Card.Header} eventKey={props.idx}>
-        <Row className="d-flex justify-content-end" >
-          <Col className=" text-center" >
-            <b className="mr-2"></b>
-            {props.device.device}
-          </Col><b className="text-muted">|</b>
-          <Col className=" text-center" >
-            <b className="mr-2"></b>
-            {props.device.model}
-          </Col><b className="text-muted">|</b>
-          <Col className=" text-center" >
-            <b className="mr-2"></b>
-            {props.device.serial}
-          </Col>
-        </Row>
-      </Accordion.Toggle>
-      <Accordion.Collapse eventKey={props.idx}>
-        <Card.Body>
-          <Card.Title>
-            <Row>
-              <Col>Detalles</Col>
-            </Row>
-          </Card.Title>
-          <Row>
-            <Col><b>Serial: </b>{props.device.serial}</Col>
-            <Col><b>Descripcion: </b>{props.device.description}</Col>
-          </Row>
-          <br></br>
-          <CanDeleteService deleteService={() => props.deleteService(props.id)} />
-          {' '}
-          {props.wrapped()}
-        </Card.Body>
-
-      </Accordion.Collapse>
-    </Card>
-  )
-}
-
-export { RenderService, RenderHardware };
+export default RenderService;
