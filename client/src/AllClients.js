@@ -74,7 +74,9 @@ export default class AllClients extends Component {
     this.state.clients.map( client => {
       if (client.services.length > 0) {
         client.services.map( service => {
-          if (service.status !== "Baja"||"Completado") {
+          if (service.status !== "Baja" &&
+            service.status !== "Completado" &&
+          service.status !== "Cumplido") {
             data.push({
               abonado: client.abonado,
               name: client.name,
@@ -154,7 +156,7 @@ export default class AllClients extends Component {
                   filterable
                   defaultFilterMethod={(filter, row) =>
                   String(row[filter.id]) === filter.value}
-                  defaultPageSize={10}
+                  defaultPageSize={15}
                 />
 
                 <Can

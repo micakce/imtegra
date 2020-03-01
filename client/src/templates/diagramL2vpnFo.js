@@ -6,7 +6,7 @@ export const diagramL2vpnFo = (props) => {
     :
     `Contra:&lt;/b&gt;&amp;nbsp;${service.sites.spokes}&lt;br&gt;&lt;br&gt;&lt;b&gt;`;
 
-  var output = `<mxGraphModel dx="588" dy="342" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+  var output = `<mxGraphModel dx="563" dy="324" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
   <root>
     <mxCell id="0"/>
     <mxCell id="1" parent="0"/>
@@ -63,14 +63,11 @@ export const diagramL2vpnFo = (props) => {
     <mxCell id="kTQoS7o8W5grcHEcw5Z9-21" value="" style="shape=mxgraph.rack.cisco.cisco_asr_9010;html=1;labelPosition=right;align=left;spacingLeft=15;dashed=0;shadow=0;fillColor=#ffffff;fontFamily=Helvetica;fontSize=14;" parent="1" vertex="1">
       <mxGeometry x="258" y="219" width="48" height="71" as="geometry"/>
     </mxCell>
-    <mxCell id="kTQoS7o8W5grcHEcw5Z9-22" value="DIST: ${service.dist} mts&lt;br style=&quot;font-size: 13px&quot;&gt;ATT: ${service.att} dB" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;fontSize=13;fontFamily=Helvetica;" parent="1" vertex="1">
-      <mxGeometry x="599" y="290" width="130" height="30" as="geometry"/>
-    </mxCell>
     <mxCell id="ndxfs6bcccySf-hzeCZ4-1" value="&lt;font&gt;HUB&lt;/font&gt;&lt;font&gt;: ${service.hub}&lt;/font&gt;&lt;br&gt;&lt;font&gt;FDF&lt;/font&gt;&lt;font&gt;:&amp;nbsp;&lt;/font&gt;${service.rack}&lt;br&gt;&lt;font&gt;PATCHERA&lt;/font&gt;&lt;font&gt;:&amp;nbsp;&lt;/font&gt;${service.patchera}&lt;br&gt;&lt;span&gt;UBICACIÓN:&amp;nbsp;&lt;/span&gt;${service.position}&lt;br&gt;&lt;span&gt;SW:&amp;nbsp;&lt;/span&gt;${service.nexus}&lt;span&gt;&lt;br&gt;PO&lt;/span&gt;&lt;span&gt;RT:&amp;nbsp;&lt;/span&gt;${service.nexus_port}&lt;span&gt;&lt;br&gt;&lt;/span&gt;" style="text;html=1;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;fontSize=13;fontFamily=Helvetica;" parent="1" vertex="1">
       <mxGeometry x="269" y="305" width="200" height="100" as="geometry"/>
     </mxCell>
-    <mxCell id="ndxfs6bcccySf-hzeCZ4-4" value="&lt;b&gt;Cliente:&lt;/b&gt;&amp;nbsp;${abonado}&lt;br&gt;&lt;b&gt;Dirección:&lt;/b&gt;&amp;nbsp;${props.clientAddress.street}&lt;br&gt;&lt;br&gt;&lt;b&gt;&lt;u&gt;Servicios:&lt;/u&gt;&lt;/b&gt;&lt;br&gt;&lt;b&gt;${service.interface}:&lt;/b&gt;&amp;nbsp;${service.service} - ${service.plan} Mbps&lt;br&gt;&lt;b&gt;Tipo:&lt;/b&gt;&amp;nbsp;${service.mode}&lt;br&gt;&lt;b&gt;${topology}Conversor:&lt;/b&gt; Switch SG350&lt;br&gt;&lt;b&gt;Conector:&lt;/b&gt; LC&lt;br&gt;&lt;b&gt;Monitoria:&lt;/b&gt;&amp;nbsp;${service.ip_mon}" style="text;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;fontSize=13;html=1;fontFamily=Helvetica;" parent="1" vertex="1">
-      <mxGeometry x="880" y="339.5" width="340" height="180" as="geometry"/>
+    <mxCell id="ndxfs6bcccySf-hzeCZ4-4" value="&lt;b&gt;Cliente:&lt;/b&gt;&amp;nbsp;${abonado}&lt;br&gt;&lt;b&gt;Dirección:&lt;/b&gt;&amp;nbsp;${props.clientAddress.street}&lt;br&gt;&lt;b&gt;Localidad:&lt;/b&gt; ${props.clientAddress.location}&lt;br&gt;&lt;br&gt;&lt;b&gt;&lt;u&gt;Servicios:&lt;/u&gt;&lt;/b&gt;&lt;br&gt;&lt;b&gt;${service.interface}:&lt;/b&gt;&amp;nbsp;${service.service} - ${service.plan} Mbps&lt;br&gt;&lt;b&gt;Tipo:&lt;/b&gt;&amp;nbsp;${service.mode}&lt;br&gt;&lt;b&gt;VLAN:&lt;/b&gt;&amp;nbsp;${service.vlan}&lt;b&gt;&lt;br&gt;${topology}&lt;br&gt;Conversor:&lt;/b&gt; Switch SG350&lt;br&gt;&lt;b&gt;Conector:&lt;/b&gt; LC&lt;br&gt;&lt;b&gt;Monitoria:&lt;/b&gt;&amp;nbsp;${service.ip_mon}" style="text;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;fontSize=13;html=1;fontFamily=Helvetica;" parent="1" vertex="1">
+      <mxGeometry x="729" y="360" width="380" height="190" as="geometry"/>
     </mxCell>
     <mxCell id="ndxfs6bcccySf-hzeCZ4-7" value="Backbone&amp;nbsp;&lt;br style=&quot;font-size: 21px;&quot;&gt;IP / MPLS" style="text;resizable=0;points=[];autosize=1;align=left;verticalAlign=top;spacingTop=-4;fontSize=21;fontFamily=Helvetica;fontStyle=0;fontColor=#FFFFFF;html=1;" parent="1" vertex="1">
       <mxGeometry x="118" y="224" width="90" height="40" as="geometry"/>
