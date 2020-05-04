@@ -3,9 +3,10 @@ import { Col, Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import { blankState } from './testVariables';
-import ValidationForm from './ValidationForm';
 import { AuthConsumer } from './authContext';
 import Can from './Can';
+import {axiosInstance} from './helpers/axios';
+// import ValidationForm from './ValidationForm';
 
 export default class AddClient extends Component {
 
@@ -40,15 +41,15 @@ export default class AddClient extends Component {
         this.setState({ [name_key]: { ...this.state[name_key], [name_value]: value } });
       }
     } else if (name === 'abonado') {
+      // returns if user inputs non digits values
       if (value.match(/[^0-9]/)) {
         return
       }
       this.setState({ [name]: value });
       if (value.match(/^\d{7}$/)) {
-        fetch(`/clients/client/${value}`)
-          .then(res => res.json())
-          .then(data => {
-            if (!data) {
+        axiosInstance.get(`/clients/client/${value}`)
+          .then(res => {
+            if (!res.data) {
               this.setState({
                 validation: {
                   ...this.state.validation,
@@ -70,7 +71,7 @@ export default class AddClient extends Component {
                 }
               });
             }
-          });
+          })
       } else {
         this.setState({
           validation: {
@@ -81,25 +82,16 @@ export default class AddClient extends Component {
         })
       }
     } else {
-      this.setState({
-        [name]: value
-      });
+      this.setState({ [name]: value });
     }
   }
 
   addClient(e) {
     if (this.props.action === 'edit') {
-      fetch(`/clients/${this.props.client._id}`, {
-        method: 'PUT',
-        body: JSON.stringify(this.state),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(res => res.json())
-        .then(data => {
+      axiosInstance.put(`/clients/${this.props.client._id}`, this.state)
+        .then(res => {
           console.log("First 'edit' rule");
+          console.log(res);
           this.setState(blankState)
           this.props.toggle();
           this.props.reload();
@@ -108,16 +100,10 @@ export default class AddClient extends Component {
       e.preventDefault();
 
     } else if (this.props.action === 'add') {
-      fetch('/clients', {
-        method: 'POST',
-        body: JSON.stringify(this.state),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(() => {
+      axiosInstance.post('/clients', this.state)
+        .then(res => {
           console.log("Second add rule");
+          console.log(res);
           this.props.toggle();
           this.props.reload();
         })
@@ -125,18 +111,10 @@ export default class AddClient extends Component {
       e.preventDefault();
 
     } else {
-
-      fetch('/clients', {
-        method: 'POST',
-        body: JSON.stringify(this.state),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(res => res.json())
-        .then(data => {
+      axiosInstance.post('/clients', this.state)
+        .then(res => {
           console.log("Third add rule");
+          console.log(res);
         })
         .catch(err => console.error(err));
       e.preventDefault();

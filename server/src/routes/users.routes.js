@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
+const verifyToken = require('./verifyToken');
 
 const Client = require('../models/client');
 const Service = require('../models/service');
-const Hardware = require('../models/hardware');
+const User = require('../models/user');
+// const Hardware = require('../models/hardware');
 
 router.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -11,41 +14,96 @@ router.use(function (req, res, next) {
   next();
 });
 
-router.get('/clients/all', async (req, res) => {
+router.post('/signin', verifyToken, async (req, res, next) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({email: email});
+  if (!user) {
+    return res.status(404).json({auth:false, message: "Email o constraseña incorrecto" });
+  }
+  const validPassword = await user.validatePassword(password);
+  if (!validPassword) {
+    return res.status(401).json({auth: false, token: null, message: "Email o constraseña incorrecto"})
+  }
+  const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {
+    expiresIn: '2h'
+  })
+  res.json({auth: true, role: user.role, token})
+});
+
+router.post('/signup', verifyToken, async (req, res) => {
+  const test_user = await User.findOne({username: req.body.username})
+  if (test_user) {
+    return res.status(401).json({message: "User already exists"})
+  }
+  const {name, lastname, username, email, password, role} = req.body;
+  const user = new User({
+    name,
+    lastname,
+    username,
+    email,
+    password,
+    role,
+  })
+  user.password = await user.encryptPassword(user.password)
+
+  const token = jwt.sign({id: user._id, role: user.role}, process.env.JWT_SECRET, {
+    expiresIn: 60*60*24
+  });
+
+  await user.save();
+
+  console.log(user);
+  console.log(token);
+  res.json({auth: true, role: user.role, token})
+});
+
+router.get('/token_test', verifyToken, (req, res) => {
+  res.json({user: req.userId, meesage: "Pasa el verify"});
+});
+
+router.get('/me', verifyToken, async (req, res, next) => {
+  const user = await User.findById(req.userId, {password: 0});
+  if (!user) {
+    return res.status(404).send("User not found");
+  }
+  res.json(user)
+});
+
+router.get('/clients/all', verifyToken, async (req, res) => {
   const clients = await Client.find();
   res.json(clients);
 });
 
-router.get('/clients/implementacion', async (req, res) => {
+router.get('/clients/implementacion', verifyToken, async (req, res) => {
   const clients = await Client.find({status: 'Implementacion'});
   res.json(clients);
 });
 
-router.get('/clients/client/:id', async (req, res) => {
+router.get('/clients/client/:id', verifyToken, async (req, res) => {
   const client = await Client.findOne({ abonado: req.params.id });
   res.json(client);
 });
 
-router.get('/clients/:id', async (req, res) => {
+router.get('/clients/:id', verifyToken, async (req, res) => {
   const client = await Client.findById(req.params.id);
   res.json(client);
 });
 
-router.post('/clients', async (req, res) => {
+router.post('/clients', verifyToken, async (req, res) => {
   const { abonado, name, email, telefono, address, services, pm, im, status } = req.body;
   const client = new Client({ abonado, name, email, telefono, address, services, pm, im, status });
   await client.save();
   res.json(client);
 });
 
-router.put('/clients/:id', async (req, res) => {
+router.put('/clients/:id', verifyToken, async (req, res) => {
   const { abonado, name, email, telefono, address, services, pm, im, status } = req.body;
   const newClient = { abonado, name, email, telefono, address, services, pm, im, status };
   await Client.findByIdAndUpdate(req.params.id, newClient);
   res.json(newClient);
 });
 
-router.delete('/clients/:id', async (req, res) => {
+router.delete('/clients/:id', verifyToken, async (req, res) => {
   const { client_id , service_id, what} = req.body
   if (what) {
     await Client.findByIdAndUpdate( client_id, {
@@ -53,20 +111,20 @@ router.delete('/clients/:id', async (req, res) => {
         services: { _id: service_id }
       }
     });
-    res.send({message: `Service ${req.body.name} was deleted succesfully`})
+    res.json({message: `Service ${req.body.name} was deleted succesfully`})
   } else {
     await Client.findByIdAndDelete(req.params.id);
-    res.send({message: `Client ${req.body.abonado} was deleted succesfully`})
+    res.json({message: `Client ${req.body.abonado} was deleted succesfully`})
   }
 });
 
-router.put('/clients/service/:id', async (req, res) => {
+router.put('/clients/service/:id', verifyToken, async (req, res) => {
   const newService = new Service(req.body);
   await Client.findOneAndUpdate({ abonado: req.params.id }, { $push: { services: newService } });
   res.send("Servicio agregado!");
 });
 
-router.put('/clients/service/edit/:id', async (req, res) => {
+router.put('/clients/service/edit/:id', verifyToken, async (req, res) => {
   const newService = new Service(req.body);
   Client.findOne(
     { abonado: req.params.id},
@@ -85,21 +143,22 @@ router.put('/clients/service/edit/:id', async (req, res) => {
   );
 });
 
-router.delete('/clients/service/:id', async (req, res) => {
-  const client = await Client.findOne({ abonado: req.body.abonado })
-  client.services.id(req.params.id).remove();
+router.delete('/clients/:abonado/service/:id', verifyToken, async (req, res) => {
+  const { abonado, id } = req.params;
+  const client = await Client.findOne({abonado})
+  client.services.id(id).remove();
   await client.save();
   res.send("Service Deleted");
 });
 
-router.put('/clients/device/:id', async (req, res) => {
+router.put('/clients/device/:id', verifyToken, async (req, res) => {
   const { device, model, code, serial, description } = req.body;
   const newDevice = { device, model, code, serial, description };
   const response = await Client.findOneAndUpdate({ abonado: req.params.id }, { $push: { hardware: newDevice } });
   res.send(response);
 });
 
-router.put('/clients/device/edit/:id', async (req, res) => {
+router.put('/clients/device/edit/:id', verifyToken, async (req, res) => {
   const { device, model, code, idx, serial, description } = req.body;
   const newDevice = { device, model, code, serial, description };
   const client = await Client.findOne({ abonado: req.params.id });
@@ -108,11 +167,12 @@ router.put('/clients/device/edit/:id', async (req, res) => {
   res.json(client);
 });
 
-router.delete('/clients/device/:id', async (req, res) => {
-  const client = await Client.findOne({ abonado: req.body.abonado })
-  client.hardware.id(req.params.id).remove();
+router.delete('/clients/:abonado/device/:id', verifyToken, async (req, res) => {
+  const {abonado, id} = req.params;
+  const client = await Client.findOne({abonado})
+  client.hardware.id(id).remove();
   await client.save();
-  res.send("Service Deleted");
+  res.send("Device Deleted correctamente");
 });
 
 module.exports = router;

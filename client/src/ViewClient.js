@@ -11,6 +11,7 @@ import AddClient from './AddClient';
 import EditHardwareModal from './EditHardwareModal';
 import { AuthConsumer } from './authContext';
 import Can from './Can';
+import {axiosInstance} from './helpers/axios';
 
 export default class ViewClient extends Component {
 
@@ -45,57 +46,36 @@ export default class ViewClient extends Component {
   searchClient(e, p) {
     const abonado = p || this.state.search || this.state.abonado
     const path = `/clients/client/${abonado}`;
-    fetch(path)
-      .then(res => res.json())
-      .then(data => {
-        this.setState(data ? { ...data, hideEditButton: false } : blankState)
-      }
-      )
-      .catch(err => console.error(err));
+    axiosInstance.get(path)
+      .then( res => {
+        this.setState(res.data ? {...res.data, hideEditButton: false} : blankState)
+      }).catch(err => console.log(err));
     if (e) e.preventDefault();
   }
 
   deleteClient(client_id) {
     if (window.confirm('Seguro quieres eliminar este cliente?')) {
-      fetch(`/clients/${client_id}`, {
-        method: 'DELETE',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(res => console.log(res.message))
-        .then(data => console.log(data))
+      axiosInstance.delete(`/clients/${client_id}`)
+        .then(res => console.log(res.data))
         .catch(err => console.error(err))
-      this.props.history.push("/");
+      this.props.history.replace('/clients/all');
     }
   }
 
   deleteService(id) {
     if (window.confirm('Seguro que quieres eliminar este servicio?')) {
-      fetch(`/clients/service/${id}`, {
-        method: 'DELETE',
-        body: JSON.stringify({ abonado: this.state.abonado }),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+      axiosInstance.delete(`/clients/${this.state.abonado}/service/${id}`)
         .then(res => console.log(res))
+        .catch(err => console.log(err))
         .then(() => this.searchClient(null, this.state.abonado))
     }
   }
 
   deleteDevice(id) {
     if (window.confirm('Seguro que quieres eliminar este dispositivo?')) {
-      fetch(`/clients/device/${id}`, {
-        method: 'DELETE',
-        body: JSON.stringify({ abonado: this.state.abonado }),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+      axiosInstance.delete(`/clients/${this.state.abonado}/device/${id}`)
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
         .then(() => this.searchClient(null, this.state.abonado))
     }
   }

@@ -44,19 +44,12 @@ const rules = {
       "services:add",
       "services:edit",
       "services:delete",
-      "posts:create",
-      "posts:post:edit",
-      "users:getSelf",
-      "home-page:visit",
-      "dashboard-page:visit",
-      "posts:list",
-      "posts:create",
-      "posts:edit",
-      "posts:delete",
-      "users:get",
-      "users:getSelf",
-      "home-page:visit",
-      "dashboard-page:visit"
+      "clients:view",
+      "clients:list",
+      "clients:add",
+      "clients:edit",
+      "clients:delete",
+      "hardware:add"
     ]
   }
 };

@@ -1,28 +1,52 @@
 import React, {Component} from "react";
-import auth0 from "auth0-js";
-
-import {AUTH_CONFIG} from "./auth0-variables";
 import {AuthProvider} from "./authContext";
-
-const auth = new auth0.WebAuth({
-  domain: AUTH_CONFIG.domain,
-  clientID: AUTH_CONFIG.clientId,
-  redirectUri: AUTH_CONFIG.callbackUrl,
-  audience: `https://${AUTH_CONFIG.domain}/userinfo`,
-  responseType: "token id_token"
-});
+import {withRouter} from "react-router-dom";
+import utilStorage from './helpers/utilStorage';
+import {axiosInstance, setTokenInAxios} from "./helpers/axios";
 
 class Auth extends Component {
+
   state = {
-    authenticated: true,
+    authenticated: utilStorage.tokenExists(),
     user: {
-      role: "pm"
+      role: utilStorage.roleExists() ? utilStorage.getRole() : "visitor"
     },
     accessToken: ""
   };
 
-  initiateLogin = () => {
-    auth.authorize();
+  initiateLogin = async ({ e, email, password, alertFunction}) => {
+    e.preventDefault();
+    let response;
+    try {
+      response = await axiosInstance.post('/signin', {email, password})
+      console.log(response);
+    } catch (err) {
+      console.error(err.response);
+      response = err.response;
+    } finally {
+
+      const {auth, role, token, message} = response.data;
+      response = null
+
+      if (!auth) {
+        console.log(message);
+        alertFunction(message)
+        return
+      }
+
+      this.setState({
+        authenticated: auth,
+        user: {
+          role: role,
+        },
+        accessToken: token
+      });
+
+      localStorage.setItem('imtegra-jwt', token)
+      localStorage.setItem('imtegra-role', role)
+      setTokenInAxios(token)
+      this.props.history.push(this.props.location.pathname)
+    }
   };
 
   logout = () => {
@@ -33,38 +57,15 @@ class Auth extends Component {
       },
       accessToken: ""
     });
+    localStorage.clear()
   };
 
-  handleAuthentication = () => {
-    auth.parseHash((error, authResult) => {
-      if (error) {
-        console.log(error);
-        console.log(`Error ${error.error} occured`);
-        return;
-      }
 
-      this.setSession(authResult.idTokenPayload);
-    });
-  };
-
-  setSession(authResult) {
-    const user = {
-      id: authResult.sub,
-      email: authResult.email,
-      role: authResult[AUTH_CONFIG.roleUrl]
-    };
-    this.setState({
-      authenticated: true,
-      accessToken: authResult.accessToken,
-      user
-    });
-  }
 
   render() {
     const authProviderValue = {
       ...this.state,
       initiateLogin: this.initiateLogin,
-      handleAuthentication: this.handleAuthentication,
       logout: this.logout
     };
     return (
@@ -75,4 +76,4 @@ class Auth extends Component {
   }
 }
 
-export default Auth;
+export default withRouter(Auth);

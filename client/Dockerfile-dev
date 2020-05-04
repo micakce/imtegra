@@ -1,26 +1,30 @@
-# client/Dockerfile-dev
+FROM node:10
 
-# This is the build file for the client module, Docker will use this to setup the client container image.
+# set up container to create files with your current user
+ARG USER_ID
+ARG GROUP_ID
+RUN groupmod -g 999 node && usermod -u 999 -g 999 node
+RUN addgroup --gid $GROUP_ID user
+RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user
 
-# Installs the node image
-FROM node
+# install node_modules in different folder and point node to it (image portability)
+# WORKDIR /nm
+# COPY ./package*.json /nm/
+# RUN npm install
+# ENV NODE_PATH=/nm/node_modules
+# change file ownership so you can install more packages as you develop
+# RUN chown -R user:user /nm
 
-# Creates the client directory in the container
-RUN mkdir -p /app/client
-# Sets the working directory to the client directory
-WORKDIR /app/client
+# USER user
 
-# # Copies the yarn.lock file to the container
-# COPY yarn.lock /app/client/
-
-# Copies the package.json to the container
-COPY package*.json /app/client/
-
-# Installs the client dependencies
+# main working directory
+WORKDIR /app/client/
+COPY ./package*.json /app/client/
 RUN npm install
 
-# Copies the files from the client directory to the container
+# Add rest of the client code
 COPY . /app/client/
 
-# Runs the client
-CMD ["npm", "start"]
+EXPOSE 3000
+
+CMD npm start

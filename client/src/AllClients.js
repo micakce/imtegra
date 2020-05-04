@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { Badge } from 'react-bootstrap';
-
-import MyModal from './MyModal';
-import AddClient from './AddClient';
-import { AuthConsumer } from "./authContext";
-import Can from "./Can";
+import React, {Component} from 'react';
+import {Link, Redirect} from 'react-router-dom';
+import {Badge} from 'react-bootstrap';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+
+import AddClient from './AddClient';
+import MyModal from './MyModal';
+import{AuthConsumer} from "./authContext";
+import Can from "./Can";
+import { axiosInstance } from './helpers/axios';
 
 export default class AllClients extends Component {
 
@@ -25,16 +26,8 @@ export default class AllClients extends Component {
 
   deleteService(client_id, service_id ) {
     if (window.confirm('Seguro quieres eliminar este servicio?')) {
-      fetch(`/clients/${client_id}`, {
-        method: 'DELETE',
-        body: JSON.stringify({ client_id, service_id, what: "service" }),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+      axiosInstance.delete(`/clients/${client_id}`, {client_id, service_id, what: "service"} )
         .then(res => res.json())
-        .then(data => console.log(data))
         .catch(err => console.error(err))
       this.fetchClients();
     }
@@ -42,13 +35,7 @@ export default class AllClients extends Component {
 
   deleteClient(client_id) {
     if (window.confirm('Seguro quieres eliminar este cliente?')) {
-      fetch(`/clients/${client_id}`, {
-        method: 'DELETE',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+      axiosInstance.delete(`/clients/${client_id}`)
         .then(res => console.log(res.message))
         .then(data => console.log(data))
         .catch(err => console.error(err))
@@ -57,11 +44,8 @@ export default class AllClients extends Component {
   }
 
   fetchClients() {
-    fetch(window.location.pathname)
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ clients: data });
-      })
+    axiosInstance(`/clients/all`)
+      .then(res => { this.setState({ clients: res.data }) })
       .catch(err => console.error(err));
   }
 
@@ -71,9 +55,9 @@ export default class AllClients extends Component {
 
     const data = [];
     const statuses = [];
-    this.state.clients.map( client => {
+    this.state.clients.forEach( client => {
       if (client.services.length > 0) {
-        client.services.map( service => {
+        client.services.forEach( service => {
           if (service.status !== "Baja" &&
             service.status !== "Completado" &&
           service.status !== "Cumplido") {

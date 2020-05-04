@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, Col } from 'react-bootstrap';
+import { axiosInstance } from './helpers/axios';
 
 class AddHardware extends Component {
   constructor(props) {
@@ -7,7 +8,12 @@ class AddHardware extends Component {
     if (props.action === "Edit") {
       this.state = props.device;
     } else {
-      this.state = { device: "" };
+      this.state = { device: "",
+        model: "",
+        code: "",
+        serial: "",
+        description: "",
+      };
     }
     this.handleChange = this.handleChange.bind(this);
     this.addDevice = this.addDevice.bind(this);
@@ -22,32 +28,18 @@ class AddHardware extends Component {
   }
 
   addDevice(e) {
+
+
     if (this.props.action === 'Edit') {
       const idx = this.props.idx;
-      fetch(`/clients/device/edit/${this.props.abonado}`, {
-        method: 'PUT',
-        body: JSON.stringify({ ...this.state, idx }),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+      axiosInstance.put(`/clients/device/edit/${this.props.abonado}`, {...this.state, idx})
         .then(() => {
           this.props.toggle();
           this.props.reload();
-        })
+        }).catch((error) => console.log(error))
       e.preventDefault();
-
     } else {
-
-      fetch(`/clients/device/${this.props.abonado}`, {
-        method: 'PUT',
-        body: JSON.stringify(this.state),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+      axiosInstance.put(`/clients/device/${this.props.abonado}`, this.state)
         .then(() => {
           this.props.toggle();
           this.props.reload();

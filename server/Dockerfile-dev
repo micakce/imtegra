@@ -1,23 +1,32 @@
-# server/Dockerfile-dev
+FROM node:10
 
-# Install node image in container
-FROM node
+# set up container to create files with your current user
+ARG USER_ID
+ARG GROUP_ID
 
-# Install nodemon for hot reloading
-RUN npm install -g nodemon
+RUN apt-get update && apt-get install sudo
+RUN groupmod -g 999 node && usermod -u 999 -g 999 node
+RUN addgroup --gid $GROUP_ID user
+RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user
 
-# Create and set the working directory
-RUN mkdir -p /app/server
+# # install node_modules in different folder and point node to it (image portability)
+# WORKDIR /nm
+# COPY ./package*.json /nm/
+# RUN npm install
+# ENV NODE_PATH=/nm/node_modules
+# # change file ownership so you can install more packages as you develop
+# RUN chown -R user:user /nm
+
+# USER user
+
+# main working directory
 WORKDIR /app/server
-
-# Copy the dependency files over
-COPY package*.json /app/server/
-
-# Install dependencies
+COPY ./package*.json /app/server/
+RUN npm install -g nodemon
 RUN npm install
 
-# Copy the server files over
+# Add rest of the client code
 COPY . /app/server/
 
-# Command to run them
-CMD ["nodemon", "server.js"]
+CMD ["nodemon", "./src/server.js"]
+# CMD nodemon -L src/server.js

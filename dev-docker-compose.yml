@@ -1,17 +1,23 @@
-version: "3"
+version: "3.2"
 
 services:
-  ##########################
-  ### SETUP SERVER CONTAINER
-  ##########################
   server:
     # Tell docker what file to build the server from
     build:
       context: ./server
+      args:
+        USER_ID: 1000
+        GROUP_ID: 1000
       dockerfile: Dockerfile-dev
+    image: backend:imtegra
+    # Port mapping
+    ports:
+      - 4000:4000
     # The ports to expose
     expose:
       - 4000
+    stdin_open: true
+    tty: true
     # Environment variables
     environment:
       - MONGO_URI=mongodb://db:27017/db
@@ -21,9 +27,6 @@ services:
       - DEBUG=worker:*
       - MORGAN=combined
       - NODE_ENV=development
-    # Port mapping
-    ports:
-      - 4000:4000
     # Volumes to mount
     volumes:
       - ./server/src:/app/server/src
@@ -41,7 +44,11 @@ services:
   client:
     build:
       context: ./client
+      args:
+        USER_ID: 1000
+        GROUP_ID: 1000
       dockerfile: Dockerfile-dev
+    image: client:imtegra
     environment:
       - REACT_APP_PORT=3000
       - CHOKIDAR_USEPOLLING=true
@@ -49,10 +56,11 @@ services:
       - 3000
     ports:
       - 3000:3000
+    stdin_open: true
+    tty: true
     volumes:
-      - ./client/src:/app/client/src
-      - ./client/public:/app/client/public
-    links:
+      - ./client/src/:/app/client/src
+    depends_on:
       - server
     command: npm run start
     restart: always
