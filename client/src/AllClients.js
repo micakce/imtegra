@@ -51,6 +51,7 @@ export default class AllClients extends Component {
 
   render() {
 
+    // eslint-disable-next-line no-unused-vars
     const cellStyle = { display: "table-cell", verticalAlign: "middle" };
 
     const data = [];
@@ -122,7 +123,7 @@ export default class AllClients extends Component {
           value={filter ? filter.value : "all"}
         >
           <option  value="all">Todos</option>
-          { statuses.map( status => <option>{status}</option> ) }
+          { statuses.map( (status, idx) => <option key={idx}>{status}</option> ) }
         </select>
     },]
 

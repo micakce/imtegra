@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Accordion, Card, Button, Table,  Row, Col, Form } from 'react-bootstrap';
-// import { Redirect } from 'react-router';
 
 import { blankState } from './testVariables';
 import RenderService from './RenderService';
@@ -36,10 +35,11 @@ export default class ViewClient extends Component {
 
   componentDidMount() {
 
-    const abonado = window.location.pathname.match(/\d.*$/)
+    const abonado = window.location.pathname.match(/\/(\d{7}$)/)
     if (abonado) {
-      this.setState({search: abonado})
-      this.searchClient(null, abonado[0]);
+      console.log(abonado);
+      this.setState({search: abonado[1]})
+      this.searchClient(null, abonado[1]);
     }
   }
 
@@ -201,6 +201,7 @@ export default class ViewClient extends Component {
                               return (
                                 <RenderService
                                   id={service._id}
+                                  key={idx.toString()}
                                   abonado={this.state.abonado}
                                   clientName={this.state.name}
                                   clientAddress={this.state.address}
@@ -255,34 +256,11 @@ export default class ViewClient extends Component {
                             {
                               this.state.hardware.map((device, idx) => {
 
-                                // const CanEditHardware = () => (
-                                //   <Can
-                                //     role={user.role}
-                                //     perform="hardware:add"
-                                //     yes={() => (
-                                //       <MyModal
-                                //         title="Editar Dispositivo"
-                                //         buttonLabel="Editar"
-                                //         render={ toggle => (
-                                //           <AddHardware
-                                //             id={device._id}
-                                //             idx={idx}
-                                //             device={device}
-                                //             action={"Edit"}
-                                //             toggle={toggle}
-                                //             reload={this.searchClient}
-                                //             abonado={this.state.abonado}
-                                //           />
-                                //         )}
-                                //       />
-                                //     )}
-                                //   />
-                                // )
-
                                 return (
 
                                   <EditHardwareModal
                                     id={device._id}
+                                    key={idx.toString()}
                                     deleteDevice={this.deleteDevice}
                                     // canEdit={CanEditHardware}
                                     device={device}

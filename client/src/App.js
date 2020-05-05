@@ -21,6 +21,7 @@ function App() {
                 authenticated ? (
                   <>
                     <Route path="/" exact component={Main} />
+                    <Route path="/home" exact component={AllClients} />
                     <Route path="/clients/all" component={AllClients} />
                     <Route
                       path="/clients/add"

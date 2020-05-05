@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Col, Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { blankState } from './testVariables';
 import { AuthConsumer } from './authContext';
@@ -8,7 +9,7 @@ import Can from './Can';
 import {axiosInstance} from './helpers/axios';
 // import ValidationForm from './ValidationForm';
 
-export default class AddClient extends Component {
+ class AddClient extends Component {
 
   constructor(props) {
     super(props);
@@ -271,5 +272,14 @@ export default class AddClient extends Component {
       </AuthConsumer>
     );
   }
-
 }
+
+AddClient.propTypes = {
+  client: PropTypes.object,
+  toggle: PropTypes.func,
+  history: PropTypes.object,
+  reload: PropTypes.func,
+  action: PropTypes.string,
+}
+
+export default AddClient;

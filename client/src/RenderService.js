@@ -194,7 +194,7 @@ function RenderService(props) {
                         <div>
                           <b>Spokes: </b>
                           {props.service.sites.spokes
-                            ? props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
+                            ? props.service.sites.spokes.split(',').map((spoke, idx) => <Badge key={idx.toString()} variant="secondary" className="mx-1">{spoke}</Badge>)
                             : ''}
                         </div></>)
                         :
@@ -202,7 +202,7 @@ function RenderService(props) {
                             <b>Contra: </b>
                             {props.service.sites.spokes
                               ?
-                                props.service.sites.spokes.split(',').map(spoke => <Badge variant="secondary" className="mx-1">{spoke}</Badge>)
+                                props.service.sites.spokes.split(',').map((spoke,idx) => <Badge key={idx.toString()} variant="secondary" className="mx-1">{spoke}</Badge>)
                                 :
                                 ''}
                           </div>
