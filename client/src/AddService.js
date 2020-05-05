@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Form, Col, Tabs, Tab } from 'react-bootstrap';
 import { serviceBlankState } from './testVariables';
+import {axiosInstance} from './helpers/axios';
 
 const ServicioCM = (props) => (
 
@@ -487,39 +488,23 @@ class AddService extends Component {
   }
 
   addService(e) {
+    e.preventDefault();
     if (this.props.action === 'Edit') {
       const idx = this.props.idx;
-      fetch(`/clients/service/edit/${this.props.abonado}`, {
-        method: 'PUT',
-        body: JSON.stringify({ ...this.state, idx }),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+      axiosInstance.put(`/clients/service/edit/${this.props.abonado}`, {...this.state, idx})
         .then((res) => {
-          console.log(res.json());
+          console.log(res);
           this.props.toggle();
           this.props.reload();
         })
-        .then(data => console.log(data))
-      e.preventDefault();
+        .catch(err => console.error(err))
 
     } else {
-
-      fetch(`/clients/service/${this.props.abonado}`, {
-        method: 'PUT',
-        body: JSON.stringify(this.state),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
+      axiosInstance.put(`/clients/service/${this.props.abonado}`, this.state)
         .then(() => {
           this.props.toggle();
           this.props.reload();
         })
-      e.preventDefault();
     }
   }
 

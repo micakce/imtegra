@@ -1,4 +1,6 @@
+
 const express = require('express');
+
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const verifyToken = require('./verifyToken');
@@ -14,7 +16,7 @@ router.use(function (req, res, next) {
   next();
 });
 
-router.post('/signin', verifyToken, async (req, res, next) => {
+router.post('/signin', async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.findOne({email: email});
   if (!user) {
@@ -90,10 +92,11 @@ router.get('/clients/:id', verifyToken, async (req, res) => {
 });
 
 router.post('/clients', verifyToken, async (req, res) => {
-  const { abonado, name, email, telefono, address, services, pm, im, status } = req.body;
-  const client = new Client({ abonado, name, email, telefono, address, services, pm, im, status });
+  // const { abonado, name, email, telefono, address, services, pm, im, status } = req.body;
+  // const client = new Client({ abonado, name, email, telefono, address, services, pm, im, status });
+  const client = new Client({ ...req.body });
   await client.save();
-  res.json(client);
+  return res.json(client);
 });
 
 router.put('/clients/:id', verifyToken, async (req, res) => {

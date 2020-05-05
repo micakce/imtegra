@@ -133,7 +133,7 @@ export default class AllClients extends Component {
             role={user.role}
             perform="services:list"
             yes={() =>
-              <React.Fragment>
+              <>
                 <ReactTable
                   data={data}
                   columns={columns}
@@ -160,9 +160,9 @@ export default class AllClients extends Component {
                     />
                   )}
                 />
-              </React.Fragment>
+              </>
             }
-          no={() => <Redirect to="/" />}
+            no={() => <Redirect to="/" />}
           />
         )}
       </AuthConsumer>
