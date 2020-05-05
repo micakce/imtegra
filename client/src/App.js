@@ -15,29 +15,35 @@ function App() {
       <Router>
         <Auth>
           <MyNavBar />
-          <Switch>
-            <AuthConsumer>
-              {({ authenticated, user }) =>
-                authenticated ? (
-                  <>
-                    <Route path="/" exact component={Main} />
-                    <Route path="/home" exact component={AllClients} />
-                    <Route path="/clients/all" component={AllClients} />
-                    <Route
-                      path="/clients/add"
-                      render={(props) => <AddClient {...props} />}
-                    />
-                    <Route
-                      path="/clients/client"
-                      render={(props) => <ViewClient {...props} />}
-                    />
-                  </>
-                ) : (
-                  <Route path="/" component={Login} />
-                )
-              }
-            </AuthConsumer>
-          </Switch>
+          <AuthConsumer>
+            {({ authenticated }) =>
+              authenticated ? (
+                <>
+                  <Switch>
+                    <Route exact path="/">
+                      <Main />
+                    </Route>
+                    <Route path="/home">
+                      <AllClients />
+                    </Route>
+                    <Route path="/clients/all">
+                      <AllClients />
+                    </Route>
+                    <Route path="/clients/add">
+                      <AddClient />
+                    </Route>
+                    {/* <Route path="/clients/client/:abonado"> */}
+                    {/*   <ViewClient /> */}
+                    {/* </Route> */}
+                    <Route path="/clients/client/:abonado" component={ViewClient} />
+                    <Route path="/clients/client/" component={ViewClient} />
+                  </Switch>
+                </>
+              ) : (
+                <Route path="/" component={Login} />
+              )
+            }
+          </AuthConsumer>
         </Auth>
       </Router>
     </div>

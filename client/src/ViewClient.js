@@ -35,11 +35,13 @@ export default class ViewClient extends Component {
 
   componentDidMount() {
 
-    const abonado = window.location.pathname.match(/\/(\d{7}$)/)
+
+    // const abonado = window.location.pathname.match(/\/(\d{7}$)/)
+    const abonado = this.props.match.params.abonado;
     if (abonado) {
       console.log(abonado);
-      this.setState({search: abonado[1]})
-      this.searchClient(null, abonado[1]);
+      this.setState({search: abonado})
+      this.searchClient(null, abonado);
     }
   }
 
