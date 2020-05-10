@@ -1,22 +1,24 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 function verifyToken(req, res, next) {
-  const token = req.headers['authorization'].split(' ')[1];
-  if(!token) {
+  const token = req.headers["authorization"]
+    ? req.headers["authorization"].split(" ")[1]
+    : null;
+  if (!token) {
     return res.status(401).json({
       auth: false,
-      message: "No token provided loco"
+      message: "No token provided loco",
     });
   }
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.userId = decoded.id;
-    console.log(decoded);
+    // console.log(decoded);
   } catch (err) {
     return res.status(401).json({
       auth: false,
-      message: err
-    })
+      message: err,
+    });
   }
   next();
 }

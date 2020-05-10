@@ -13,7 +13,7 @@ router.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept",
+    "Origin, X-Requested-With, Content-Type, Accept"
   );
   next();
 });
@@ -88,12 +88,21 @@ router.get("/clients/all", verifyToken, async (req, res) => {
   res.json(clients);
 });
 
+router.get("/clients/check/:abonado", verifyToken, async (req, res) => {
+  const client = await Client.findOne({ abonado: req.params.abonado });
+  console.log(client, "desde router.js 93");
+  if (client) {
+    res.json({ valid: true });
+  }
+  res.json({ valid: false });
+});
+
 router.get("/clients/implementacion", verifyToken, async (req, res) => {
   const clients = await Client.find({ status: "Implementacion" });
   res.json(clients);
 });
 
-router.get("/clients/client/:id", verifyToken, async (req, res) => {
+router.get("/clients/:id", verifyToken, async (req, res) => {
   const client = await Client.findOne({ abonado: req.params.id });
   res.json(client);
 });
@@ -106,6 +115,10 @@ router.get("/clients/:id", verifyToken, async (req, res) => {
 router.post("/clients", verifyToken, async (req, res) => {
   // const { abonado, name, email, telefono, address, services, pm, im, status } = req.body;
   // const client = new Client({ abonado, name, email, telefono, address, services, pm, im, status });
+  const clientExists = await Client.findOne({abonado: req.body.abonado});
+  if (clientExists) {
+    return res.status(403).json({ message: "Client already exists" })
+  }
   const client = new Client({ ...req.body });
   await client.save();
   return res.json(client);
@@ -139,18 +152,17 @@ router.put("/clients/:id", verifyToken, async (req, res) => {
 });
 
 router.delete("/clients/:id", verifyToken, async (req, res) => {
-  const { client_id, service_id, what } = req.body;
-  if (what) {
-    await Client.findByIdAndUpdate(client_id, {
-      $pull: {
-        services: { _id: service_id },
-      },
-    });
-    res.json({ message: `Service ${req.body.name} was deleted succesfully` });
-  } else {
-    await Client.findByIdAndDelete(req.params.id);
-    res.json({ message: `Client ${req.body.abonado} was deleted succesfully` });
-  }
+  // const { client_id, service_id, what } = req.body;
+  // if (what) {
+  //   await Client.findByIdAndUpdate(client_id, {
+  //     $pull: {
+  //       services: { _id: service_id },
+  //     },
+  //   });
+  //   res.json({ message: `Service ${req.body.name} was deleted succesfully` });
+  // } else {
+  await Client.findByIdAndDelete(req.params.id);
+  res.json({ message: `Client ${req.body.abonado} was deleted succesfully` });
 });
 
 router.put("/clients/service/:id", verifyToken, async (req, res) => {
@@ -209,6 +221,13 @@ router.put("/clients/device/edit/:id", verifyToken, async (req, res) => {
   client.hardware[idx] = newDevice;
   await client.save();
   res.json(client);
+});
+
+router.get("/clients/:abonado/service/:id", verifyToken, async (req, res) => {
+  const { abonado, id } = req.params;
+  const client = await Client.findOne({ abonado });
+  const service = client.service.id(id)
+  res.json({client, service})
 });
 
 router.delete("/clients/:abonado/device/:id", verifyToken, async (req, res) => {

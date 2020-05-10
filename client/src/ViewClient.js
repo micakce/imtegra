@@ -4,9 +4,9 @@ import { Accordion, Card, Button, Table,  Row, Col, Form } from 'react-bootstrap
 import { blankState } from './testVariables';
 import RenderService from './RenderService';
 import MyModal from './MyModal';
+import AddClient from './AddClient';
 import AddService from './AddService';
 import AddHardware from './AddHardware';
-import AddClient from './AddClient';
 import EditHardwareModal from './EditHardwareModal';
 import { AuthConsumer } from './authContext';
 import Can from './Can';
@@ -34,8 +34,6 @@ export default class ViewClient extends Component {
   }
 
   componentDidMount() {
-
-
     // const abonado = window.location.pathname.match(/\/(\d{7}$)/)
     const abonado = this.props.match.params.abonado;
     if (abonado) {
@@ -47,7 +45,7 @@ export default class ViewClient extends Component {
 
   searchClient(e, p) {
     const abonado = p || this.state.search || this.state.abonado
-    const path = `/clients/client/${abonado}`;
+    const path = `/clients/${abonado}`;
     axiosInstance.get(path)
       .then( res => {
         this.setState(res.data ? {...res.data, hideEditButton: false} : blankState)

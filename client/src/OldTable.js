@@ -143,7 +143,7 @@ export default class AllClients extends Component {
                               return (
                                 <tr key={service._id} hidden={false} >
                                   <td style={cellStyle}>
-                                    <Link to={`/clients/client/${client.abonado}`}>
+                                    <Link to={`/clients/${client.abonado}`}>
                                       {client.abonado}
                                     </Link>
                                   </td>
@@ -162,7 +162,7 @@ export default class AllClients extends Component {
                               return (
                                 < tr key={client._id}  >
                                   <td style={cellStyle}>
-                                    <Link to={`/clients/client/${client.abonado}`}>
+                                    <Link to={`/clients/${client.abonado}`}>
                                       {client.abonado}
                                     </Link>
                                   </td>
@@ -181,7 +181,7 @@ export default class AllClients extends Component {
                         return (
                           < tr key={client._id}  >
                             <td style={cellStyle}>
-                              <Link to={`/clients/client/${client.abonado}`}>
+                              <Link to={`/clients/${client.abonado}`}>
                                 {client.abonado}
                               </Link>
                             </td>

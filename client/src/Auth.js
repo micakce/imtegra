@@ -32,6 +32,7 @@ class Auth extends Component {
         return;
       }
 
+      setTokenInAxios(token);
       this.setState({
         authenticated: auth,
         user: {
@@ -42,7 +43,6 @@ class Auth extends Component {
 
       localStorage.setItem("imtegra-jwt", token);
       localStorage.setItem("imtegra-role", role);
-      setTokenInAxios(token);
       this.props.history.push(this.props.location.pathname);
     }
   };

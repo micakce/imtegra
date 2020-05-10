@@ -7,7 +7,6 @@ import { blankState } from './testVariables';
 import { AuthConsumer } from './authContext';
 import Can from './Can';
 import {axiosInstance} from './helpers/axios';
-// import ValidationForm from './ValidationForm';
 
  class AddClient extends Component {
 
@@ -48,7 +47,7 @@ import {axiosInstance} from './helpers/axios';
       }
       this.setState({ [name]: value });
       if (value.match(/^\d{7}$/)) {
-        axiosInstance.get(`/clients/client/${value}`)
+        axiosInstance.get(`/clients/${value}`)
           .then(res => {
             if (!res.data) {
               this.setState({
@@ -65,7 +64,7 @@ import {axiosInstance} from './helpers/axios';
                   [name]: {
                     valid: false,
                     invalid: true,
-                    message: <p>Abonado ya <Link style={{color: "red", textDecoration: "underline"}} to={`/clients/client/${this.state.abonado}`}>existe</Link></p>,
+                    message: <p>Abonado ya <Link style={{color: "red", textDecoration: "underline"}} to={`/clients/${this.state.abonado}`}>existe</Link></p>,
                     editable: true
                   },
                   submit: false
@@ -119,7 +118,7 @@ import {axiosInstance} from './helpers/axios';
         })
         .catch(err => console.error(err));
       e.preventDefault();
-      this.props.history.push(`/clients/client/${this.state.abonado}`)
+      this.props.history.push(`/clients/${this.state.abonado}`)
 
     }
   }

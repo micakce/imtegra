@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import {Badge} from 'react-bootstrap';
-import ReactTable from 'react-table';
+import ReactTable, {useTable} from 'react-table';
 // import 'react-table/react-table.css';
 
 import AddClient from './AddClient';
-import MyModal from './MyModal';
-import{AuthConsumer} from "./authContext";
-import Can from "./Can";
-import { axiosInstance } from './helpers/axios';
+import MyModal from '../../MyModal';
+import{AuthConsumer} from "../../authContext";
+import Can from "../../Can";
+import { axiosInstance } from '../../helpers/axios';
 
 export default class AllClients extends Component {
 
@@ -54,7 +54,7 @@ export default class AllClients extends Component {
     // eslint-disable-next-line no-unused-vars
     const cellStyle = { display: "table-cell", verticalAlign: "middle" };
 
-    const data = [];
+    const datArray = [];
     const statuses = [];
     this.state.clients.forEach( client => {
       if (client.services.length > 0) {
@@ -62,7 +62,7 @@ export default class AllClients extends Component {
           if (service.status !== "Baja" &&
             service.status !== "Completado" &&
           service.status !== "Cumplido") {
-            data.push({
+            datArray.push({
               abonado: client.abonado,
               name: client.name,
               clientId: client._id,
@@ -74,7 +74,7 @@ export default class AllClients extends Component {
           }
         })
       } else {
-        data.push({
+        datArray.push({
           abonado: client.abonado,
           name: client.name,
           clientId: client._id,
@@ -83,49 +83,61 @@ export default class AllClients extends Component {
       }
     } )
 
-    const columns = [{
-      Header: "Abonado",
-      accessor: "abonado",
-      Cell: props => <Link to={ `/clients/${props.value}` }>{props.value}</Link>,
-    },{
-      Header: "Nombre",
-      accessor: "name",
-      filterMethod: (filter, row) =>
-      row[filter.id].match(filter.value)
-    },{
-      id: "Servicio",
-      Header: "Servicio",
-      accessor: d => d.service.plan ? `${d.service.service} - ${d.service.plan} Mbps` : d.service.service,
-      Cell: props => <Badge>{props.value}</Badge>
-    },{
-      id: "pm",
-      Header: "PM",
-      accessor: d => d.service.pm
-    },{
-      id: "im",
-      Header: "Implementador",
-      accessor: d => d.service.im
-    },{
-      id: "serviceStatus",
-      Header: "Status",
-      accessor: d => d.service.status,
-      filterMethod: (filter, row) => {
-        if (filter.value === "all") {
-          return true;
-        }
-        return row[filter.id] === filter.value;
+    const data = React.useMemo(() => datArray, [])
 
-      },
-      Filter: ({ filter, onChange }) =>
-        <select
-          onChange={event => onChange(event.target.value)}
-          style={{ width: "100%" }}
-          value={filter ? filter.value : "all"}
-        >
-          <option  value="all">Todos</option>
-          { statuses.map( (status, idx) => <option key={idx}>{status}</option> ) }
-        </select>
-    },]
+    const columns = React.useMemo(
+      () => [{
+        Header: "Abonado",
+        accessor: "abonado",
+        Cell: props => <Link to={ `/clients/${props.value}` }>{props.value}</Link>,
+      },{
+        Header: "Nombre",
+        accessor: "name",
+        filterMethod: (filter, row) =>
+        row[filter.id].match(filter.value)
+      },{
+        id: "Servicio",
+        Header: "Servicio",
+        accessor: d => d.service.plan ? `${d.service.service} - ${d.service.plan} Mbps` : d.service.service,
+        Cell: props => <Badge>{props.value}</Badge>
+      },{
+        id: "pm",
+        Header: "PM",
+        accessor: d => d.service.pm
+      },{
+        id: "im",
+        Header: "Implementador",
+        accessor: d => d.service.im
+      },{
+        id: "serviceStatus",
+        Header: "Status",
+        accessor: d => d.service.status,
+        filterMethod: (filter, row) => {
+          if (filter.value === "all") {
+            return true;
+          }
+          return row[filter.id] === filter.value;
+        },
+        Filter: ({ filter, onChange }) =>
+          <select
+            onChange={event => onChange(event.target.value)}
+            style={{ width: "100%" }}
+            value={filter ? filter.value : "all"}
+          >
+            <option  value="all">Todos</option>
+            { statuses.map( (status, idx) => <option key={idx}>{status}</option> ) }
+          </select>
+      },],
+      []
+    )
+
+    const {
+      getTableProps,
+      getTableBodyProps,
+      headerGroups,
+      rows,
+      prepareRow,
+    } = useTable({ columns, data })
 
     return (
       <AuthConsumer>
@@ -135,8 +147,29 @@ export default class AllClients extends Component {
             perform="services:list"
             yes={() =>
               <>
-
-                <h1>Maldita tabla</h1>
+                <table {...getTableProps()}>
+                  <thead>
+                    {headerGroups.map(headerGroup => (
+                      <tr {...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map(column => (
+                          <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                        ))}
+                      </tr>
+                    ))}
+                  </thead>
+                  <tbody {...getTableBodyProps()}>
+                    {rows.map(row => {
+                      prepareRow(row)
+                      return (
+                        <tr {...row.getRowProps()}>
+                          {row.cells.map(cell => {
+                            return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                          })}
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
 
                 {/* <ReactTable */}
                 {/*   data={data} */}
