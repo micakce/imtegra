@@ -1,0 +1,404 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: Client Collector App
+paths:
+  /clients:
+    x-swagger-router-controller: client.controller
+    get:
+      description: get the game system list
+      operationId: getClients
+      parameters:
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: abonado
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetClientListResponse"
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      description: add a new client
+      operationId: createClient
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Client"
+        description: the client to create
+      responses:
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetClientResponse"
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  "/clients/{id}":
+    x-swagger-router-controller: client.controller
+    get:
+      description: get a single client
+      operationId: getClientById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetClientResponse"
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      description: Edit a client
+      operationId: updateClient
+      parameters:
+        - in: path
+          name: id
+          description: client id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Client"
+        description: the updates to apply
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetClientResponse"
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      description: Delete a client
+      operationId: deleteClient
+      parameters:
+        - in: path
+          name: id
+          description: client id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneralResponse"
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  "/clients/{abonado}/services/":
+    x-swagger-router-controller: service.controller
+    get:
+      description: get the client's service list
+      operationId: getServices
+      parameters:
+        - in: path
+          name: abonado
+          description: Services holder abonado
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: service
+          description: type of service
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetServiceListResponse"
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      description: add a new game system to the list
+      operationId: createService
+      parameters:
+        - in: path
+          name: abonado
+          description: Services holder abonado
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Service"
+        description: The service to create.
+      responses:
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetServiceResponse"
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  "/clients/{abonado}/services/{id}":
+    x-swagger-router-controller: service.controller
+    get:
+      description: get a service
+      operationId: getServiceById
+      parameters:
+        - in: path
+          name: abonado
+          description: service holder abonado
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetServiceResponse"
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      description: update a service
+      operationId: updateService
+      parameters:
+        - in: path
+          name: abonado
+          description: service holder abonado
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: id
+          description: service id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Service"
+        description: The service to update.
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetServiceResponse"
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      description: delete a service
+      operationId: deleteService
+      parameters:
+        - in: path
+          name: abonado
+          description: service holder abonado
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: id
+          description: service  id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneralResponse"
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+servers:
+  - url: http://localhost:10010/
+  - url: https://localhost:10010/
+components:
+  schemas:
+    Client:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the Client
+        abonado:
+          type: string
+          description: Abonado of the Client
+        services:
+          type: array
+          items:
+            $ref: "#/components/schemas/Service"
+        image:
+          type: string
+          format: byte
+      required:
+        - name
+        - abonado
+    GetClientResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: identifier
+        name:
+          type: string
+          description: Name of the Client
+        abonado:
+          type: string
+          description: Description of the Client
+        services:
+          type: array
+          items:
+            $ref: "#/components/schemas/Service"
+          description: Client services
+        image:
+          type: string
+          format: byte
+      required:
+        - id
+        - name
+        - abonado
+    GetClientListResponse:
+      required:
+        - clients
+      properties:
+        clients:
+          type: array
+          items:
+            $ref: "#/components/schemas/GetClientResponse"
+    Service:
+      type: object
+      properties:
+        service:
+          type: string
+          description: Name of the service
+        plan:
+          type: string
+          description: Speed/Specification of the service
+        image:
+          type: string
+          format: byte
+      required:
+        - service
+        - plan
+    GetServiceResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: identifier
+        service:
+          type: string
+          description: Type of the service
+        plan:
+          type: string
+          description: Plan under the service
+        image:
+          type: string
+          format: byte
+      required:
+        - id
+        - service
+        - plan
+    GetServiceListResponse:
+      required:
+        - services
+      properties:
+        services:
+          type: array
+          items:
+            $ref: "#/components/schemas/GetServiceResponse"
+    GeneralResponse:
+      type: object
+      properties:
+        success:
+          type: number
+          description: returns 1 if successful
+        description:
+          type: string
+          description: a short comment
+      required:
+        - success
+        - description
+    ErrorResponse:
+      required:
+        - message
+      properties:
+        message:
+          type: string

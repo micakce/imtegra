@@ -1,24 +1,20 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useContext } from "react";
-import { Badge, Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEdit,
-  faPlus,
-  faExpand,
-  faExpandAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { Table, Badge, Button } from "react-bootstrap";
+import AddServiceModal from './AddServiceModal';
+import './service.css';
 import { useHistory } from "react-router";
 import { ClientContext } from "../../contexts/ClientContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExpandAlt } from "@fortawesome/free-solid-svg-icons";
 
 const ServicesTable = (props) => {
-  console.log(props.services);
   const history = useHistory();
-  const { client } = useContext(ClientContext);
+  const { client, getAndSetClient } = useContext(ClientContext);
 
   return (
     <>
-      <table className="table table-hover">
+      <Table className="" size="sm" hover>
         <thead>
           <tr>
             <td> Servicio</td>
@@ -32,7 +28,7 @@ const ServicesTable = (props) => {
           {props.services.map((service) => {
             return (
               <tr key={service._id}>
-                <td>
+                <td className="align-middle" >
                   <b className="mr-2">{`${service.service} - ${service.plan}`}</b>
                   {service.medium === "CO" ? (
                     <Badge variant="primary">{service.medium}</Badge>
@@ -40,18 +36,19 @@ const ServicesTable = (props) => {
                     <Badge variant="warning">{service.medium}</Badge>
                   )}
                 </td>
-                <td>
+                <td className="align-middle" >
                   <b>PM:</b> {service.pm}
                 </td>
-                <td>
+                <td className="align-middle" >
                   <b>IM:</b> {service.im}
                 </td>
-                <td>
+                <td className="align-middle" >
                   <b>Status:</b>{" "}
                   <Badge variant="success">{service.status}</Badge>
                 </td>
-                <td>
+                <td className="align-middle" >
                   <Button
+                    className="ml-2"
                     size="sm"
                     onClick={() =>
                       history.push(
@@ -59,19 +56,23 @@ const ServicesTable = (props) => {
                       )
                     }
                   >
-                    <FontAwesomeIcon icon={faPlus} />
+                    <FontAwesomeIcon icon={faExpandAlt} />
                   </Button>
-                  <Button size="sm" className="mx-sm-2">
-                    <FontAwesomeIcon className="" icon={faEdit} />
-                  </Button>
-                  {/* <FontAwesomeIcon icon={ faExpand }/> */}
-                  {/* <FontAwesomeIcon icon={ faExpandAlt }/> */}
                 </td>
               </tr>
             );
           })}
+          <tr>
+            <AddServiceModal
+              title="Agregar Servicio"
+              action="Agregar"
+              hardware={client.hardware}
+              abonado={client.abonado}
+              reload={() => getAndSetClient(client.abonado)}
+            />
+          </tr>
         </tbody>
-      </table>
+      </Table>
     </>
   );
 };

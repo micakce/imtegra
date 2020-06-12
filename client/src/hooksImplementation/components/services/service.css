@@ -1,0 +1,7 @@
+.myButton {
+    display: none;
+}
+
+td:hover  .myButton, .myButton:hover {
+    display: inline-block;
+}

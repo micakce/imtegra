@@ -8,12 +8,9 @@ import Can from "../../../Can";
 import ServicesTable from "./ServicesTable";
 import AddService from "../../../AddService";
 
-
-
 const ClientServices = (props) => {
 
   const { user } = useContext(AuthContext);
-  console.log(props.services);
 
   return (
   <Card>

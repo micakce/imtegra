@@ -106,6 +106,7 @@ const ClientInfo = (props) => {
                 <AddClient
                   toggle={toggle}
                   action="EDIT"
+                  client={props.client}
                 />
               )}
             />

@@ -7,7 +7,7 @@ const verifyToken = require("./verifyToken");
 const Client = require("../models/client");
 const Service = require("../models/service");
 const User = require("../models/user");
-// const Hardware = require('../models/hardware');
+const Hardware = require("../models/hardware");
 
 router.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -115,9 +115,9 @@ router.get("/clients/:id", verifyToken, async (req, res) => {
 router.post("/clients", verifyToken, async (req, res) => {
   // const { abonado, name, email, telefono, address, services, pm, im, status } = req.body;
   // const client = new Client({ abonado, name, email, telefono, address, services, pm, im, status });
-  const clientExists = await Client.findOne({abonado: req.body.abonado});
+  const clientExists = await Client.findOne({ abonado: req.body.abonado });
   if (clientExists) {
-    return res.status(403).json({ message: "Client already exists" })
+    return res.status(403).json({ message: "Client already exists" });
   }
   const client = new Client({ ...req.body });
   await client.save();
@@ -215,19 +215,28 @@ router.put("/clients/device/:id", verifyToken, async (req, res) => {
 });
 
 router.put("/clients/device/edit/:id", verifyToken, async (req, res) => {
-  const { device, model, code, idx, serial, description } = req.body;
-  const newDevice = { device, model, code, serial, description };
-  const client = await Client.findOne({ abonado: req.params.id });
-  client.hardware[idx] = newDevice;
-  await client.save();
-  res.json(client);
+  const newHardware = new Hardware(req.body);
+  Client.findOne({ abonado: req.params.id }, function (err, client) {
+    var device = client.hardware.id(req.body._id);
+    device.set(newHardware);
+
+    client
+      .save()
+      // eslint-disable-next-line no-unused-vars
+      .then(function (savedService) {
+        res.json({ message: "Dispositivo editado!", client });
+      })
+      .catch(function (err) {
+        res.status(500).send(err);
+      });
+  });
 });
 
 router.get("/clients/:abonado/service/:id", verifyToken, async (req, res) => {
   const { abonado, id } = req.params;
   const client = await Client.findOne({ abonado });
-  const service = client.service.id(id)
-  res.json({client, service})
+  const service = client.service.id(id);
+  res.json({ client, service });
 });
 
 router.delete("/clients/:abonado/device/:id", verifyToken, async (req, res) => {

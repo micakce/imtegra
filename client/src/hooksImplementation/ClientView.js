@@ -7,7 +7,7 @@ import ClientHardware from "./components/ClientHardware";
 import { ClientContext } from "./contexts/ClientContext";
 import { blankClient } from "../helpers/blankStates";
 
-const ClientViewHook = () => {
+const ClientView = () => {
   const { abonado } = useParams();
 
   const { client, setClient, getAndSetClient } = useContext(ClientContext);
@@ -27,9 +27,9 @@ const ClientViewHook = () => {
       <h1>This is the add client hook</h1>
       <ClientInfo client={client} />
       <ClientServices services={client.services} />
-      <ClientHardware abonado={client.abonado} hardware={client.hardware} />
+      <ClientHardware />
     </>
   );
 };
 
-export default ClientViewHook;
+export default ClientView;

@@ -1,23 +1,21 @@
-/* eslint-disable react/prop-types */
-import React, { Component } from "react";
-import { Button, Form, Col, Tabs, Tab } from "react-bootstrap";
-import { serviceBlankState } from "./testVariables";
-import { axiosInstance } from "./helpers/axios";
+import React, { Component } from 'react';
+import { Button, Form, Col, Tabs, Tab } from 'react-bootstrap';
+import { serviceBlankState } from '../../../helpers/blankStates';
+import {axiosInstance} from '../../../helpers/axios';
 
 const ServicioCM = (props) => (
+
   <>
     <Form.Row>
       <Form.Group as={Col} controlId="">
-        <Form.Label>
-          {props.modifier ? props.modifier.plan : "Velocidad"}
-        </Form.Label>
+        <Form.Label>{props.modifier ? props.modifier.plan : 'Velocidad'}</Form.Label>
         <Form.Control
           size="sm"
           value={props.state.plan}
           name="plan"
           onChange={props.handleChange}
           type="string"
-          placeholder={props.modifier ? props.modifier.placeholder : "en Mbps"}
+          placeholder={props.modifier ? props.modifier.placeholder : 'en Mbps'}
           required
         />
       </Form.Group>
@@ -79,8 +77,7 @@ const ServicioCM = (props) => (
           onChange={props.handleChange}
           placeholder=""
         />
-      </Form.Group>
-      <Form.Group as={Col} controlId="">
+      </Form.Group><Form.Group as={Col} controlId="">
         <Form.Label>PM</Form.Label>
         <Form.Control
           size="sm"
@@ -89,8 +86,7 @@ const ServicioCM = (props) => (
           onChange={props.handleChange}
           placeholder=""
         />
-      </Form.Group>
-      <Form.Group as={Col} controlId="">
+      </Form.Group><Form.Group as={Col} controlId="">
         <Form.Label>Status</Form.Label>
         <Form.Control
           size="sm"
@@ -101,25 +97,24 @@ const ServicioCM = (props) => (
         />
       </Form.Group>
     </Form.Row>
-  </>
-);
 
-const ServicioFO = (props) => (
+  </>
+)
+
+const ServicioFO = props => (
   <>
     <br></br>
 
     <Form.Row>
       <Form.Group as={Col} controlId="">
-        <Form.Label>
-          {props.modifier ? props.modifier.plan : "Velocidad"}
-        </Form.Label>
+        <Form.Label>{props.modifier ? props.modifier.plan : 'Velocidad'}</Form.Label>
         <Form.Control
           size="sm"
           value={props.state.plan}
           name="plan"
           onChange={props.handleChange}
           type="text"
-          placeholder={props.modifier ? props.modifier.placeholder : "en Mbps"}
+          placeholder={props.modifier ? props.modifier.placeholder : 'en Mbps'}
           required
         />
       </Form.Group>
@@ -130,8 +125,8 @@ const ServicioFO = (props) => (
           value={props.state.hub}
           name="hub"
           onChange={props.handleChange}
-          placeholder="HUB"
-        ></Form.Control>
+          placeholder="HUB" >
+        </Form.Control>
       </Form.Group>
       <Form.Group as={Col} controlId="">
         <Form.Label>Obra</Form.Label>
@@ -140,14 +135,14 @@ const ServicioFO = (props) => (
           value={props.state.obra}
           name="obra"
           onChange={props.handleChange}
-          placeholder="XXFO"
-        ></Form.Control>
+          placeholder="XXFO" >
+        </Form.Control>
       </Form.Group>
     </Form.Row>
 
     {props.children}
 
-    {props.state.service === "L3VPN" ? (
+    {props.state.service === 'L3VPN' ?
       <Form.Row>
         <Form.Group as={Col} md={4} controlId="">
           <Form.Label>Tipo</Form.Label>
@@ -157,52 +152,32 @@ const ServicioFO = (props) => (
             name="mode"
             onChange={props.handleChange}
             as="select"
-            placeholder="en Mbps"
-          >
+            placeholder="en Mbps">
             <option>...</option>
             <option>Punto a punto</option>
             <option>Punto Multipunto</option>
             <option>Multipunto</option>
           </Form.Control>
         </Form.Group>
-        {props.state.mode === "Punto Multipunto" ? (
-          <>
-            <Form.Group as={Col} md={2} controlId="">
+        {props.state.mode === 'Punto Multipunto'
+          ?
+            (<><Form.Group as={Col} md={2} controlId="">
               <Form.Label>Hub</Form.Label>
-              <Form.Control
-                size="sm"
-                value={props.state.sites.hub}
-                name="sites.hub"
-                onChange={props.handleChange}
-                type="text"
-                placeholder="5551212,5559012"
+              <Form.Control size="sm" value={props.state.sites.hub} name="sites.hub" onChange={props.handleChange} type="text" placeholder="5551212,5559012"
               />
             </Form.Group>
-            <Form.Group as={Col} md={4} controlId="">
-              <Form.Label>Spokes</Form.Label>
-              <Form.Control
-                size="sm"
-                value={props.state.sites.spokes}
-                name="sites.spokes"
-                onChange={props.handleChange}
-                type="text"
-                placeholder="5551212,5559012"
-              />
-            </Form.Group>
-          </>
-        ) : (
-          <Form.Group as={Col} controlId="">
-            <Form.Label>Contra</Form.Label>
-            <Form.Control
-              size="sm"
-              value={props.state.sites.spokes}
-              name="sites.spokes"
-              onChange={props.handleChange}
-              type="text"
-              placeholder="5551212,5559012"
-            />
-          </Form.Group>
-        )}
+              <Form.Group as={Col} md={4} controlId="">
+                <Form.Label>Spokes</Form.Label>
+                <Form.Control size="sm" value={props.state.sites.spokes} name="sites.spokes" onChange={props.handleChange} type="text" placeholder="5551212,5559012"
+                />
+              </Form.Group></>)
+              :
+                <Form.Group as={Col} controlId="">
+                  <Form.Label>Contra</Form.Label>
+                  <Form.Control size="sm" value={props.state.sites.spokes} name="sites.spokes" onChange={props.handleChange} type="text" placeholder="5551212,5559012"
+                  />
+                </Form.Group>
+        }
         <Form.Group as={Col} md={2} controlId="">
           <Form.Label>VLAN</Form.Label>
           <Form.Control
@@ -214,8 +189,7 @@ const ServicioFO = (props) => (
             placeholder=""
           />
         </Form.Group>
-      </Form.Row>
-    ) : (
+      </Form.Row> :
       <Form.Row>
         <Form.Group as={Col} controlId="">
           <Form.Label>Equipo</Form.Label>
@@ -225,18 +199,11 @@ const ServicioFO = (props) => (
             name="device"
             onChange={props.handleChange}
             as="select"
-            placeholder=""
-          >
+            placeholder="" >
             <option>...</option>
-            {props.hardware.length > 0 ? (
-              props.hardware.map((device, idx) => (
-                <option key={idx}>
-                  {device.device} {device.model}
-                </option>
-              ))
-            ) : (
-              <option>No hay equipos asociados </option>
-            )}
+            {props.hardware.length > 0
+              ? props.hardware.map(device => <option>{device.device} {device.model}</option>)
+              : <option>No hay equipos asociados </option>}
           </Form.Control>
         </Form.Group>
         <Form.Group as={Col} controlId="">
@@ -262,7 +229,9 @@ const ServicioFO = (props) => (
           />
         </Form.Group>
       </Form.Row>
-    )}
+
+    }
+
 
     <Form.Row>
       <Form.Group as={Col} controlId="">
@@ -274,8 +243,7 @@ const ServicioFO = (props) => (
           onChange={props.handleChange}
           placeholder=""
         />
-      </Form.Group>
-      <Form.Group as={Col} controlId="">
+      </Form.Group><Form.Group as={Col} controlId="">
         <Form.Label>PM</Form.Label>
         <Form.Control
           size="sm"
@@ -284,8 +252,7 @@ const ServicioFO = (props) => (
           onChange={props.handleChange}
           placeholder=""
         />
-      </Form.Group>
-      <Form.Group as={Col} controlId="">
+      </Form.Group><Form.Group as={Col} controlId="">
         <Form.Label>Status</Form.Label>
         <Form.Control
           size="sm"
@@ -296,8 +263,9 @@ const ServicioFO = (props) => (
         />
       </Form.Group>
     </Form.Row>
+
   </>
-);
+)
 
 const DireccionamientoFO = (props) => (
   <>
@@ -388,90 +356,92 @@ const DireccionamientoFO = (props) => (
       </Form.Group>
     </Form.Row>
   </>
-);
+)
 
 const Patcheo = (props) => (
   <>
     <br></br>
     <Form.Row>
-      <Form.Group as={Col}>
+      <Form.Group as={Col} >
         <Form.Label>Rack</Form.Label>
         <Form.Control
           size="sm"
           value={props.state.rack}
           name="rack"
           onChange={props.handleChange}
-          placeholder="Rack/FDF"
-        ></Form.Control>
+          placeholder="Rack/FDF" >
+        </Form.Control>
       </Form.Group>
-      <Form.Group as={Col}>
+      <Form.Group as={Col} >
         <Form.Label>Patchera</Form.Label>
         <Form.Control
           size="sm"
           value={props.state.patchera}
           name="patchera"
           onChange={props.handleChange}
-          placeholder="Patchera"
-        ></Form.Control>
+          placeholder="Patchera" >
+        </Form.Control>
       </Form.Group>
-      <Form.Group as={Col}>
+      <Form.Group as={Col} >
         <Form.Label>Posición</Form.Label>
         <Form.Control
           size="sm"
           value={props.state.position}
           name="position"
           onChange={props.handleChange}
-          placeholder="Posicion"
-        ></Form.Control>
+          placeholder="Posicion" >
+        </Form.Control>
       </Form.Group>
     </Form.Row>
 
     <Form.Row>
-      <Form.Group as={Col}>
+      <Form.Group as={Col} >
         <Form.Label>Distancia</Form.Label>
         <Form.Control
           size="sm"
           value={props.state.dist}
           name="dist"
           onChange={props.handleChange}
-          placeholder="en mts"
-        ></Form.Control>
+          placeholder="en mts" >
+        </Form.Control>
       </Form.Group>
-      <Form.Group as={Col}>
+      <Form.Group as={Col} >
         <Form.Label>Att</Form.Label>
         <Form.Control
           size="sm"
           value={props.state.att}
           name="att"
           onChange={props.handleChange}
-          placeholder="en dB"
-        ></Form.Control>
+          placeholder="en dB" >
+        </Form.Control>
       </Form.Group>
-      <Form.Group as={Col}>
+      <Form.Group as={Col} >
         <Form.Label>Switch</Form.Label>
         <Form.Control
           size="sm"
           value={props.state.nexus}
           name="nexus"
           onChange={props.handleChange}
-          placeholder="Switch en HUB"
-        ></Form.Control>
+          placeholder="Switch en HUB" >
+        </Form.Control>
       </Form.Group>
-      <Form.Group as={Col}>
+      <Form.Group as={Col} >
         <Form.Label>Puerto</Form.Label>
         <Form.Control
           size="sm"
           value={props.state.nexus_port}
           name="nexus_port"
           onChange={props.handleChange}
-          placeholder="Numero de puerto"
-        ></Form.Control>
+          placeholder="Numero de puerto" >
+        </Form.Control>
       </Form.Group>
     </Form.Row>
   </>
-);
+)
+
 
 class AddService extends Component {
+
   constructor(props) {
     super(props);
     if (props.action === "Edit") {
@@ -486,97 +456,89 @@ class AddService extends Component {
   handleChange(e) {
     const { name, value, id } = e.target;
 
-    if (name === "mediumRadios") {
+    if (name === 'mediumRadios') {
       this.setState({ medium: id });
     } else if (name.match(/\./)) {
       const name_key = name.match(/(\D+)\./)[1];
       const name_value = name.match(/\.(\D+)/)[1];
-      this.setState({
-        [name_key]: { ...this.state[name_key], [name_value]: value },
-      });
-    } else if (name === "red") {
+      this.setState({ [name_key]: { ...this.state[name_key], [name_value]: value } });
+    } else if (name === 'red') {
       if (value.match(/^\d{1,3}(\.\d{1,3}){3}\/\d{2}$/)) {
-        console.log("It matches");
+        console.log('It matches');
         var oct123 = value.match(/^\d{1,3}(\.\d{1,3}){2}/)[0];
         var oct4 = parseInt(value.match(/(\d{1,3})\//)[1]);
-        var service_ip = oct123 + "." + (oct4 + 1).toString();
-        var service_dg = oct123 + "." + (oct4 + 2).toString();
+        var service_ip = oct123 + '.' + (oct4 + 1).toString();
+        var service_dg = oct123 + '.' + (oct4 + 2).toString();
         this.setState({
           red: value,
           ip: service_ip,
           dg: service_dg,
-          mask: "255.255.255.252",
+          mask: '255.255.255.252'
         });
       } else {
         this.setState({
-          [name]: value,
+          [name]: value
         });
       }
     } else {
       this.setState({
-        [name]: value,
+        [name]: value
       });
     }
   }
 
   addService(e) {
     e.preventDefault();
-    if (this.props.action === "Edit") {
+    if (this.props.action === 'Edit') {
       const idx = this.props.idx;
-      axiosInstance
-        .put(`/clients/service/edit/${this.props.abonado}`, {
-          ...this.state,
-          idx,
-        })
+      axiosInstance.put(`/clients/service/edit/${this.props.abonado}`, {...this.state, idx})
         .then((res) => {
           console.log(res);
           this.props.toggle();
           this.props.reload();
         })
-        .catch((err) => console.error(err));
+        .catch(err => console.error(err))
+
     } else {
-      axiosInstance
-        .put(`/clients/service/${this.props.abonado}`, this.state)
+      axiosInstance.put(`/clients/service/${this.props.abonado}`, this.state)
         .then(() => {
           this.props.toggle();
           this.props.reload();
-        });
+        })
     }
   }
 
   adi() {
-    if (this.state.service === "ADI") {
+
+    if (this.state.service === 'ADI') {
       if (this.state.medium === "FO") {
         return (
-          <Tabs defaultActiveKey="service">
-            <Tab eventKey="service" title="Service">
-              <ServicioFO
-                state={this.state}
-                hardware={this.props.hardware}
-                handleChange={this.handleChange}
+          <Tabs defaultActiveKey="service" >
+
+            <Tab eventKey="service" title="Service" >
+              <ServicioFO state={this.state} hardware={this.props.hardware} handleChange={this.handleChange} />
+            </Tab>
+
+            <Tab eventKey="direccionamiento" title="Direccionamiento" >
+              <DireccionamientoFO state={this.state} handleChange={this.handleChange}
               />
             </Tab>
 
-            <Tab eventKey="direccionamiento" title="Direccionamiento">
-              <DireccionamientoFO
-                state={this.state}
-                handleChange={this.handleChange}
-              />
-            </Tab>
-
-            <Tab eventKey="patcheo" title="Patcheo">
+            <Tab eventKey="patcheo" title="Patcheo" >
               <Patcheo state={this.state} handleChange={this.handleChange} />
             </Tab>
+
           </Tabs>
-        );
+
+        )
       } else if (this.state.medium === "CO") {
         return (
           <ServicioCM state={this.state} handleChange={this.handleChange}>
+
             <Form.Row>
               <Form.Group as={Col} controlId="">
                 <Form.Label>Red</Form.Label>
-                <Form.Control
-                  size="sm"
+                <Form.Control size="sm"
                   value={this.state.red}
                   name="red"
                   onChange={this.handleChange}
@@ -622,124 +584,83 @@ class AddService extends Component {
                 />
               </Form.Group>
             </Form.Row>
+
           </ServicioCM>
-        );
+
+        )
       }
     }
   }
 
   l2vpn() {
-    if (this.state.service === "L2VPN") {
+    if (this.state.service === 'L2VPN') {
       if (this.state.medium === "FO") {
         return (
-          <Tabs defaultActiveKey="service">
-            <Tab eventKey="service" title="Service">
-              <ServicioFO
-                state={this.state}
-                hardware={this.props.hardware}
-                handleChange={this.handleChange}
-              >
+
+          <Tabs defaultActiveKey="service" >
+
+            <Tab eventKey="service" title="Service" >
+              <ServicioFO state={this.state} hardware={this.props.hardware} handleChange={this.handleChange}>
                 <Form.Row>
                   <Form.Group as={Col} md={4} controlId="">
                     <Form.Label>Tipo</Form.Label>
-                    <Form.Control
-                      size="sm"
-                      value={this.state.mode}
-                      name="mode"
-                      onChange={this.handleChange}
-                      as="select"
-                      placeholder="en Mbps"
-                    >
+                    <Form.Control size="sm" value={this.state.mode} name="mode" onChange={this.handleChange} as="select" placeholder="en Mbps">
                       <option>...</option>
                       <option>Punto a punto</option>
                       <option>Punto Multipunto</option>
                       <option>Multipunto</option>
                     </Form.Control>
                   </Form.Group>
-                  {this.state.mode === "Punto Multipunto" ? (
-                    <>
-                      <Form.Group as={Col} md={3} controlId="">
+                  {this.state.mode === 'Punto Multipunto'
+                    ?
+                      (<><Form.Group as={Col} md={3} controlId="">
                         <Form.Label>Concentrador</Form.Label>
-                        <Form.Control
-                          size="sm"
-                          value={this.state.sites.hub}
-                          name="sites.hub"
-                          onChange={this.handleChange}
-                          type="text"
-                          placeholder="5551212,5559012"
+                        <Form.Control size="sm" value={this.state.sites.hub} name="sites.hub" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
                         />
                       </Form.Group>
-                      <Form.Group as={Col} md={5} controlId="">
-                        <Form.Label>Spokes</Form.Label>
-                        <Form.Control
-                          size="sm"
-                          value={this.state.sites.spokes}
-                          name="sites.spokes"
-                          onChange={this.handleChange}
-                          type="text"
-                          placeholder="5551212,5559012"
-                        />
-                      </Form.Group>
-                    </>
-                  ) : (
-                    <Form.Group as={Col} controlId="">
-                      <Form.Label>Contra</Form.Label>
-                      <Form.Control
-                        size="sm"
-                        value={this.state.sites.spokes}
-                        name="sites.spokes"
-                        onChange={this.handleChange}
-                        type="text"
-                        placeholder="5551212,5559012"
-                      />
-                    </Form.Group>
-                  )}
+                        <Form.Group as={Col} md={5} controlId="">
+                          <Form.Label>Spokes</Form.Label>
+                          <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
+                          />
+                        </Form.Group></>)
+                        :
+                          <Form.Group as={Col} controlId="">
+                            <Form.Label>Contra</Form.Label>
+                            <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
+                            />
+                          </Form.Group>
+                  }
                 </Form.Row>
 
                 <Form.Row>
                   <Form.Group as={Col} controlId="">
                     <Form.Label>IP Monitoria</Form.Label>
-                    <Form.Control
-                      size="sm"
-                      value={this.state.ip_mon}
-                      name="ip_mon"
-                      onChange={this.handleChange}
-                      type="text"
-                      placeholder="IP equipo cliente"
+                    <Form.Control size="sm" value={this.state.ip_mon} name="ip_mon" onChange={this.handleChange} type="text" placeholder="IP equipo cliente"
                     />
                   </Form.Group>
                   <Form.Group as={Col} controlId="">
                     <Form.Label>Mascara</Form.Label>
-                    <Form.Control
-                      size="sm"
-                      value={this.state.mask_mon}
-                      name="mask_mon"
-                      onChange={this.handleChange}
-                      type="text"
-                      placeholder="255.255.255.240"
+                    <Form.Control size="sm" value={this.state.mask_mon} name="mask_mon" onChange={this.handleChange} type="text" placeholder="255.255.255.240"
                     />
                   </Form.Group>
                   <Form.Group as={Col} controlId="">
                     <Form.Label>DG</Form.Label>
-                    <Form.Control
-                      size="sm"
-                      value={this.state.dg_mon}
-                      name="dg_mon"
-                      onChange={this.handleChange}
-                      type="text"
-                      placeholder="IP del PE"
+                    <Form.Control size="sm" value={this.state.dg_mon} name="dg_mon" onChange={this.handleChange} type="text" placeholder="IP del PE"
                     />
                   </Form.Group>
                 </Form.Row>
+
               </ServicioFO>
             </Tab>
 
-            <Tab eventKey="patcheo" title="Patcheo">
+            <Tab eventKey="patcheo" title="Patcheo" >
               <Patcheo state={this.state} handleChange={this.handleChange} />
             </Tab>
-          </Tabs>
-        );
+
+          </Tabs >
+        )
       } else if (this.state.medium === "CO") {
+
         return (
           <ServicioCM state={this.state} handleChange={this.handleChange}>
             <Form.Row>
@@ -751,96 +672,66 @@ class AddService extends Component {
                   name="mode"
                   onChange={this.handleChange}
                   as="select"
-                  placeholder="en Mbps"
-                >
+                  placeholder="en Mbps">
                   <option>...</option>
                   <option>Punto a punto</option>
                   <option>Punto Multipunto</option>
                   <option>Multipunto</option>
                 </Form.Control>
               </Form.Group>
-              {this.state.mode === "Punto Multipunto" ? (
-                <>
-                  <Form.Group as={Col} md={3} controlId="">
+              {this.state.mode === 'Punto Multipunto'
+                ?
+                  (<><Form.Group as={Col} md={3} controlId="">
                     <Form.Label>Concentrador</Form.Label>
-                    <Form.Control
-                      size="sm"
-                      value={this.state.sites.hub}
-                      name="sites.hub"
-                      onChange={this.handleChange}
-                      type="text"
-                      placeholder="5559012"
+                    <Form.Control size="sm" value={this.state.sites.hub} name="sites.hub" onChange={this.handleChange} type="text" placeholder="5559012"
                     />
                   </Form.Group>
-                  <Form.Group as={Col} md={5} controlId="">
-                    <Form.Label>Spokes</Form.Label>
-                    <Form.Control
-                      size="sm"
-                      value={this.state.sites.spokes}
-                      name="sites.spokes"
-                      onChange={this.handleChange}
-                      type="text"
-                      placeholder="5551212,5559012"
-                    />
-                  </Form.Group>
-                </>
-              ) : (
-                <Form.Group as={Col} controlId="">
-                  <Form.Label>Contra</Form.Label>
-                  <Form.Control
-                    size="sm"
-                    value={this.state.sites.spokes}
-                    name="sites.spokes"
-                    onChange={this.handleChange}
-                    type="text"
-                    placeholder="5551212,5559012"
-                  />
-                </Form.Group>
-              )}
+                    <Form.Group as={Col} md={5} controlId="">
+                      <Form.Label>Spokes</Form.Label>
+                      <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
+                      />
+                    </Form.Group></>)
+                    :
+                      <Form.Group as={Col} controlId="">
+                        <Form.Label>Contra</Form.Label>
+                        <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
+                        />
+                      </Form.Group>
+              }
             </Form.Row>
+
           </ServicioCM>
-        );
+        )
       }
     }
   }
 
   l3vpn() {
-    if (this.state.service === "L3VPN") {
+    if (this.state.service === 'L3VPN') {
       if (this.state.medium === "FO") {
         return (
-          <Tabs defaultActiveKey="service">
+
+          <Tabs defaultActiveKey="service" >
+
             <Tab eventKey="service" title="Service">
-              <ServicioFO
-                state={this.state}
-                hardware={this.props.hardware}
-                handleChange={this.handleChange}
-              ></ServicioFO>
+
+              <ServicioFO state={this.state} hardware={this.props.hardware} handleChange={this.handleChange}>
+              </ServicioFO>
+
             </Tab>
 
-            <Tab eventKey="capa2" title="Capa 2">
+
+            <Tab eventKey="capa2" title="Capa 2" >
               <br></br>
 
               <Form.Row>
                 <Form.Group as={Col} controlId="">
                   <Form.Label>Equipo</Form.Label>
-                  <Form.Control
-                    size="sm"
-                    value={this.state.device}
-                    name="device"
-                    onChange={this.handleChange}
-                    as="select"
-                    placeholder=""
-                  >
+                  <Form.Control size="sm" value={this.state.device} name="device" onChange={this.handleChange} as="select" placeholder="" >
                     <option>...</option>
-                    {this.props.hardware.length > 0 ? (
-                      this.props.hardware.map((device) => (
-                        <option>
-                          {device.device} {device.model}
-                        </option>
-                      ))
-                    ) : (
-                      <option>No hay equipos asociados </option>
-                    )}
+                    {this.props.hardware.length > 0
+                      ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
+                      : <option>No hay equipos asociados </option>}
                   </Form.Control>
                 </Form.Group>
                 <Form.Group as={Col} controlId="">
@@ -893,7 +784,7 @@ class AddService extends Component {
               </Form.Row>
             </Tab>
 
-            <Tab eventKey="capa3" title="Capa 3">
+            <Tab eventKey="capa3" title="Capa 3" >
               <br></br>
 
               <Form.Row>
@@ -999,18 +890,11 @@ class AddService extends Component {
                     name="device_router"
                     onChange={this.handleChange}
                     as="select"
-                    placeholder=""
-                  >
+                    placeholder="" >
                     <option>...</option>
-                    {this.props.hardware.length > 0 ? (
-                      this.props.hardware.map((device) => (
-                        <option>
-                          {device.device} {device.model}
-                        </option>
-                      ))
-                    ) : (
-                      <option>No hay equipos asociados </option>
-                    )}
+                    {this.props.hardware.length > 0
+                      ? this.props.hardware.map(device => <option>{device.device} {device.model}</option>)
+                      : <option>No hay equipos asociados </option>}
                   </Form.Control>
                 </Form.Group>
                 <Form.Group as={Col} controlId="">
@@ -1060,13 +944,15 @@ class AddService extends Component {
                   />
                 </Form.Group>
               </Form.Row>
+
             </Tab>
-            <Tab eventKey="patcheo" title="Patcheo">
+            <Tab eventKey="patcheo" title="Patcheo" >
               <Patcheo state={this.state} handleChange={this.handleChange} />
             </Tab>
-          </Tabs>
-        );
+          </Tabs >
+        )
       } else if (this.state.medium === "CO") {
+
         return (
           <ServicioCM state={this.state} handleChange={this.handleChange}>
             <Form.Row>
@@ -1078,73 +964,49 @@ class AddService extends Component {
                   name="mode"
                   onChange={this.handleChange}
                   as="select"
-                  placeholder="en Mbps"
-                >
+                  placeholder="en Mbps">
                   <option>...</option>
                   <option>Punto a punto</option>
                   <option>Punto Multipunto</option>
                   <option>Multipunto</option>
                 </Form.Control>
               </Form.Group>
-              {this.state.mode === "Punto Multipunto" ? (
-                <>
-                  <Form.Group as={Col} md={3} controlId="">
+              {this.state.mode === 'Punto Multipunto'
+                ?
+                  (<><Form.Group as={Col} md={3} controlId="">
                     <Form.Label>Concentrador</Form.Label>
-                    <Form.Control
-                      size="sm"
-                      value={this.state.sites.hub}
-                      name="sites.hub"
-                      onChange={this.handleChange}
-                      type="text"
-                      placeholder="5551212,5559012"
+                    <Form.Control size="sm" value={this.state.sites.hub} name="sites.hub" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
                     />
                   </Form.Group>
-                  <Form.Group as={Col} md={5} controlId="">
-                    <Form.Label>Spokes</Form.Label>
-                    <Form.Control
-                      size="sm"
-                      value={this.state.sites.spokes}
-                      name="sites.spokes"
-                      onChange={this.handleChange}
-                      type="text"
-                      placeholder="5551212,5559012"
-                    />
-                  </Form.Group>
-                </>
-              ) : (
-                <Form.Group as={Col} controlId="">
-                  <Form.Label>Contra</Form.Label>
-                  <Form.Control
-                    size="sm"
-                    value={this.state.sites.spokes}
-                    name="sites.spokes"
-                    onChange={this.handleChange}
-                    type="text"
-                    placeholder="5551212,5559012"
-                  />
-                </Form.Group>
-              )}
+                    <Form.Group as={Col} md={5} controlId="">
+                      <Form.Label>Spokes</Form.Label>
+                      <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
+                      />
+                    </Form.Group></>)
+                    :
+                      <Form.Group as={Col} controlId="">
+                        <Form.Label>Contra</Form.Label>
+                        <Form.Control size="sm" value={this.state.sites.spokes} name="sites.spokes" onChange={this.handleChange} type="text" placeholder="5551212,5559012"
+                        />
+                      </Form.Group>
+              }
             </Form.Row>
+
           </ServicioCM>
-        );
+        )
       }
     }
   }
 
   ttt() {
-    if (this.state.service === "TTT") {
+    if (this.state.service === 'TTT') {
       if (this.state.medium === "FO") {
         return (
-          <Tabs defaultActiveKey="service">
-            <Tab eventKey="service" title="Service">
+          <Tabs defaultActiveKey="service" >
+            <Tab eventKey="service" title="Service" >
               <br></br>
 
-              <ServicioFO
-                state={this.state}
-                modifier={{ plan: "Plan", placeholder: "Canales/Numeros" }}
-                hardware={this.props.hardware}
-                handleChange={this.handleChange}
-              >
+              <ServicioFO state={this.state} modifier={{ plan: 'Plan', placeholder: 'Canales/Numeros' }} hardware={this.props.hardware} handleChange={this.handleChange}>
                 <Form.Row>
                   <Form.Group as={Col} controlId="">
                     <Form.Label>Cabecera</Form.Label>
@@ -1169,28 +1031,26 @@ class AddService extends Component {
                     />
                   </Form.Group>
                 </Form.Row>
-              </ServicioFO>
+
+              </ServicioFO >
             </Tab>
 
-            <Tab eventKey="direccionamiento" title="Direccionamiento">
-              <DireccionamientoFO
-                state={this.state}
-                handleChange={this.handleChange}
+            <Tab eventKey="direccionamiento" title="Direccionamiento" >
+              <DireccionamientoFO state={this.state} handleChange={this.handleChange}
               />
             </Tab>
 
-            <Tab eventKey="patcheo" title="Patcheo">
-              <Patcheo state={this.state} handleChange={this.handleChange} />
+            <Tab eventKey="patcheo" title="Patcheo" >
+              <Patcheo state={this.state} handleChange={this.handleChange}
+              />
             </Tab>
+
           </Tabs>
-        );
+        )
       } else if (this.state.medium === "CO") {
+
         return (
-          <ServicioCM
-            state={this.state}
-            handleChange={this.handleChange}
-            modifier={{ plan: "Plan", placeholder: "Canales/Numeros" }}
-          >
+          <ServicioCM state={this.state} handleChange={this.handleChange} modifier={{ plan: 'Plan', placeholder: 'Canales/Numeros' }}>
             <Form.Row>
               <Form.Group as={Col} controlId="">
                 <Form.Label>Cabecera</Form.Label>
@@ -1219,8 +1079,7 @@ class AddService extends Component {
             <Form.Row>
               <Form.Group as={Col} controlId="">
                 <Form.Label>Red</Form.Label>
-                <Form.Control
-                  size="sm"
+                <Form.Control size="sm"
                   value={this.state.red || "172.31."}
                   name="red"
                   onChange={this.handleChange}
@@ -1266,7 +1125,8 @@ class AddService extends Component {
               </Form.Group>
             </Form.Row>
           </ServicioCM>
-        );
+
+        )
       }
     }
   }
@@ -1275,16 +1135,9 @@ class AddService extends Component {
     return (
       <Form onSubmit={this.addService}>
         <Form.Row className="text-center">
-          <Form.Group as={Col} controlId="formGridState">
+          <Form.Group as={Col} controlId="formGridState" >
             <Form.Label>Servicio</Form.Label>
-            <Form.Control
-              size="sm"
-              name="service"
-              value={this.state.service}
-              onChange={this.handleChange}
-              as="select"
-              required
-            >
+            <Form.Control size="sm" name="service" value={this.state.service} onChange={this.handleChange} as="select" required >
               <option>Selecciona un servicio</option>
               <option>ADI</option>
               <option>L2VPN</option>
@@ -1293,16 +1146,18 @@ class AddService extends Component {
             </Form.Control>
           </Form.Group>
 
-          <Form.Group as={Col}>
-            <Form.Label>Medio</Form.Label>
-            <div className="d-flex justify-content-around">
+          <Form.Group as={Col} >
+            <Form.Label >
+              Medio
+            </Form.Label>
+            <div className="d-flex justify-content-around" >
               <Form.Check
                 type="radio"
                 label="CO"
                 name="mediumRadios"
                 id="CO"
                 onChange={this.handleChange}
-                checked={this.state.medium === "CO" ? true : false}
+                checked={this.state.medium === 'CO' ? true : false}
                 required
               />
               <Form.Check
@@ -1311,7 +1166,7 @@ class AddService extends Component {
                 name="mediumRadios"
                 id="FO"
                 onChange={this.handleChange}
-                checked={this.state.medium === "FO" ? true : false}
+                checked={this.state.medium === 'FO' ? true : false}
                 required
               />
             </div>
@@ -1321,14 +1176,15 @@ class AddService extends Component {
         {this.l2vpn()}
         {this.l3vpn()}
         {this.ttt()}
-        <Button variant="warning" type="submit">
+        <Button variant="warning" type="submit" >
           Save
-        </Button>{" "}
-        <Button variant="secondary" onClick={() => this.props.toggle(false)}>
+        </Button>
+        {' '}
+        <Button variant="secondary" onClick={() => this.props.toggle(false)}  >
           Cancel
         </Button>
       </Form>
-    );
+    )
   }
 }
 
