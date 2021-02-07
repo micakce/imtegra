@@ -6,7 +6,7 @@ const devUrl = 'http://localhost:3000';
 const prodUrl = 'https://imtegra.telecentro.net.ar';
 
 export const axiosInstance = axios.create({
-  baseUrl: process.env.NODE_ENV === 'development' ? devUrl : prodUrl,
+  baseURL: process.env.NODE_ENV === 'development' ? devUrl : prodUrl,
   timeout: 2000,
   headers: {
     'Content-Type': 'application/json',
